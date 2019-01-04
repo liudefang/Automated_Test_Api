@@ -1,0 +1,15 @@
+ .error {
+            color: red;
+            margin-left: 10px
+}
+
+.container {
+    margin-top: 150px;
+}
+
+.navbar-header {
+    color: white;
+}
+.navbar {
+    background-color: #428bca;
+}

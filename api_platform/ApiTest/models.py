@@ -1,3 +1,4 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 # Create your models here.
@@ -19,6 +20,7 @@ class Project(models.Model):
     prj_name = models.CharField('项目名称', max_length=64)  # 项目名称
     prj_desc = models.CharField('项目描述', max_length=256)  # 项目描述
     testers = models.CharField('测试负责人', max_length=256)  # 项目负责人
+    sign = models.ForeignKey('Sign', on_delete=models.CASCADE)  # 签名信息
     create_time = models.DateTimeField('创建时间', auto_now=True)  # 创建时间
 
     class Meta:
@@ -36,7 +38,7 @@ class Environment(models.Model):
     project = models.ForeignKey('Project', on_delete=models.CASCADE)    # 关联项目id
     evn_desc = models.CharField('测试环境描述', max_length=128)   # 测试环境描述
     url = models.CharField('项目URL地址', max_length=256)   # 测试环境的URL地址
-    private_key = models.CharField('签名方式', max_length=64)
+    private_key = models.CharField('签名值', max_length=64)
 
 
 # 接口步骤表
@@ -47,7 +49,7 @@ class ApiStep(models.Model):
     method = models.CharField('请求方式', max_length=8)
     data_type = models.CharField('数据类型', max_length=8)
     project = models.ForeignKey('Project', on_delete=models.CASCADE)
-    is_sign = models.IntegerField()
+    is_sign = models.IntegerField('是否签名')
     api_desc = models.CharField('接口描述', max_length=256)
     request_header_param = models.TextField('请求头信息')
     request_body_param = models.TextField('请求体内容信息')
@@ -97,6 +99,18 @@ class TestReport(models.Model):
     def __str__(self):
         return self.report_name
 
+
+class UserInfo(AbstractUser):
+    """
+    用户信息
+    """
+    nid = models.AutoField(primary_key=True)
+    telephone = models.CharField(max_length=11, null=True, unique=True)
+    avatar = models.FileField(upload_to='avatars/', default="/avatars/default.png")
+    create_time = models.DateTimeField(verbose_name='创建时间', auto_now_add=True)
+
+    def __str__(self):
+        return self.username
 
 
 

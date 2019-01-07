@@ -57,17 +57,157 @@
         <div class="row">
             <div class="col-sm-3 col-md-1 sidebar">
                 <div class="menu">
-                    <!--<div class="head bg-primary">项目管理</div>-->
-                    <ul class="nav navbar-nav">
+                    <div class="head bg-primary">基础信息</div>
+                    <ul class="nav nav-sidebar">
                         <li><a href="/project/" target="_self">测试项目</a> </li>
-                        <li><a href="/modules/" target="_self">测试模块</a> </li>
+                        <li><a href="/modules/" target="_self">测试环境</a> </li>
+                        <li><a href="#">测试接口</a> </li>
+                        <li><a href="#">测试用例</a> </li>
+                        <li><a href="#">测试计划</a> </li>
+
+                    </ul>
+                </div>
+
+                <div class="menu">
+                    <div class="head bg-primary">系统设置</div>
+                    <ul class="nav nav-sidebar">
+                        <li><a href="/sign/">签名方式</a> </li>
 
                     </ul>
                 </div>
             </div>
         </div>
     </div>
+    <div class="right">
+
+        {#表格#}
+        {% block add %}
+            <h1>欢迎csfsdfsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdes</h1>
+        {% endblock %}
+    </div>
 </div>
 
+<script src="/static/js/jquery-3.3.1.js"></script>
+<script src="/static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+<script>
+    // 左侧菜单
+    $(".head").on("click",function(){
+        //兄弟标签紧挨着的ul标签隐藏addclass("hide")
+        $(this).parent().siblings().children("ul").slideUp();
+        //把自己紧挨着的ul标签显示removeClass("hide")
+            $(this).next().removeClass("hide");
+        $(this).next().slideToggle();
+    });
+</script>
+
+<script>
+
+        toastr.options= {
+                "closeButton":false,//显示关闭按钮
+                "debug":false,//启用debug
+                "positionClass":"toast-top-center",//弹出的位置
+                "showDuration":"300",//显示的时间
+                "hideDuration":"1000",//消失的时间
+                "timeOut":"5000",//停留的时间
+                "extendedTimeOut":"1000",//控制时间
+                "showEasing":"swing",//显示时的动画缓冲方式
+                "hideEasing":"linear",//消失时的动画缓冲方式
+                "showMethod":"fadeIn",//显示时的动画方式
+                "hideMethod":"fadeOut"//消失时的动画方式
+                };
+        // // 新建项目验证
+
+    $(".btn_sub").click(function () {
+
+        $.ajax({
+            url: "/add_project/",
+            type: "post",
+            data: {
+                prj_name: $("#prj_name").val(),
+                prj_desc: $("#prj_desc").val(),
+                testers: $("#testers").val(),
+                sign_id: $("#sign_id").val(),
+                csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val(),
+            },
+            success: function (data) {
+
+                if (data.status== 0) {
+                    // alert(111)
+                    toastr.success('新增项目成功');
+                    if (location.search){
+                            location.href = location.search.slice(6)
+                    }
+                    else {
+                        setTimeout(function () {
+                            location.href = "/project/"
+                        }, 2000)
+
+                    }
+
+                }
+                else {
+
+
+                    $(".error").text(data.msg);
+                    setTimeout(function () {
+                        $(".error").text("");
+
+                    }, 5000)
+                }
+
+
+
+            }
+
+        })
+    });
+
+
+    // 新增签名方式
+
+    $(".add_sign").click(function () {
+
+        $.ajax({
+            url: "/add_sign/",
+            type: "post",
+            data: {
+                sign_name: $("#sign_name").val(),
+                description: $("#description").val(),
+
+                csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val(),
+            },
+            success: function (data) {
+
+                if (data.status== 0) {
+                    // alert(111)
+                    toastr.success('新增签名方式成功');
+                    if (location.search){
+                            location.href = location.search.slice(6)
+                    }
+                    else {
+                        setTimeout(function () {
+                            location.href = "/sign/"
+                        }, 2000)
+
+                    }
+
+                }
+                else {
+
+
+                    $(".error").text(data.msg);
+                    setTimeout(function () {
+                        $(".error").text("");
+
+                    }, 5000)
+                }
+
+
+
+            }
+
+        })
+    });
+</script>
 </body>
 </html>

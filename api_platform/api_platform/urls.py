@@ -21,5 +21,18 @@ from ApiTest import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^index/$', views.index),
+    url(r'^register/$', views.register),
+    url(r'^login/$', views.login),
+    url(r'^index/$', views.login),
+    url(r'^logout/$', views.logout),
+    url(r'^home/$', views.home),
+
+    # 项目
+    url(r'^project/$', views.project),
+    url(r'^add_project/$', views.add_project),
+    # url(r'^del_project/$', views.del_project),
+
+    # 签名方式
+    url(r'^sign/$', views.sign),
+    url(r'^add_sign/$', views.add_sign),
 ]

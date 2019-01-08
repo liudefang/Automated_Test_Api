@@ -58,6 +58,13 @@
                                 <td>{{ project_obj.testers }}</td>
                                 <td>{{ project_obj.sign }}</td>
                                 <td>{{ project_obj.create_time|date:'Y-m-d' }}</td>
+                                <td>
+                                    <a href="/project/{{project_obj.prj_id}}/edit_project"> <button type="button" class="btn btn-info" data-toggle="modal" data-target="#editmyModal">
+                                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编辑</button></a>
+                                    &nbsp;&nbsp;
+                                    <button type="button" class="btn btn-danger" onclick="return delete_info({project_obj.prj_id})">
+                                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 删除</button>
+                                </td>
 
 
 
@@ -118,44 +125,6 @@
       </div>
     </div>
 
-<!-- 编辑项目模态框 -->
-    <div class="modal fade" id="editmyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">编辑项目</h4>
-          </div>
-          <div class="modal-body">
-              <form role="form">
-                  {% csrf_token %}
-                  <div class="form-group">
-                    <label for="project_name">项目名称</label>
-                    <input type="text" name="project_name" id="project_name" class="form-control" placeholder="输入项目名称">
-                  </div>
-                  <h6 style="color: red"><span class="error"></span></h6>
-
-                  <div class="form-group">
-                    <label for="project_desc">项目描述</label>
-                    <input type="text" name="project_desc" id="project_desc" class="form-control" placeholder="输入项目描述">
-                  </div>
-
-                  <div class="form-group">
-                    <label for="testers">项目负责人</label>
-                    <input type="text" name="testers" id="testers" class="form-control" placeholder="输入项目负责人">
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary btn_sub">提交</button>
-                  </div>
-
-              </form>
-
-          </div>
-
-        </div>
-      </div>
-    </div>
 
 
 {% endblock %}

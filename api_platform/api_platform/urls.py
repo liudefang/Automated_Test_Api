@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path
 
 from ApiTest import views
 
@@ -30,6 +30,7 @@ urlpatterns = [
     # 项目
     url(r'^project/$', views.project),
     url(r'^add_project/$', views.add_project),
+    re_path(r'project/(\d+)/(edit|delete)', views.edit_project),
     # url(r'^del_project/$', views.del_project),
 
     # 签名方式

@@ -148,6 +148,44 @@ def add_project(request):
 
 
 @login_required
+def edit_project(request, id, option):
+    """
+    编辑项目
+    :param request:
+    :return:
+    """
+
+    edit_project_list = Project.objects.filter(prj_id=id).first()
+
+    if request.method == "POST":
+
+        prj_name = request.POST.get("prj_name")
+        prj_desc = request.POST.get("prj_desc")
+        testers = request.POST.get("testers")
+        sign_id = request.POST.get("sign_id")
+
+        print("prj_name:", prj_name)
+        print("sign_id:", sign_id)
+        print(len(prj_name))
+
+        if len(prj_name) != 0:
+
+            Project.objects.filter(prj_id=id).update(prj_name=prj_name, prj_desc=prj_desc, testers=testers, sign_id=sign_id)
+
+            response = {"status": 0, "msg": "编辑成功!"}
+
+            # return redirect("/project")
+        else:
+            response = {"status": 1, "msg": "项目名称不能为空!"}
+
+        return JsonResponse(response)
+
+    sign_list = Sign.objects.filter().all()
+
+    return render(request, "project/edit.html", {"edit_project_list": edit_project_list, "sign_list": sign_list})
+
+
+@login_required
 def sign(request):
     """
     签名方式

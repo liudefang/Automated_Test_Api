@@ -39,6 +39,7 @@ class Environment(models.Model):
     evn_desc = models.CharField('测试环境描述', max_length=128)   # 测试环境描述
     url = models.CharField('项目URL地址', max_length=256)   # 测试环境的URL地址
     private_key = models.CharField('签名值', max_length=64)
+    create_time = models.DateTimeField('创建时间', auto_now=True)  # 创建时间
 
 
 # 接口步骤表
@@ -55,6 +56,7 @@ class ApiStep(models.Model):
     request_body_param = models.TextField('请求体内容信息')
     response_header_param = models.TextField('返回头信息')
     response_body_param = models.TextField('返回体内容信息')
+    create_time = models.DateTimeField('创建时间', auto_now=True)  # 创建时间
 
     def __str__(self):
         return self.api_name
@@ -67,6 +69,7 @@ class TestCase(models.Model):
     project = models.ForeignKey('Project', on_delete=models.CASCADE)
     case_desc = models.CharField('用例描述', max_length=256)
     content = models.TextField('用例内容')
+    create_time = models.DateTimeField('创建时间', auto_now=True)  # 创建时间
 
     def __str__(self):
         return self.case_name
@@ -80,6 +83,7 @@ class TestPlan(models.Model):
     environment = models.ForeignKey('Environment', on_delete=models.CASCADE)
     plan_desc = models.CharField('测试计划描述', max_length=256)
     content = models.TextField()
+    create_time = models.DateTimeField('创建时间', auto_now=True)  # 创建时间
 
     def __str__(self):
         return self.plan_name
@@ -95,6 +99,7 @@ class TestReport(models.Model):
     pass_num = models.IntegerField(null=True)
     fail_num = models.IntegerField(null=True)
     error_num = models.IntegerField(null=True)
+    create_time = models.DateTimeField('创建时间', auto_now=True)  # 创建时间
 
     def __str__(self):
         return self.report_name

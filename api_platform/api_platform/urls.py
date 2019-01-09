@@ -33,6 +33,11 @@ urlpatterns = [
     re_path(r'project/(\d+)/(edit|delete)', views.edit_project),
     # url(r'^del_project/$', views.del_project),
 
+    # 环境
+    url(r'^env/$', views.environment),
+    url(r'^add_env/$', views.add_env),
+    re_path(r'env/(\d+)/(edit|delete)', views.edit_env),
+
     # 签名方式
     url(r'^sign/$', views.sign),
     url(r'^add_sign/$', views.add_sign),

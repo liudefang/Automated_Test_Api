@@ -17,7 +17,7 @@
 {% endblock style%}
 {% block add %}
     <div class="panel panel-info">
-        <div class="panel-heading">编辑项目信息</div>
+        <div class="panel-heading">编辑环境信息</div>
         <div class="panel-body">
             <form class="form-horizontal" action="" method="post">
                 {% csrf_token %}
@@ -27,32 +27,38 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="prj_name" class="col-sm-2 control-label">项目名称:</label>
+                    <label for="evn_name" class="col-sm-2 control-label">测试环境:</label>
                     <div class="col-sm-6">
-                        <input type="text" name="prj_name" value="{{ edit_project_list.prj_name }}" id="prj_name">
+                        <input type="text" name="evn_name" value="{{ edit_env_list.evn_name }}" id="evn_name">
                     </div>
                 </div>
                 <h6 style="color: red"><span class="error"></span></h6>
                 <div class="form-group">
-                    <label for="prj_desc" class="col-sm-2 control-label">项目描述:</label>
+                    <label for="url" class="col-sm-2 control-label">测试URL地址:</label>
                     <div class="col-sm-6">
-                        <textarea name="prj_desc" id="prj_desc" cols="60" rows="10">{{ edit_project_list.prj_desc }}</textarea>
+                        <input type="text" name="url" value="{{ edit_env_list.url }}" id="url">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="testers" class="col-sm-2 control-label">项目负责人:</label>
+                    <label for="prj_id" class="col-sm-2 control-label">所属项目:</label>
                     <div class="col-sm-6">
-                        <input type="text" name="testers" value="{{ edit_project_list.testers }}" id="testers">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="sign_id" class="col-sm-2 control-label">签名方式:</label>
-                    <div class="col-sm-6">
-                        <select name="sign_id" id="sign_id" class="form-control-static">
-                            {% for sign_obj in sign_list %}
-                            <option value="{{sign_obj.pk}}">{{sign_obj.sign_name}}</option>
+                        <select name="prj_id" id="prj_id" class="form-control-static">
+                            {% for prj_obj in project_list %}
+                            <option value="{{prj_obj.pk}}">{{prj_obj.prj_name}}</option>
                             {% endfor %}
                         </select>
+                    </div>
+                </div>
+                 <div class="form-group">
+                    <label for="private_key" class="col-sm-2 control-label">项目密钥:</label>
+                    <div class="col-sm-6">
+                        <input type="text" name="private_key" value="{{ edit_env_list.private_key }}" id="private_key">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="evn_desc" class="col-sm-2 control-label">项目环境描述:</label>
+                    <div class="col-sm-6">
+                        <textarea name="evn_desc" id="evn_desc" cols="60" rows="10">{{ edit_env_list.evn_desc }}</textarea>
                     </div>
                 </div>
 
@@ -60,7 +66,7 @@
                     <div class="col-sm-10 col-md-offset-6">
                         <a href="/project/" class="btn btn-primary ">取消</a>
                         &nbsp;&nbsp;
-                        <input type="button" class="btn btn-info edit_prj" value="提交">
+                        <input type="button" class="btn btn-info edit_env" value="提交">
 
                     </div>
                 </div>
@@ -70,16 +76,17 @@
         <script>
 
      // 编辑项目
-    $(".edit_prj").click(function () {
+    $(".edit_env").click(function () {
         $.ajax({
-            url: "/project/{{edit_project_list.prj_id}}/edit/",
+            url: "/env/{{edit_env_list.env_id}}/edit/",
             type: "post",
             data: {
 
-                prj_name: $("#prj_name").val(),
-                prj_desc: $("#prj_desc").val(),
-                testers: $("#testers").val(),
-                sign_id: $("#sign_id").val(),
+                evn_name: $("#evn_name").val(),
+                url: $("#url").val(),
+                prj_id: $("#prj_id").val(),
+                private_key: $("#private_key").val(),
+                evn_desc: $("#evn_desc").val(),
                 csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val(),
             },
 
@@ -93,7 +100,7 @@
                     }
                     else {
                         setTimeout(function () {
-                            location.href = "/project/"
+                            location.href = "/env/"
                         }, 2000)
 
                     }

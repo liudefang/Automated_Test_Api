@@ -11,16 +11,16 @@
 <div class="btn-toolbar" role="toolbar">
   <div class="btn-group" style="padding-top: 100px; left: 100px">
     <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#addmyModal">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 添加
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 添加项目
     </button>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editmyModal">
+    <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editmyModal">
         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 修改
     </button>
     <form id="del" method="POST" action="/del_project/" style="display: inline;">
         <input id="ipt1" type="text" name="pid" style="display: none"/>
          <button id="btn-del" type="onclick" class="btn btn-danger ">
             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 删除
-        </button>
+        </button>-->
         {% csrf_token %}
     </form>
 
@@ -59,14 +59,13 @@
                                 <td>{{ project_obj.sign }}</td>
                                 <td>{{ project_obj.create_time|date:'Y-m-d' }}</td>
                                 <td>
-                                    <a href="/project/{{project_obj.prj_id}}/edit_project"> <button type="button" class="btn btn-info" data-toggle="modal" data-target="#editmyModal">
+                                    <a href="/project/{{project_obj.prj_id}}/edit"> <button type="button" class="btn btn-info" data-toggle="modal" data-target="#editmyModal">
                                         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编辑</button></a>
                                     &nbsp;&nbsp;
-                                    <button type="button" class="btn btn-danger" onclick="return delete_info({project_obj.prj_id})">
+                                        <button class="btn btn-danger btn_delete">
                                         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 删除</button>
+                                    <!--<button class="btn btn-danger btn_delete">删除</button>-->
                                 </td>
-
-
 
                             </tr>
                         {% endfor %}

@@ -38,6 +38,11 @@ urlpatterns = [
     url(r'^add_env/$', views.add_env),
     re_path(r'env/(\d+)/(edit|delete)', views.edit_env),
 
+    # 接口
+    url(r'^interface/$', views.interface),
+    url(r'^add_api/$', views.add_api),
+    re_path(r'interface/(\d+)/(edit|delete)', views.edit_api),
+
     # 签名方式
     url(r'^sign/$', views.sign),
     url(r'^add_sign/$', views.add_sign),

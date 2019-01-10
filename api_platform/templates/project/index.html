@@ -13,14 +13,14 @@
     <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#addmyModal">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 添加项目
     </button>
-    <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editmyModal">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editmyModal">
         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 修改
     </button>
     <form id="del" method="POST" action="/del_project/" style="display: inline;">
         <input id="ipt1" type="text" name="pid" style="display: none"/>
          <button id="btn-del" type="onclick" class="btn btn-danger ">
             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 删除
-        </button>-->
+        </button>
         {% csrf_token %}
     </form>
 
@@ -28,7 +28,6 @@
 
 </div>
 
-<!--https://segmentfault.com/a/1190000007651357-->
 <!--项目列表-->
 <div class="container">
         <div class="row">
@@ -40,12 +39,11 @@
                             <th>选中</th>
                             <th>项目id</th>
                             <th>项目名称</th>
-                            <th>项目描述</th>
                             <th>测试人员</th>
-                            <th>签名方式</th>
+                            <th>开发人员</th>
+                            <th>状态</th>
+                            <th>项目描述</th>
                             <th>创建时间</th>
-                            <th>操作</th>
-
                         </tr>
                     </thead>
                     <tbody>
@@ -54,18 +52,19 @@
                                 <td id="che1"><input type="checkbox"/></td>
                                 <td>{{project_obj.prj_id}}</td>
                                 <td>{{ project_obj.prj_name }}</td>
+                                <td>{{ project_obj.testers}}</td>
+                                <td>{{ project_obj.developer }}</td>
+                                <td>{{ project_obj.status }}</td>
                                 <td>{{ project_obj.prj_desc }}</td>
-                                <td>{{ project_obj.testers }}</td>
-                                <td>{{ project_obj.sign }}</td>
                                 <td>{{ project_obj.create_time|date:'Y-m-d' }}</td>
-                                <td>
+                                <!--<td>
                                     <a href="/project/{{project_obj.prj_id}}/edit"> <button type="button" class="btn btn-info" data-toggle="modal" data-target="#editmyModal">
                                         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编辑</button></a>
                                     &nbsp;&nbsp;
                                         <button class="btn btn-danger btn_delete">
-                                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 删除</button>
-                                    <!--<button class="btn btn-danger btn_delete">删除</button>-->
-                                </td>
+                                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 删除</button>-->
+                                    <!--<button class="btn btn-danger btn_delete">删除</button>
+                                </td>-->
 
                             </tr>
                         {% endfor %}
@@ -91,25 +90,22 @@
                     <input type="text" name="prj_name" id="prj_name" class="form-control" placeholder="输入项目名称">
                   </div>
                   <h6 style="color: red"><span class="error"></span></h6>
-
-                  <div class="form-group">
-                    <label for="prj_desc">项目描述</label>
-                    <input type="text" name="prj_desc" id="prj_desc" class="form-control" placeholder="输入项目描述">
-                  </div>
-
                   <div class="form-group">
                     <label for="testers">项目负责人</label>
                     <input type="text" name="testers" id="testers" class="form-control" placeholder="输入项目负责人">
                   </div>
-                   <div class="form-group">
-                    <label for="sign_id">签名方式</label>
-
-                        <select name="sign_id" id="sign_id" class="form-control">
-                            {% for sign_obj in sign_list %}
-                            <option value="{{sign_obj.pk}}">{{sign_obj.sign_name}}</option>
-                            {% endfor %}
-                        </select>
-
+                  <div class="form-group">
+                    <label for="developer">开发负责人</label>
+                    <input type="text" name="testers" id="developer" class="form-control" placeholder="输入开发负责人">
+                  </div>
+                  <div class="form-group">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" name="status" id="optionsRadios1"> 项目状态
+                    </label>
+                  </div>
+                  <div class="form-group">
+                    <label for="prj_desc">项目描述</label>
+                    <input type="text" name="prj_desc" id="prj_desc" class="form-control" placeholder="输入项目描述">
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>

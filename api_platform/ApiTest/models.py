@@ -45,7 +45,7 @@ class Project(models.Model):
     prj_name = models.CharField('项目名称', max_length=64)  # 项目名称
     prj_desc = models.CharField('项目描述', max_length=256)  # 项目描述
     testers = models.CharField('测试负责人', max_length=256)  # 项目负责人
-    devloper = models.CharField('开发负责人', max_length=256)
+    developer = models.CharField('开发负责人', max_length=256)
     status = models.BooleanField()
     create_time = models.DateTimeField('创建时间', auto_now=True)  # 创建时间
 
@@ -100,7 +100,7 @@ class ApiStep(models.Model):
     files = models.CharField(max_length=512)
     step_desc = models.CharField('接口描述', max_length=256)
     assert_response = models.CharField('接口预期结果', max_length=512)
-    api_dependency = models.CharField('接口依赖', max_length=500, default="")
+    api_dependency = models.CharField('接口依赖', max_length=512, default="")
     step_weights = models.IntegerField('接口权重', default=0)
     status = models.BooleanField()
     create_time = models.DateTimeField('创建时间', auto_now=True)  # 创建时间
@@ -111,39 +111,109 @@ class ApiStep(models.Model):
 
 
 # 步骤依赖表
+class ReferenceStep(models.Model):
+    step = models.ForeignKey(ApiStep, on_delete=models.CASCADE)
+    step_name = models.CharField('步骤名称', max_length=128)
+    path = models.CharField('目录路径', max_length=128, default='')
+    reference_step_name = models.CharField('步骤依赖名称', max_length=128)
+    variable = models.CharField('变量')
+    create_time = models.DateTimeField('创建时间', auto_now=True)  # 创建时间
+    update_time = models.DateTimeField('更新时间', auto_now=True)
+
+    def __str__(self):
+        return self.step
 
 
+# sql表
+class Sql(models.Model):
+    step = models.ForeignKey(ApiStep, on_delete=models.CASCADE)
+    sql_condition = models.IntegerField()
+    is_select = models.BooleanField('是否查询')
+    variable = models.CharField('变量', max_length=256)
+    sql = models.CharField('查询的sql语句', max_length=256)
+    remake = models.CharField('重置', max_length=256)
+    status = models.BooleanField('状态')
+    create_time = models.DateTimeField('创建时间', auto_now=True)  # 创建时间
+    update_time = models.DateTimeField('更新时间', auto_now=True)
 
+    def __str__(self):
+        return self.sql
 
 
 # 测试计划表
 class TestPlan(models.Model):
+    case = models.ForeignKey(TestCase, on_delete=models.CASCADE)
     plan_id = models.AutoField(primary_key=True, null=False)
     plan_name = models.CharField('测试计划名称', max_length=64)
-    project = models.ForeignKey('Project', on_delete=models.CASCADE)
-    environment = models.ForeignKey('Environment', on_delete=models.CASCADE)
+    plan_run_time_regular = models.CharField('测试计划执行时间', max_length=128)
+    ip = models.CharField('ip地址', max_length=56, default='')
+    db = models.CharField('数据库', max_length=56, default='')
+    email = models.CharField('邮箱地址', max_length=56, default='')
+    failcount = models.CharField('错误统计', max_length=56, default='')
+    remark = models.CharField('重置', max_length=256)
+    db_remark = models.CharField('数据重置', max_length=128, default='')
     plan_desc = models.CharField('测试计划描述', max_length=256)
-    content = models.TextField()
+    subject = models.CharField('主题', max_length=128, default='')
+    status = models.BooleanField('状态')
     create_time = models.DateTimeField('创建时间', auto_now=True)  # 创建时间
+    update_time = models.DateTimeField('更新时间', auto_now=True)
 
     def __str__(self):
         return self.plan_name
 
 
-# 测试报告表
-class TestReport(models.Model):
-    report_id = models.AutoField(primary_key=True, null=False)
-    report_name = models.CharField('测试报告名称', max_length=256)
-    plan = models.ForeignKey('TestPlan', on_delete=models.CASCADE)
-    content = models.TextField()
-    case_num = models.IntegerField(null=True)
-    pass_num = models.IntegerField(null=True)
-    fail_num = models.IntegerField(null=True)
-    error_num = models.IntegerField(null=True)
-    create_time = models.DateTimeField('创建时间', auto_now=True)  # 创建时间
+# 测试结果表
+class ApiTestResult(models.Model):
+    task = models.ForeignKey(TestPlan, on_delete=models.CASCADE)
+    case = models.ForeignKey(TestCase, on_delete=models.CASCADE)
+    step = models.ForeignKey(ApiStep, on_delete=models.CASCADE)
+    case_result = models.CharField('测试用例结果', max_length=256)
+    error_info = models.CharField('错误信息', max_length=256)
+    response_body = models.CharField('测试返回结果', max_length=512)
+    case_start_time = models.DateTimeField('用例开始执行时间', auto_now=True)
+    case_end_time = models.DateTimeField('用例执行结束时间', auto_now=True)
+    case_run_time = models.DateTimeField('用例执行时间')
 
     def __str__(self):
-        return self.report_name
+        return self.case_result
+
+
+# 统计分析总表
+# 任务表
+class StatisticsData(models.Model):
+    case_number = models.IntegerField('测试用例总数')
+    task_number = models.IntegerField('测试任务总数')
+    carry_number = models.IntegerField('执行用例数')
+    pass_number = models.IntegerField('测试通过的用例数')
+    assert_error_number = models.IntegerField('不通过的用例数')
+    fail_number = models.IntegerField('失败用例数')
+    error_ratio = models.IntegerField('失败率')
+
+    def __str__(self):
+        return self.casenumber
+
+
+# 邮件和日志的反馈
+class LogAndHtmlFeedback(models.Model):
+    test_step = models.CharField('测试步骤', max_length=128)
+    test_status = models.IntegerField('测试结果')
+    test_response = models.CharField('测试返回值', max_length=512)
+    test_carry_Task_id = models.CharField('第几次执行', max_length=56, default="")
+    update_time = models.DateTimeField(auto_now=True)
+    create_time = models.DateTimeField(auto_now_add=True)
+
+
+# 第几次执行任务
+class CarryTask(models.Model):
+    task_name = models.CharField('任务名称', max_length=56)
+    html_report = models.CharField(max_length=256, default="")
+    success_log_name = models.CharField(max_length=256, default="")
+    error_log_name = models.CharField(max_length=256, default="")
+    update_time = models.DateTimeField(auto_now=True)
+    create_time = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.task_name
 
 
 class UserInfo(AbstractUser):

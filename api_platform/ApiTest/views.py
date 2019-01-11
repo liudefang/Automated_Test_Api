@@ -110,9 +110,8 @@ def project(request):
     :return:
     """
     project_list = Project.objects.filter().all()
-    sign_list = Sign.objects.filter().all()
 
-    return render(request, "project/index.html", {"project_list": project_list, "sign_list": sign_list})
+    return render(request, "project/index.html", {"project_list": project_list})
 
 
 @login_required
@@ -128,13 +127,19 @@ def add_project(request):
         prj_name = request.POST.get("prj_name")
         prj_desc = request.POST.get("prj_desc")
         testers = request.POST.get("testers")
-        sign_id = request.POST.get("sign_id")
+        developer = request.POST.get("developer")
+        status = request.POST.get("status")
 
-        print("sign_id:", sign_id)
+        print("status:", type(status))
 
         if len(prj_name) != 0 and prj_name != str(Project.objects.filter(prj_name=prj_name).first()):
+            if status == '1':
 
-            Project.objects.create(prj_name=prj_name, prj_desc=prj_desc, testers=testers, sign_id=sign_id)
+                Project.objects.create(prj_name=prj_name, prj_desc=prj_desc, testers=testers, developer=developer,
+                                       status=1)
+            else:
+                Project.objects.create(prj_name=prj_name, prj_desc=prj_desc, testers=testers, developer=developer,
+                                       status=0)
 
             response = {"status": 0, "msg": "项目添加成功!"}
 
@@ -156,7 +161,7 @@ def edit_project(request, prj_id, option):
     :param request:
     :return:
     """
-
+    print("prj_id:", prj_id)
     edit_project_list = Project.objects.filter(prj_id=prj_id).first()
     if edit_project_list and option == "delete":
         try:
@@ -191,9 +196,7 @@ def edit_project(request, prj_id, option):
 
             return JsonResponse(response)
 
-        sign_list = Sign.objects.filter().all()
-
-        return render(request, "project/edit.html", {"edit_project_list": edit_project_list, "sign_list": sign_list})
+        return render(request, "project/edit.html", {"edit_project_list": edit_project_list})
     else:
         return render(request, "not_found.html")
 

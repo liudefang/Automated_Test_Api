@@ -134,7 +134,8 @@
                 prj_name: $("#prj_name").val(),
                 prj_desc: $("#prj_desc").val(),
                 testers: $("#testers").val(),
-                sign_id: $("#sign_id").val(),
+                developer: $("#developer").val(),
+                status: $("*[name='status']:checked").val(),
                 csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val(),
             },
             success: function (data) {
@@ -219,15 +220,34 @@
     });
 
     // 删除项目
-    $(".btn_delete").click(function () {
-            var delete_id = $(this).parent().siblings('td').eq(1).text();
-            var row = $(this).parent().parent();
-            var pathname = window.location.pathname;
-            var url = null;
-            alert(delete_id)
+    $("#btn_delete").click(function () {
+            var env_ids=new Array();
+
+                var count=0;
+
+                var i=0;
+                 var row = $(this).parent().parent();
+                var pathname = window.location.pathname;
+                var url = null;
+                $("#table").find(":checkbox:checked").each(function() {
+
+                    env_id = $(this).parent().next().text();
+
+                    if (env_id != "") {
+
+                        env_ids[i++] = env_id;
+
+                    }
+
+                    count++;
+
+                });
+
+            alert(count)
             if(pathname.indexOf("project/")>0){
-                url = /project/+delete_id+pathname.replace('/project/', '/delete/')
+                url = /project/+env_id+pathname.replace('/project/', '/delete/')
             }
+
 
 
             // 删除插件的应用
@@ -249,7 +269,7 @@
                     url: url,
                     type: 'post',
                     data:{
-                        delete_id: delete_id,
+                        delete_id: env_id,
 
                     },
 
@@ -259,8 +279,11 @@
                             row.remove();
 
                             toastr.success(data.msg);
+                            location.href = "/project/"
+
                         }else{
                             toastr.error(data.msg);
+                            location.href = "/project/"
                         }
 
 
@@ -269,7 +292,9 @@
 
             });
 
-        });
+
+
+    });
 
 
 </script>

@@ -116,7 +116,7 @@ class ReferenceStep(models.Model):
     step_name = models.CharField('步骤名称', max_length=128)
     path = models.CharField('目录路径', max_length=128, default='')
     reference_step_name = models.CharField('步骤依赖名称', max_length=128)
-    variable = models.CharField('变量')
+    variable = models.CharField('变量', max_length=256)
     create_time = models.DateTimeField('创建时间', auto_now=True)  # 创建时间
     update_time = models.DateTimeField('更新时间', auto_now=True)
 
@@ -149,7 +149,7 @@ class TestPlan(models.Model):
     ip = models.CharField('ip地址', max_length=56, default='')
     db = models.CharField('数据库', max_length=56, default='')
     email = models.CharField('邮箱地址', max_length=56, default='')
-    failcount = models.CharField('错误统计', max_length=56, default='')
+    fail_count = models.CharField('错误统计', max_length=56, default='')
     remark = models.CharField('重置', max_length=256)
     db_remark = models.CharField('数据重置', max_length=128, default='')
     plan_desc = models.CharField('测试计划描述', max_length=256)

@@ -20,6 +20,18 @@
             margin-right: 10px;
             vertical-align: -3px;
         }
+        .form-horzontal {
+            margin-top:50px;
+        }
+    .panel {
+        margin-top: 50px;
+        width:800px;
+        height: 500px;
+        margin-left: 100px;
+    }
+    h6 {
+        margin-left:500px;
+    }
 
     </style>
 </head>
@@ -243,14 +255,10 @@
 
                 });
 
-            alert(count)
-            if(pathname.indexOf("project/")>0){
+            //alert(count)
+            if(count>0){
                 url = /project/+env_id+pathname.replace('/project/', '/delete/')
-            }
-
-
-
-            // 删除插件的应用
+                 // 删除插件的应用
             swal({
 
                 title: "确定要删除吗？",
@@ -279,11 +287,16 @@
                             row.remove();
 
                             toastr.success(data.msg);
+                            setTimeout(function () {
                             location.href = "/project/"
+                        }, 2000)
+
 
                         }else{
                             toastr.error(data.msg);
+                            setTimeout(function () {
                             location.href = "/project/"
+                        }, 2000)
                         }
 
 
@@ -291,11 +304,70 @@
                 });
 
             });
+            }
+            else {
+                toastr.error("请至少选择一项")
+            }
+
+
+
+
 
 
 
     });
+ //编辑
 
+            $("#edit_btn").click(function(){
+
+                var count=0;
+                var env_value;
+                var env=new Array();
+                var elements=$(".ipt");
+                var url = null;
+                $("#table").find(":checkbox:checked").each(function(){
+                    env_value=$(this).parent()
+                    for (var i=0;i<elements.length;i++){
+                        env_value=env_value.next()
+                        //alert(email_value.text());
+                        env[i]=env_value.text();
+                    }
+
+                    count++;
+                });
+                if (count==1)
+                {
+                    //alert(env);
+                    url = "/project/"+env+"/edit"
+                    //alert(url)
+
+                    for (var i=0;i<env.length-1;i++){
+                        $(elements[i]).val(env[i]);
+                    }
+                    if (env[env.length-1]=="True"){
+                        $(elements[env.length-1]).prop('checked',true);
+                    }
+                    else{
+                        $(elements[env.length-1]).removeAttr('checked');
+                    }
+                    //$('#editMyModal').modal("show");
+
+                    if(env>0){
+
+                        location.href = url;
+                    }
+
+
+                }
+                else if(count==0){
+                    toastr.error("请至少选择一个选项!")
+                }
+                else{
+                    toastr.error("编辑只能选择一个选项!");
+
+                }
+
+            });
 
 </script>
 </body>

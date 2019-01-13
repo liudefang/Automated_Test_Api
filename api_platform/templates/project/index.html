@@ -9,7 +9,7 @@
 </div>
 <!--按钮-->
 <div class="btn-toolbar" role="toolbar">
-  <div class="btn-group" style="padding-top: 100px; left: 50px">
+  <div class="btn-group" style="padding-top: 20px;left: 50px">
     <button id="add_btn" class="btn btn-primary " data-toggle="modal" data-target="#addmyModal">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 添加项目
     </button>
@@ -118,7 +118,7 @@
                   </div>
                   <div class="form-group">
                     <label for="prj_desc">项目描述</label>
-                    <input type="text" name="prj_desc" id="prj_desc" class="form-control" placeholder="输入项目描述">
+                    <textarea name="prj_desc" id="prj_desc" cols="60" rows="3" class="form-control" placeholder="输入项目描述"></textarea>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -133,6 +133,59 @@
       </div>
     </div>
 
+<!-- 编辑模态框 -->
+    <div class="modal fade" id="editMyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">编辑项目</h4>
+          </div>
+          <div class="modal-body">
+              <form role="form">
+                  {% csrf_token %}
+                  <div class="form-group">
+                    <label for="prj_name">项目名称</label>
+                    <input type="text" name="prj_name" id="prj_name" class="ipt form-control" value="{{ edit_project_list.prj_name }}">
+                  </div>
+                  <h6 style="color: #ff0000"><span class="error"></span></h6>
+                  <div class="form-group">
+                    <label for="testers">项目负责人</label>
+                    <input type="text" name="testers" id="testers" class="form-control" placeholder="输入项目负责人">
+                  </div>
+                  <div class="form-group">
+                    <label for="developer">开发负责人</label>
+                    <input type="text" name="developer" id="developer" class="form-control" placeholder="输入开发负责人">
+                  </div>
+                  <div class="form-group">
+                      <label>项目状态</label>
+                      <div>
+                          <label class="radio-inline">
+                              <input type="radio" name="status" id="optionsRadios1" value="1" checked> 有效
 
+                          </label>
+                          &nbsp;&nbsp;&nbsp;&nbsp;
+                          <label class="radio-inline">
+                              <input type="radio" name="status" id="optionsRadios2" value="0"> 无效
+                          </label>
+                      </div>
+
+                  </div>
+                  <div class="form-group">
+                    <label for="prj_desc">项目描述</label>
+                    <input type="text" name="prj_desc" id="prj_desc" class="form-control" placeholder="输入项目描述">
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary edit_prj">提交</button>
+                  </div>
+
+              </form>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
 
 {% endblock %}

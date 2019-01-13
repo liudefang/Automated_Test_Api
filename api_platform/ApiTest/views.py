@@ -178,15 +178,17 @@ def edit_project(request, prj_id, option):
             prj_name = request.POST.get("prj_name")
             prj_desc = request.POST.get("prj_desc")
             testers = request.POST.get("testers")
-            sign_id = request.POST.get("sign_id")
+            developer = request.POST.get("developer")
+            status = request.POST.get("status")
 
-            print("prj_name:", prj_name)
-            print("sign_id:", sign_id)
+            print("status:", status)
+
             print(len(prj_name))
 
             if len(prj_name) != 0:
 
-                Project.objects.filter(prj_id=prj_id).update(prj_name=prj_name, prj_desc=prj_desc, testers=testers, sign_id=sign_id)
+                Project.objects.filter(prj_id=prj_id).update(prj_name=prj_name, prj_desc=prj_desc, testers=testers,
+                                                             developer=developer, status=status)
 
                 response = {"status": 0, "msg": "编辑成功!"}
 

@@ -2,25 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="95d82afa-5943-4d02-91da-c8ee0a933eef" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/api_platform/templates/modules/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/templates/modules/edit.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/templates/modules/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/templates/testcase/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/templates/testcase/edit.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/templates/testcase/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Automated_Test_Api.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Automated_Test_Api.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api_platform/ApiTest/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api_platform/ApiTest/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_platform/ApiTest/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api_platform/ApiTest/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_platform/ApiTest/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api_platform/api_platform/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_platform/api_platform/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api_platform/db.sqlite3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api_platform/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/api_platform/db.sqlite3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api_platform/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/api_platform/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api_platform/templates/env/edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/api_platform/templates/env/edit.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api_platform/templates/env/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/api_platform/templates/env/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api_platform/templates/project/edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/api_platform/templates/project/edit.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api_platform/templates/project/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/api_platform/templates/project/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api_platform/templates/testcase/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api_platform/templates/testcase/edit.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api_platform/templates/testcase/index.html" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -30,11 +19,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/api_platform/ApiTest/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="648">
-              <caret line="340" lean-forward="true" selection-start-line="340" selection-end-line="340" />
+            <state relative-caret-position="896">
+              <caret line="321" column="17" selection-start-line="321" selection-start-column="8" selection-end-line="321" selection-end-column="17" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -45,8 +34,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/api_platform/ApiTest/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
-              <caret line="75" column="11" selection-start-line="75" selection-start-column="4" selection-end-line="75" selection-end-column="11" />
+            <state relative-caret-position="425">
+              <caret line="61" column="11" selection-start-line="61" selection-start-column="4" selection-end-line="61" selection-end-column="11" />
               <folding>
                 <element signature="e#0#51#0" expanded="true" />
               </folding>
@@ -55,24 +44,28 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/api_platform/templates/testcase/index.html">
+        <entry file="file://$PROJECT_DIR$/api_platform/api_platform/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="410">
-              <caret line="45" column="34" selection-start-line="45" selection-start-column="34" selection-end-line="45" selection-end-column="34" />
+            <state relative-caret-position="393">
+              <caret line="41" column="38" selection-start-line="41" selection-start-column="38" selection-end-line="41" selection-end-column="38" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/api_platform/templates/api_case/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="240">
+              <caret line="50" column="39" selection-start-line="50" selection-start-column="39" selection-end-line="50" selection-end-column="39" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/api_platform/templates/testcase/edit.html">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/api_platform/templates/project/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1486">
-              <caret line="50" column="44" selection-start-line="50" selection-start-column="40" selection-end-line="50" selection-end-column="44" />
+            <state relative-caret-position="1470">
+              <caret line="49" column="32" selection-start-line="49" selection-start-column="32" selection-end-line="49" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -80,16 +73,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/api_platform/templates/modules/edit.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="484">
-              <caret line="41" column="44" lean-forward="true" selection-start-line="41" selection-start-column="44" selection-end-line="41" selection-end-column="44" />
+            <state relative-caret-position="1230">
+              <caret line="41" column="44" selection-start-line="41" selection-start-column="44" selection-end-line="41" selection-end-column="44" />
               <folding>
                 <element signature="n#style#0;n#h6#0;n#form#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="e#2169#2175#0" expanded="true" />
-                <element signature="e#2175#2181#0" expanded="true" />
-                <element signature="e#2181#2187#0" expanded="true" />
-                <element signature="e#2187#2193#0" expanded="true" />
-                <element signature="e#2985#2991#0" expanded="true" />
-                <element signature="e#2991#2997#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -98,7 +85,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/api_platform/templates/project/edit.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="354">
+            <state relative-caret-position="870">
               <caret line="29" column="49" selection-start-line="29" selection-start-column="49" selection-end-line="29" selection-end-column="49" />
             </state>
           </provider>
@@ -107,8 +94,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/api_platform/templates/interface/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2256">
-              <caret line="94" column="24" lean-forward="true" selection-start-line="85" selection-start-column="19" selection-end-line="94" selection-end-column="24" />
+            <state relative-caret-position="2820">
+              <caret line="94" column="24" selection-start-line="85" selection-start-column="19" selection-end-line="94" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -116,7 +103,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/api_platform/templates/modules/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="733">
+            <state relative-caret-position="8970">
               <caret line="299" column="52" selection-start-line="299" selection-start-column="52" selection-end-line="299" selection-end-column="52" />
             </state>
           </provider>
@@ -125,8 +112,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/api_platform/templates/base.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="349">
-              <caret line="79" column="54" lean-forward="true" selection-start-line="79" selection-start-column="54" selection-end-line="79" selection-end-column="54" />
+            <state relative-caret-position="679">
+              <caret line="78" column="46" selection-start-line="78" selection-start-column="38" selection-end-line="78" selection-end-column="46" />
             </state>
           </provider>
         </entry>
@@ -147,9 +134,11 @@
       <find>btn_delete</find>
       <find>edit_project_list</find>
       <find>che1</find>
+      <find>module_obj</find>
     </findStrings>
     <replaceStrings>
       <replace>edit_module_list</replace>
+      <replace>case_obj</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -163,21 +152,22 @@
         <option value="$PROJECT_DIR$/api_platform/templates/project/index.html" />
         <option value="$PROJECT_DIR$/api_platform/templates/env/edit.html" />
         <option value="$PROJECT_DIR$/api_platform/templates/env/index.html" />
-        <option value="$PROJECT_DIR$/api_platform/api_platform/urls.py" />
         <option value="$PROJECT_DIR$/api_platform/ApiTest/models.py" />
         <option value="$PROJECT_DIR$/api_platform/templates/modules/edit.html" />
         <option value="$PROJECT_DIR$/api_platform/templates/modules/index.html" />
         <option value="$PROJECT_DIR$/api_platform/templates/testcase/index.html" />
         <option value="$PROJECT_DIR$/api_platform/templates/base.html" />
+        <option value="$PROJECT_DIR$/api_platform/api_platform/urls.py" />
         <option value="$PROJECT_DIR$/api_platform/ApiTest/views.py" />
+        <option value="$PROJECT_DIR$/api_platform/templates/api_case/index.html" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="1920" />
-    <option name="y" value="23" />
+    <option name="y" value="22" />
     <option name="width" value="1920" />
-    <option name="height" value="1057" />
+    <option name="height" value="1058" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -187,7 +177,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -230,7 +219,7 @@
               <item name="Automated_Test_Api" type="462c0819:PsiDirectoryNode" />
               <item name="api_platform" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="env" type="462c0819:PsiDirectoryNode" />
+              <item name="api_case" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Automated_Test_Api" type="b2602c69:ProjectViewProjectNode" />
@@ -260,17 +249,11 @@
               <item name="templates" type="462c0819:PsiDirectoryNode" />
               <item name="system" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="Automated_Test_Api" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Automated_Test_Api" type="462c0819:PsiDirectoryNode" />
-              <item name="api_platform" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="testcase" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -309,21 +292,22 @@
       <workItem from="1547125665805" duration="6274000" />
       <workItem from="1547349684422" duration="4590000" />
       <workItem from="1547434729209" duration="15240000" />
+      <workItem from="1547469978991" duration="5593000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="26104000" />
+    <option name="totallyTimeSpent" value="31697000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1920" y="23" width="1920" height="1057" extended-state="6" />
+    <frame x="1913" y="-7" width="2062" height="1126" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16828479" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17828283" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.3297062" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32944915" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
@@ -371,13 +355,6 @@
         <state relative-caret-position="-587" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/api_platform/api_platform/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="573">
-          <caret line="35" column="8" lean-forward="true" selection-start-line="35" selection-start-column="8" selection-end-line="35" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/api_platform/ApiTest/migrations/0001_initial.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2471" />
@@ -388,71 +365,58 @@
         <state relative-caret-position="-567" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/api_platform/templates/project/edit.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="354">
-          <caret line="29" column="49" selection-start-line="29" selection-start-column="49" selection-end-line="29" selection-end-column="49" />
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/api_platform/templates/api_case/edit.html">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/api_platform/templates/project/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1486">
-          <caret line="50" column="44" selection-start-line="50" selection-start-column="40" selection-end-line="50" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api_platform/templates/interface/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2256">
-          <caret line="94" column="24" lean-forward="true" selection-start-line="85" selection-start-column="19" selection-end-line="94" selection-end-column="24" />
+        <state relative-caret-position="1470">
+          <caret line="49" column="32" selection-start-line="49" selection-start-column="32" selection-end-line="49" selection-end-column="32" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/api_platform/templates/modules/edit.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="484">
-          <caret line="41" column="44" lean-forward="true" selection-start-line="41" selection-start-column="44" selection-end-line="41" selection-end-column="44" />
+        <state relative-caret-position="1230">
+          <caret line="41" column="44" selection-start-line="41" selection-start-column="44" selection-end-line="41" selection-end-column="44" />
           <folding>
             <element signature="n#style#0;n#h6#0;n#form#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="e#2169#2175#0" expanded="true" />
-            <element signature="e#2175#2181#0" expanded="true" />
-            <element signature="e#2181#2187#0" expanded="true" />
-            <element signature="e#2187#2193#0" expanded="true" />
-            <element signature="e#2985#2991#0" expanded="true" />
-            <element signature="e#2991#2997#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api_platform/templates/project/edit.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="870">
+          <caret line="29" column="49" selection-start-line="29" selection-start-column="49" selection-end-line="29" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api_platform/templates/interface/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2820">
+          <caret line="94" column="24" selection-start-line="85" selection-start-column="19" selection-end-line="94" selection-end-column="24" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/api_platform/templates/modules/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="733">
+        <state relative-caret-position="8970">
           <caret line="299" column="52" selection-start-line="299" selection-start-column="52" selection-end-line="299" selection-end-column="52" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/api_platform/templates/testcase/edit.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api_platform/templates/testcase/index.html">
+    <entry file="file://$PROJECT_DIR$/api_platform/api_platform/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="410">
-          <caret line="45" column="34" selection-start-line="45" selection-start-column="34" selection-end-line="45" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api_platform/templates/base.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="349">
-          <caret line="79" column="54" lean-forward="true" selection-start-line="79" selection-start-column="54" selection-end-line="79" selection-end-column="54" />
+        <state relative-caret-position="393">
+          <caret line="41" column="38" selection-start-line="41" selection-start-column="38" selection-end-line="41" selection-end-column="38" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/api_platform/ApiTest/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="75" column="11" selection-start-line="75" selection-start-column="4" selection-end-line="75" selection-end-column="11" />
+        <state relative-caret-position="425">
+          <caret line="61" column="11" selection-start-line="61" selection-start-column="4" selection-end-line="61" selection-end-column="11" />
           <folding>
             <element signature="e#0#51#0" expanded="true" />
           </folding>
@@ -461,11 +425,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/api_platform/ApiTest/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="648">
-          <caret line="340" lean-forward="true" selection-start-line="340" selection-end-line="340" />
+        <state relative-caret-position="896">
+          <caret line="321" column="17" selection-start-line="321" selection-start-column="8" selection-end-line="321" selection-end-column="17" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api_platform/templates/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="679">
+          <caret line="78" column="46" selection-start-line="78" selection-start-column="38" selection-end-line="78" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api_platform/templates/api_case/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="50" column="39" selection-start-line="50" selection-start-column="39" selection-end-line="50" selection-end-column="39" />
         </state>
       </provider>
     </entry>

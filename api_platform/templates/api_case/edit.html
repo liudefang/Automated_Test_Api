@@ -1,0 +1,143 @@
+{% extends "../base.html" %}
+{% block style %}
+
+    {{block.super}}
+    .form-horzontal {
+            margin-top:100px;
+        }
+    .panel {
+        margin-top: 50px;
+        width:300px;
+        height: 500px;
+        margin-left: 100px;
+    }
+    h6 {
+        margin-left:500px;
+    }
+{% endblock style%}
+{% block add %}
+    <div class="panel panel-info">
+        <div class="panel-heading">编辑模块信息</div>
+        <div class="panel-body">
+            <form class="form-horizontal" action="" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <div class="col-sm-10">
+                        <input type="hidden" name="b">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="modules_name" class="col-sm-2 control-label">模块名称:</label>
+                    <div class="col-sm-6">
+                        <input type="text" name="modules_name" value="{{ edit_module_list.modules_name }}" id="modules_name">
+                    </div>
+                </div>
+                <h6 style="color: red"><span class="error"></span></h6>
+                <div class="form-group">
+                    <label for="project_id" class="col-sm-2 control-label">所属项目:</label>
+                        <div class="col-sm-6">
+                            <select name="project_id" id="project_id" class="form-control">
+                                {% for project_obj in project_list %}
+                                <option value="{{project_obj.pk}}">{{project_obj.prj_name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                  </div>
+                <div class="form-group">
+                    <label for="testers" class="col-sm-2 control-label">测试人员:</label>
+                    <div class="col-sm-6">
+                        <input type="text" name="testers" value="{{ edit_module_list.testers }}" id="testers">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="developer" class="col-sm-2 control-label">开发人员:</label>
+                    <div class="col-sm-6">
+                        <input type="text" name="developer" value="{{ edit_module_list.developer }}" id="developer">
+                    </div>
+                </div>
+                 <div class="form-group">
+                      <label class="col-sm-2 control-label">项目状态:</label>
+                      <div>
+                          <label class="radio-inline">
+                              <input type="radio" name="status" id="optionsRadios1" value="1" > 有效
+
+                          </label>
+                          &nbsp;&nbsp;&nbsp;&nbsp;
+                          <label class="radio-inline">
+                              <input type="radio" name="status" id="optionsRadios2" value="0" > 无效
+                          </label>
+                      </div>
+
+                  </div>
+               <div class="form-group">
+                    <label for="modules_desc" class="col-sm-2 control-label">项目描述:</label>
+                    <div class="col-sm-6">
+                        <textarea name="modules_desc" id="modules_desc" cols="60" rows="5">{{ edit_module_list.modules_desc }}</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-10 col-md-offset-6">
+                        <a href="/module/" class="btn btn-primary ">取消</a>
+                        &nbsp;&nbsp;
+                        <input type="button" class="btn btn-info edit_mode_sub" value="提交">
+
+                    </div>
+                </div>
+
+            </form>
+        </div>
+        <script>
+
+     // 编辑项目
+    $(".edit_mode_sub").click(function () {
+        $.ajax({
+            url: "/module/{{edit_module_list.pk}}/edit/",
+            type: "post",
+            data: {
+
+                modules_name: $("#modules_name").val(),
+                modules_desc: $("#modules_desc").val(),
+                project_id: $("#project_id").val(),
+                testers: $("#testers").val(),
+                developer: $("#developer").val(),
+                status: $("*[name='status']:checked").val(),
+                csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val(),
+            },
+
+            success: function (data) {
+
+                if (data.status== 0) {
+                    // alert(111)
+                    toastr.success(data.msg);
+                    if (location.search){
+                            location.href = location.search.slice(6)
+                    }
+                    else {
+                        setTimeout(function () {
+                            location.href = "/module/"
+                        }, 2000)
+
+                    }
+
+                }
+                else {
+
+
+                    $(".error").text(data.msg);
+                    setTimeout(function () {
+                        $(".error").text("");
+
+                    }, 5000)
+                }
+
+
+
+            }
+
+        })
+    });
+
+        </script>
+    </div>
+{% endblock %}

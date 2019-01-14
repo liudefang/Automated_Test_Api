@@ -38,6 +38,11 @@ urlpatterns = [
     url(r'^add_module/$', views.add_module),
     re_path(r'^module/(\d+)/(edit|delete)', views.edit_module),
 
+    # 用例
+    url(r'^api_case/$', views.api_case),
+    url(r'^add_case/$', views.add_case),
+    re_path(r'^case/(\d+)/(edit|delete)', views.edit_case),
+
     # 环境
     url(r'^env/$', views.environment),
     url(r'^add_env/$', views.add_env),

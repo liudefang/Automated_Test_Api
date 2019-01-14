@@ -296,7 +296,7 @@ def edit_module(request, mod_id, option):
 
 
 @login_required
-def test_case(request):
+def api_case(request):
     """
     模块
     :param request:
@@ -306,13 +306,13 @@ def test_case(request):
     project_list = Project.objects.filter().all()
     case_list = TestCase.objects.filter().all()
 
-    return render(request, "testcase/index.html", {"case_list": case_list, "module_list": module_list, "project_list": project_list})
+    return render(request, "api_case/index.html", {"case_list": case_list, "module_list": module_list, "project_list": project_list})
 
 
 @login_required
 def add_case(request):
     """
-    新增模块
+    新增用例
     :param request:
     :return:
     """
@@ -325,11 +325,13 @@ def add_case(request):
         api = request.POST.get("api")
         version = request.POST.get("version")
         status = request.POST.get("status")
+        project_id = request.POST.get("project_id")
 
-        if len(case_name) != 0 and case_name != str(Modules.objects.filter(case_name=case_name).first()):
-            Modules.objects.create(case_name=case_name, case_desc=case_desc, modules_id=modules_id,
-                                   api=api, version=version, status=status)
+        if len(case_name) != 0 and case_name != str(TestCase.objects.filter(case_name=case_name).first()):
+            TestCase.objects.create(case_name=case_name, case_desc=case_desc, modules_id=modules_id,
+                                    api=api, version=version, status=status)
 
+            Modules.objects.filter(id=modules_id).update(project_id=project_id)
             response = {"status": 0, "msg": "用例添加成功!"}
 
         elif len(case_name) == 0:
@@ -339,13 +341,13 @@ def add_case(request):
 
         return JsonResponse(response)
 
-    return render(request, "testcase/index.html")
+    return render(request, "api_case/index.html")
 
 
 @login_required
-def edit_module(request, mod_id, option):
+def edit_case(request, mod_id, option):
     """
-    编辑模块
+    编辑用例
     :param request:
     :return:
     """
@@ -382,7 +384,7 @@ def edit_module(request, mod_id, option):
 
             return JsonResponse(response)
         project_list = Project.objects.filter().all()
-        return render(request, "modules/edit.html", {"edit_module_list": edit_module_list, "project_list": project_list})
+        return render(request, "api_case/edit.html", {"edit_module_list": edit_module_list, "project_list": project_list})
     else:
         return render(request, "not_found.html")
 
@@ -524,7 +526,6 @@ def add_api(request):
 
             response = {"status": 0, "msg": "测试接口添加成功!"}
 
-            # return redirect("/project")
         elif len(api_name) == 0:
             response = {"status": 1, "msg": "接口名称不能为空!"}
         else:

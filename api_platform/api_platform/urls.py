@@ -33,6 +33,11 @@ urlpatterns = [
     re_path(r'project/(\d+)/(edit|delete)', views.edit_project),
     # url(r'^del_project/$', views.del_project),
 
+    # 模块
+    url(r'^module/$', views.module),
+    url(r'^add_module/$', views.add_module),
+    re_path(r'^module/(\d+)/(edit|delete)', views.edit_module),
+
     # 环境
     url(r'^env/$', views.environment),
     url(r'^add_env/$', views.add_env),

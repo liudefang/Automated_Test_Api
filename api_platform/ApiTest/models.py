@@ -62,7 +62,7 @@ class Modules(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)      # 关联项目表id
     modules_name = models.CharField('模块名称', max_length=32)
     testers = models.CharField('测试负责人', max_length=256)  # 项目负责人
-    devloper = models.CharField('开发负责人', max_length=256)
+    developer = models.CharField('开发负责人', max_length=256)
     status = models.BooleanField()
     modules_desc = models.CharField('模块描述', max_length=256)
     create_time = models.DateTimeField('创建时间', auto_now=True)  # 创建时间

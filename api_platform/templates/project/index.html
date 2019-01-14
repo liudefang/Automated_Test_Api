@@ -2,11 +2,6 @@
 
 {% block add %}
 
-
-<div id="myAlert1" class="alert alert-warning" style="display: none;">
-    <a href="#" class="close" data-dismiss="alert">&times;</a>
-    <strong>警告!</strong>请勾选一条数据
-</div>
 <!--按钮-->
 <div class="btn-toolbar" role="toolbar">
   <div class="btn-group" style="padding-top: 20px;left: 50px">
@@ -14,7 +9,7 @@
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 添加项目
     </button>
 
-    <button id="edit_btn" class="btn btn-primary" data-toggle="modal" data-target="#">
+    <button id="edit_prj" class="btn btn-primary" data-toggle="modal" data-target="#">
         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 修改
     </button>
       <button id="btn_delete" type="onclick" class="btn btn-danger ">
@@ -91,7 +86,7 @@
                   {% csrf_token %}
                   <div class="form-group">
                     <label for="prj_name">项目名称</label>
-                    <input type="text" name="prj_name" id="prj_name" class="form-control" placeholder="输入项目名称">
+                    <input type="text" name="prj_name" id="prj_name" class="ipt form-control" placeholder="输入项目名称">
                   </div>
                   <h6 style="color: red"><span class="error"></span></h6>
                   <div class="form-group">
@@ -134,7 +129,7 @@
     </div>
 
 <!-- 编辑模态框 -->
-    <div class="modal fade" id="editMyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <!--<div class="modal fade" id="editMyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -186,6 +181,6 @@
 
         </div>
       </div>
-    </div>
+    </div>-->
 
 {% endblock %}

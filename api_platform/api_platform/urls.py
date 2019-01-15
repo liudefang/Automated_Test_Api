@@ -41,18 +41,19 @@ urlpatterns = [
     # 用例
     url(r'^api_case/$', views.api_case),
     url(r'^add_case/$', views.add_case),
-    re_path(r'^case/(\d+)/(edit|delete)', views.edit_case),
+    re_path(r'^api_case/(\d+)/(edit|delete)', views.edit_case),
+
+    # 用例步骤
+    url(r'^api_step/$', views.api_step),
+    url(r'^add_step/$', views.add_step),
+    re_path(r'^api_step/(\d+)/(edit|delete)', views.edit_step),
 
     # 环境
     url(r'^env/$', views.environment),
     url(r'^add_env/$', views.add_env),
     re_path(r'env/(\d+)/(edit|delete)', views.edit_env),
 
-    # 接口
-    url(r'^interface/$', views.interface),
-    url(r'^add_api/$', views.add_api),
-    re_path(r'interface/(\d+)/(edit|delete)', views.edit_api),
-
+    
     # 签名方式
     url(r'^sign/$', views.sign),
     url(r'^add_sign/$', views.add_sign),

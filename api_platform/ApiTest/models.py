@@ -80,6 +80,7 @@ class TestCase(models.Model):
     case_weights = models.CharField('用例优先级', max_length=32)
     version = models.CharField('接口版本', max_length=32)
     modules = models.ForeignKey('Modules', on_delete=models.CASCADE)
+    project = models.ForeignKey('Project', on_delete=models.CASCADE)
     case_desc = models.CharField('用例描述', max_length=256)
     create_time = models.DateTimeField('创建时间', auto_now=True)  # 创建时间
     update_time = models.DateTimeField('更新时间', auto_now=True)

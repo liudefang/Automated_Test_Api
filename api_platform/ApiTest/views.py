@@ -294,11 +294,10 @@ def edit_module(request, mod_id, option):
         return render(request, "not_found.html")
 
 
-
 @login_required
 def api_case(request):
     """
-    模块
+    接口用例
     :param request:
     :return:
     """
@@ -329,9 +328,8 @@ def add_case(request):
 
         if len(case_name) != 0 and case_name != str(TestCase.objects.filter(case_name=case_name).first()):
             TestCase.objects.create(case_name=case_name, case_desc=case_desc, modules_id=modules_id,
-                                    api=api, version=version, status=status)
+                                    api=api, version=version, status=status, project_id=project_id)
 
-            Modules.objects.filter(id=modules_id).update(project_id=project_id)
             response = {"status": 0, "msg": "用例添加成功!"}
 
         elif len(case_name) == 0:
@@ -345,46 +343,154 @@ def add_case(request):
 
 
 @login_required
-def edit_case(request, mod_id, option):
+def edit_case(request, case_id, option):
     """
     编辑用例
     :param request:
     :return:
     """
-    print("prj_id:", mod_id)
-    edit_module_list = Modules.objects.filter(id=mod_id).first()
-    if edit_module_list and option == "delete":
+    print("prj_id:", case_id)
+    edit_case_list = TestCase.objects.filter(case_id=case_id).first()
+    if edit_case_list and option == "delete":
         try:
-            edit_module_list.delete()
+            edit_case_list.delete()
             reg = {'status': 0, 'msg': '删除成功!'}
         except Exception as e:
             reg = {'status': 1, 'msg': '删除失败!'}
 
         return HttpResponse(json.dumps(reg))
-    elif edit_module_list and option == "edit":
+    elif edit_case_list and option == "edit":
 
         if request.method == "POST":
 
-            modules_name = request.POST.get("modules_name")
-            modules_desc = request.POST.get("modules_desc")
-            project_id = request.POST.get("project_id")
-            testers = request.POST.get("testers")
-            developer = request.POST.get("developer")
+            case_name = request.POST.get("case_name")
+            case_desc = request.POST.get("case_desc")
+            modules_id = request.POST.get("modules_id")
+            api = request.POST.get("api")
+            version = request.POST.get("version")
             status = request.POST.get("status")
+            project_id = request.POST.get("project_id")
 
-            if len(modules_name) != 0:
+            if len(case_name) != 0:
 
-                Modules.objects.filter(id=mod_id).update(modules_name=modules_name, modules_desc=modules_desc, testers=testers,
-                                                         developer=developer, project_id=project_id, status=status)
+                TestCase.objects.filter(case_id=case_id).update(case_name=case_name, case_desc=case_desc,
+                                                                modules_id=modules_id, api=api, version=version,
+                                                                status=status, project_id=project_id)
 
                 response = {"status": 0, "msg": "编辑成功!"}
 
             else:
-                response = {"status": 1, "msg": "模块名称不能为空!"}
+                response = {"status": 1, "msg": "用例名称不能为空!"}
 
             return JsonResponse(response)
         project_list = Project.objects.filter().all()
-        return render(request, "api_case/edit.html", {"edit_module_list": edit_module_list, "project_list": project_list})
+        module_list = Modules.objects.filter().all()
+
+        return render(request, "api_case/edit.html", {"edit_case_list": edit_case_list, "project_list": project_list,
+                                                      "module_list": module_list})
+    else:
+        return render(request, "not_found.html")
+
+
+@login_required
+def api_step(request):
+    """
+    项目
+    :param request:
+    :return:
+    """
+    api_list = ApiStep.objects.filter().all()
+    case_list = TestCase.objects.filter().all()
+
+    return render(request, "api_step/index.html", {"case_list": case_list, "api_list": api_list})
+
+
+@login_required
+def add_step(request):
+    """
+    新增项目
+    :param request:
+    :return:
+    """
+
+    if request.method == "POST":
+
+        api_name = request.POST.get("api_name")
+        url = request.POST.get("url")
+        method = request.POST.get("method")
+        data_type = request.POST.get("data_type")
+        project_id = request.POST.get("project_id")
+        is_sign = request.POST.get("is_sign")
+        api_desc = request.POST.get("api_desc")
+        request_header_param = request.POST.get("request_header_param")
+        request_body_param = request.POST.get("request_body_param")
+        response_header_param = request.POST.get("response_header_param")
+        response_body_param = request.POST.get("response_body_param")
+        private_key = request.POST.get("private_key")
+
+        print("project_id:", project_id)
+
+        if len(api_name) != 0 and api_name != str(ApiStep.objects.filter(api_name=api_name).first()):
+
+            ApiStep.objects.create(api_name=api_name, url=url, method=method, data_type=data_type,
+                                   project_id=project_id, is_sign=is_sign, api_desc=api_desc, request_header_param=request_header_param,
+                                   request_body_param=request_body_param, response_header_param=response_header_param,
+                                   response_body_param=response_body_param, private_key=private_key)
+
+            response = {"status": 0, "msg": "测试接口添加成功!"}
+
+        elif len(api_name) == 0:
+            response = {"status": 1, "msg": "接口名称不能为空!"}
+        else:
+            response = {"status": 2, "msg": "接口名称已存在!"}
+
+        return JsonResponse(response)
+
+    return render(request, "env/index.html")
+
+
+@login_required
+def edit_step(request, env_id, option):
+    """
+    编辑项目
+    :param request:
+    :return:
+    """
+
+    edit_env_list = Environment.objects.filter(env_id=env_id).first()
+    if edit_env_list and option == "delete":
+        try:
+            edit_env_list.delete()
+            reg = {'status': 0, 'msg': '删除成功!'}
+        except Exception as e:
+            reg = {'status': 1, 'msg': '删除失败!'}
+
+        return HttpResponse(json.dumps(reg))
+    elif edit_env_list and option == "edit":
+
+        if request.method == "POST":
+
+            evn_name = request.POST.get("evn_name")
+            evn_desc = request.POST.get("evn_desc")
+            url = request.POST.get("url")
+            project_id = request.POST.get("project_id")
+            private_key = request.POST.get("private_key")
+
+            if len(evn_name) != 0:
+
+                Environment.objects.filter(env_id=env_id).update(evn_name=evn_name, evn_desc=evn_desc, url=url, project_id=project_id, private_key=private_key)
+
+                response = {"status": 0, "msg": "编辑成功!"}
+
+                # return redirect("/project")
+            else:
+                response = {"status": 1, "msg": "环境名称不能为空!"}
+
+            return JsonResponse(response)
+
+        project_list = Project.objects.filter().all()
+
+        return render(request, "env/edit.html", {"edit_env_list": edit_env_list, "project_list": project_list})
     else:
         return render(request, "not_found.html")
 
@@ -479,107 +585,6 @@ def edit_env(request, env_id, option):
         return render(request, "not_found.html")
 
 
-@login_required
-def interface(request):
-    """
-    项目
-    :param request:
-    :return:
-    """
-    api_list = ApiStep.objects.filter().all()
-    project_list = Project.objects.filter().all()
-
-    return render(request, "interface/index.html", {"project_list": project_list, "api_list": api_list})
-
-
-@login_required
-def add_api(request):
-    """
-    新增项目
-    :param request:
-    :return:
-    """
-
-    if request.method == "POST":
-
-        api_name = request.POST.get("api_name")
-        url = request.POST.get("url")
-        method = request.POST.get("method")
-        data_type = request.POST.get("data_type")
-        project_id = request.POST.get("project_id")
-        is_sign = request.POST.get("is_sign")
-        api_desc = request.POST.get("api_desc")
-        request_header_param = request.POST.get("request_header_param")
-        request_body_param = request.POST.get("request_body_param")
-        response_header_param = request.POST.get("response_header_param")
-        response_body_param = request.POST.get("response_body_param")
-        private_key = request.POST.get("private_key")
-
-        print("project_id:", project_id)
-
-        if len(api_name) != 0 and api_name != str(ApiStep.objects.filter(api_name=api_name).first()):
-
-            ApiStep.objects.create(api_name=api_name, url=url, method=method, data_type=data_type,
-                                   project_id=project_id, is_sign=is_sign, api_desc=api_desc, request_header_param=request_header_param,
-                                   request_body_param=request_body_param, response_header_param=response_header_param,
-                                   response_body_param=response_body_param, private_key=private_key)
-
-            response = {"status": 0, "msg": "测试接口添加成功!"}
-
-        elif len(api_name) == 0:
-            response = {"status": 1, "msg": "接口名称不能为空!"}
-        else:
-            response = {"status": 2, "msg": "接口名称已存在!"}
-
-        return JsonResponse(response)
-
-    return render(request, "env/index.html")
-
-
-@login_required
-def edit_api(request, env_id, option):
-    """
-    编辑项目
-    :param request:
-    :return:
-    """
-
-    edit_env_list = Environment.objects.filter(env_id=env_id).first()
-    if edit_env_list and option == "delete":
-        try:
-            edit_env_list.delete()
-            reg = {'status': 0, 'msg': '删除成功!'}
-        except Exception as e:
-            reg = {'status': 1, 'msg': '删除失败!'}
-
-        return HttpResponse(json.dumps(reg))
-    elif edit_env_list and option == "edit":
-
-        if request.method == "POST":
-
-            evn_name = request.POST.get("evn_name")
-            evn_desc = request.POST.get("evn_desc")
-            url = request.POST.get("url")
-            project_id = request.POST.get("project_id")
-            private_key = request.POST.get("private_key")
-
-            if len(evn_name) != 0:
-
-                Environment.objects.filter(env_id=env_id).update(evn_name=evn_name, evn_desc=evn_desc, url=url, project_id=project_id, private_key=private_key)
-
-                response = {"status": 0, "msg": "编辑成功!"}
-
-                # return redirect("/project")
-            else:
-                response = {"status": 1, "msg": "环境名称不能为空!"}
-
-            return JsonResponse(response)
-
-        project_list = Project.objects.filter().all()
-
-        return render(request, "env/edit.html", {"edit_env_list": edit_env_list, "project_list": project_list})
-    else:
-        return render(request, "not_found.html")
 
 
 @login_required

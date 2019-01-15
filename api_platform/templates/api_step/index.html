@@ -5,14 +5,14 @@
 <!--按钮-->
 <div class="btn-toolbar" role="toolbar">
   <div class="btn-group" style="padding-top: 20px;left: 50px">
-    <button id="add_case" class="btn btn-primary " data-toggle="modal" data-target="#addmyModal">
+    <button id="add_step" class="btn btn-primary " data-toggle="modal" data-target="#addmyModal">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 添加接口用例步骤
     </button>
 
-    <button id="edit_case" class="btn btn-primary" data-toggle="modal" data-target="#">
+    <button id="edit_step" class="btn btn-primary" data-toggle="modal" data-target="#">
         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 修改
     </button>
-      <button id="del_case" type="onclick" class="btn btn-danger ">
+      <button id="del_step" type="onclick" class="btn btn-danger ">
             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 删除
         </button>
     <!--<form id="del_btn" method="POST" action="/del_project/" style="display: inline;">
@@ -37,12 +37,14 @@
                         <tr>
                             <th>选中</th>
                             <th>步骤id</th>
+                            <th>步骤名称</th>
                             <th>用例名称</th>
                             <th>请求方式</th>
                             <th>消息头</th>
                             <th>请求参数</th>
                             <th>请求文件</th>
                             <th>断言</th>
+                            <th style="display:None">接口依赖</th>
                             <th>优先级</th>
                             <th>步骤描述</th>
                             <th>状态</th>
@@ -50,19 +52,23 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for case_obj in case_list %}
+                        {% for step_obj in api_list %}
 
                                 <tr>
                                     <td id="che1"><input type="checkbox"/></td>
-                                    <td>{{ case_obj.case_id}}</td>
-                                    <td>{{ case_obj.case_name }}</td>
-                                    <td>{{ case_obj.modules }}</td>
-                                    <td>{{ case_obj.project }}</td>
-                                    <td>{{ case_obj.api }}</td>
-                                    <td>{{ case_obj.version }}</td>
-                                    <td>{{ case_obj.status }}</td>
-                                    <td>{{ case_obj.case_desc }}</td>
-                                    <td>{{ case_obj.create_time|date:'Y-m-d' }}</td>
+                                    <td>{{ step_obj.api_id}}</td>
+                                    <td>{{ step_obj.step_name }}</td>
+                                    <td>{{ step_obj.case }}</td>
+                                    <td>{{ step_obj.method }}</td>
+                                    <td>{{ step_obj.headers }}</td>
+                                    <td>{{ step_obj.params }}</td>
+                                    <td>{{ step_obj.files }}</td>
+                                    <td>{{ step_obj.assert_response }}</td>
+                                    <td style="display:None">{{ step.api_dependency }}</td>
+                                    <td>{{ step_obj.step_level }}</td>
+                                    <td>{{ step_obj.step_desc }}</td>
+                                    <td>{{ step_obj.status }}</td>
+                                    <td>{{ step_obj.create_time|date:'Y-m-d' }}</td>
 
                                 </tr>
 
@@ -79,42 +85,45 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">添加用例</h4>
+            <h4 class="modal-title" id="myModalLabel">添加用例步骤</h4>
           </div>
           <div class="modal-body">
               <form role="form">
                   {% csrf_token %}
                   <div class="form-group">
-                    <label for="case_name">用例名称</label>
-                    <input type="text" name="case_name" id="case_name" class="ipt form-control" placeholder="输入用例名称">
+                    <label for="step_name">步骤名称</label>
+                    <input type="text" name="step_name" id="step_name" class="ipt form-control" placeholder="输入步骤名称">
                   </div>
                   <h6 style="color: red"><span class="error"></span></h6>
                   <div class="form-group">
-                    <label for="modules_id">模块名称</label>
+                    <label for="case_id">用例名称</label>
 
-                        <select name="modules_id" id="modules_id" class="form-control">
-                            {% for module_obj in module_list %}
-                            <option value="{{module_obj.pk}}">{{module_obj.modules_name}}</option>
+                        <select name="case_id" id="case_id" class="form-control">
+                            {% for case_obj in case_list %}
+                            <option value="{{case_obj.pk}}">{{case_obj.case_name}}</option>
                             {% endfor %}
                         </select>
 
                   </div>
                   <div class="form-group">
-                    <label for="project_id">所属项目</label>
-
-                        <select name="project_id" id="project_id" class="form-control">
-                            {% for project_obj in project_list %}
-                            <option value="{{project_obj.pk}}">{{project_obj.prj_name}}</option>
-                            {% endfor %}
-                        </select>
+                    <label >请求方式</label>
+                      <br>
+                      <div class="btn-group">
+                          <button id="add_get" type="button" name="method" class="btn btn-primary">get</button>
+                          <button id="add_post_form" type="button" name="method" class="btn btn-primary">post_form</button>
+                          <button id="add_post_body" type="button" name="method" class="btn btn-primary">post_body</button>
+                          <button id="add_post_file" type="button" name="method" class="btn btn-primary">post_file</button>
+                          <input id="method" type="text" name="method" style="display:None" required/>
+                      </div>
 
                   </div>
                   <div class="form-group">
-                    <label for="api">api地址</label>
-                    <input type="text" name="api" id="api" class="form-control" placeholder="输入api地址">
-                  </div>
-                  <div class="form-group">
-                    <label for="version">版本</label>
+                    <label for="headers">消息头</label>
+                      <ul id="add_headers" style="list-style-type:none">
+                          <li>
+                              <
+                          </li>
+                      </ul>
                     <input type="text" name="version" id="version" class="form-control" placeholder="输入项目版本">
                   </div>
                   <div class="form-group">

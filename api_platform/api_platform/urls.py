@@ -53,7 +53,7 @@ urlpatterns = [
     url(r'^add_env/$', views.add_env),
     re_path(r'env/(\d+)/(edit|delete)', views.edit_env),
 
-    
+
     # 签名方式
     url(r'^sign/$', views.sign),
     url(r'^add_sign/$', views.add_sign),

@@ -98,7 +98,7 @@
             <h4 class="modal-title" id="myModalLabel">添加用例步骤</h4>
           </div>
           <div class="modal-body">
-              <form role="form">
+              <form id="add" role="form" method="POST" action="/add_step/">
                   {% csrf_token %}
                   <div class="form-group">
                     <label for="step_name">步骤名称</label>
@@ -167,7 +167,7 @@
                   </div>
 
                   <div class="form-group">
-                      <label for="assert">断言</label>
+                      <label for="asserts">断言</label>
                       <div id="add_div_big" class="add_open_big">
                           <div id="add_div_small" class="add_open_small"></div>
                       </div>
@@ -191,7 +191,7 @@
                               <input type="text" class="add_api_dependency" placeholder="变量名" />&nbsp;&nbsp;&nbsp;<input type="text" class="add_api_dependency" placeholder="路径" />
                                 <input id="add_api_dependency" type="button" class="btn btn-primary"  style="height:24px;width:24px;text-align:center; margin:0px; padding:0px;" value="+">
                                 <input id="del_api_dependency" type="button" class="btn btn-primary"  style="height:24px;width:24px;text-align:center; margin:0px; padding:0px;" value="-">
-                                <input id="add_merge_dependency" type="text" style="display:None" name="dependency"/>
+                                <input id="add_merge_api_dependency" type="text" style="display:None" name="dependency"/>
                           </li>
                       </ul>
                   </div>
@@ -251,13 +251,13 @@
 
     }
     $(function(){
-        edit();
+        //edit();
         add();
-        del();
-        paging();
-        search();
+        //del();
+        //paging();
+        //search();
         display();
-        funisRepeat();
+        //funisRepeat();
     });
     // 搜索或者搜索分页后去根据select返回的value去确定第几个option被选中
     function get_option(elements, value) {
@@ -277,23 +277,23 @@
         $(add_btn).click(function () {
             if(add_class !="add_assert" && add_class !="edit_assert" && add_class !="add_api_dependency_step" && add_class !="edit_api_dependency_step")
             {
-                $(ul_id).append("<li><input type=\"text\" class="+add_class+" placeholder=\""+placeholder_name+"\" /><input type=\"text\" class="+add_class+" placeholder=\""+placeholder_value+"\" /></li>")
+                $(ul_id).append("<li><input type=\"text\" class="+add_class+" placeholder=\""+placeholder_name+"\" />&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"text\" class="+add_class+" placeholder=\""+placeholder_value+"\" /></li>")
             }
             // 断言增行
-            else if(add_class == "add_assert"){
-                 $(ul_id).append("<li><input   type=\"text\" class="+add_class+" placeholder=\""+placeholder_name+"\"  /><select class=\"add_assert_Way\" ><option value=\"assertEqual\">等于</option><option value=\"assertNotEqual\">不等于</option><option value=\"assertRegexpMatches\">包含</option><option value=\"assertNotRegexpMatches\">不包含</option><option value=\"assertGreater\">大于</option><option value=\"assertGreaterEqual\">大于等于</option><option value=\"assertLess\">小于</option><option value=\"assertLessEqual\">小于等于</option><option value=\"assertIn\">在列表中</option><option value=\"assertNotIn\">不在列表中</option></select><input   type=\"text\" class="+add_class+" placeholder=\""+placeholder_value+"\" /></li>");
-                }
-                else if(add_class=="edit_assert"){
-                    $(ul_id).append("<li><input   type=\"text\" class="+add_class+" placeholder=\""+placeholder_name+"\"  /><select class=\"edit_assert_Way\" ><option value=\"assertEqual\">等于</option><option value=\"assertNotEqual\">不等于</option><option value=\"assertRegexpMatches\">包含</option><option value=\"assertNotRegexpMatches\">不包含</option><option value=\"assertGreater\">大于</option><option value=\"assertGreaterEqual\">大于等于</option><option value=\"assertLess\">小于</option><option value=\"assertLessEqual\">小于等于</option><option value=\"assertIn\">在列表中</option><option value=\"assertNotIn\">不在列表中</option></select><input   type=\"text\" class="+add_class+" placeholder=\""+placeholder_value+"\" /></li>");
-                }
+            else if(add_class=="add_assert"){
+                 $(ul_id).append("<li><input type=\"text\" class="+add_class+" placeholder=\""+placeholder_name+"\"  /><select class=\"add_assert_Way\" >&nbsp;&nbsp;&nbsp;&nbsp;<option value=\"assertEqual\">等于</option><option value=\"assertNotEqual\">不等于</option><option value=\"assertRegexpMatches\">包含</option><option value=\"assertNotRegexpMatches\">不包含</option><option value=\"assertGreater\">大于</option><option value=\"assertGreaterEqual\">大于等于</option><option value=\"assertLess\">小于</option><option value=\"assertLessEqual\">小于等于</option><option value=\"assertIn\">在列表中</option><option value=\"assertNotIn\">不在列表中</option></select>&nbsp;&nbsp;&nbsp;&nbsp;<input   type=\"text\" class="+add_class+" placeholder=\""+placeholder_value+"\" /></li>");
+            }
+            else if(add_class=="edit_assert"){
+                $(ul_id).append("<li><input   type=\"text\" class="+add_class+" placeholder=\""+placeholder_name+"\"  /><select class=\"edit_assert_Way\" ><option value=\"assertEqual\">等于</option><option value=\"assertNotEqual\">不等于</option><option value=\"assertRegexpMatches\">包含</option><option value=\"assertNotRegexpMatches\">不包含</option><option value=\"assertGreater\">大于</option><option value=\"assertGreaterEqual\">大于等于</option><option value=\"assertLess\">小于</option><option value=\"assertLessEqual\">小于等于</option><option value=\"assertIn\">在列表中</option><option value=\"assertNotIn\">不在列表中</option></select><input   type=\"text\" class="+add_class+" placeholder=\""+placeholder_value+"\" /></li>");
+            }
 
             // 接口依赖增行
             else if(add_class=="add_api_dependency"){
                     $(ul_id).append("<li><select class=\"add_api_dependency_step\">{% for step in step_names %}<option>{{ step }} </option>{% endfor %}</select><br/><input   type=\"text\" class="+add_class+" placeholder=\""+placeholder_name+"\"  /><input   type=\"text\" class="+add_class+" placeholder=\""+placeholder_value+"\" /></li>");
-                }
-                else if(add_class=="edit_api_dependency"){
-                    $(ul_id).append("<li><select class=\"edit_api_dependency_step\">{% for step in step_names %}<option>{{ step }} </option>{% endfor %}</select><br/><input   type=\"text\" class="+add_class+" placeholder=\""+placeholder_name+"\"  /><input   type=\"text\" class="+add_class+" placeholder=\""+placeholder_value+"\" /></li>");
-                }
+            }
+            else if(add_class=="edit_api_dependency"){
+                $(ul_id).append("<li><select class=\"edit_api_dependency_step\">{% for step in step_names %}<option>{{ step }} </option>{% endfor %}</select><br/><input   type=\"text\" class="+add_class+" placeholder=\""+placeholder_name+"\"  /><input   type=\"text\" class="+add_class+" placeholder=\""+placeholder_value+"\" /></li>");
+            }
         });
         $(del_btn).click(function () {
             if($(ul_id+" li").length>1){
@@ -315,7 +315,7 @@
                     $(btns[i]).attr("class","select_btn btn btn-primary");
                 }
                 else {
-                    $(btns[i]).attr("class","un_select_btn btn btn-primary")
+                    $(btns[i]).attr("class","un_select_btn btn btn-default")
                 }
             }
             // method的输入框填写方式
@@ -337,12 +337,30 @@
             else {
                 $("#add_div_big").attr("class","add_open_big");
                 $("#add_div_small").attr("class","add_open_small");
-                $("#add_assert_response_ul").attr("style","list-style-type:none;display:None");
+                $("#add_assert_response_ul").attr("style","list-style-type:none;display:block");
                 // 添加断言属性
                 $("#add_merge_asserts").attr("name","asserts");
             }
 
         });
+
+        //是否要使用接口依赖
+            $("#add_div_big_api_dependency").click(function(){
+                if ($("#add_div_big_api_dependency").attr("class")=="add_open_big"){
+                    $("#add_div_big_api_dependency").attr("class","add_close_big");
+                    $("#add_div_small_api_dependency").attr("class","add_close_small");
+                    $("#add_api_dependency_ul").attr("style","display:None");
+                    //删除断言属性
+                    $("#add_merge_api_dependency").removeAttr("name");
+                }
+                else{
+                    $("#add_div_big_api_dependency").attr("class","add_open_big");
+                    $("#add_div_small_api_dependency").attr("class","add_open_small");
+                    $("#add_api_dependency_ul").attr("style","list-style-type: none;display:block");
+                    //添加断言属性
+                    $("#add_merge_api_dependency").attr("name","asserts");
+                }
+            });
 
         $("#add_step").click(function () {
             $("#myAlert").css("display","none");
@@ -374,18 +392,97 @@
         var placeholder_name_assert_response="断言名";
         var placeholder_value_assert_response="值";
         var add_class_assert="add_assert";
-        add_line(add_btn_assert_response,del_btn_assert_response,ul_id_assert_response,placeholder_name_assert_response,placeholder_value_assert_response,add_class_assert)
+        add_line(add_btn_assert_response,del_btn_assert_response,ul_id_assert_response,placeholder_name_assert_response,placeholder_value_assert_response,add_class_assert);
         //接口依赖增加行
-        add_line("#add_api_dependency","#del_api_dependency","#add_api_dependency_ul","变量名","路径","add_api_dependency")
+        add_line("#add_api_dependency","#del_api_dependency","#add_api_dependency_ul","变量名","路径","add_api_dependency");
         //文件增行
         $("#add_files").click(function(){
-            $("#add_files_ul").append("<li><input   type=\"text\"  placeholder=\"文件名称\"  /><input   type=\"text\"  placeholder=\"参数名称\" /><input   type=\"text\"  placeholder=\"MiME类型\" style=\"width: 70px\"/></li>");
+            $("#add_files_ul").append("<li><input   type=\"text\"  placeholder=\"文件名称\"  />&nbsp;&nbsp;&nbsp;&nbsp;<input   type=\"text\"  placeholder=\"参数名称\" />&nbsp;&nbsp;&nbsp;&nbsp;<input   type=\"text\"  placeholder=\"MiME类型\" style=\"width: 70px\"/></li>");
         });
         $("#del_files").click(function(){
                 if ($("#add_files_ul li").length>1){
                     $("#add_files_ul li:last").remove();
                 }
             });
+        // get方式
+        var btn="#add_get";
+        var elements=["#add_params_div","#add_params_body_div","add_files_div"];
+        var display_list=["display:block","display:None","display:None"];
+        var btns=["#add_get","#add_post_form","#add_post_body","#add_post_file"];
+        control_display(btns,btn,elements,display_list,"#method");
+        //post_form方式
+        btn="#add_post_form";
+
+        control_display(btns,btn,elements,display_list,"#method");
+        //post_body方式
+        btn="#add_post_body";
+        elements=["#add_params_div","#add_params_body_div","#add_files_div"];
+        display_list=["#display:None","display:block","display:None"];
+        control_display(btns,btn,elements,display_list,"#method");
+        //post_file方式
+        btn="#add_post_file";
+        elements=["#add_params_div","#add_params_body_div","#add_files_div"];
+        display_list=["#display:None","display:block","display:None"];
+        control_display(btns,btn,elements,display_list,"#method");
+
+        // headers,params和断言数据合并转成json字符串
+        function merge_data(btn,select_input) {
+            var elements=$(select_input);
+            var obj={};
+            if(select_input !=".add_assert" && select_input !=".add_api_dependency"){
+                for(var i=0;i<elements.length;i+=2){
+                    if($(elements[i].val())){
+                        obj[$(elements[i]).val()]=$(elements[i+1]).val();
+                    }
+                }
+            }
+            //断言时候数据特殊处理
+            else if(select_input==".add_assert"){
+                var assert_way_elements=$(".add_assert_Way");
+                j=0;
+                for(var i=0;i<elements.length;i+=2){
+                    if($(elements[i]).val()){
+                        var assert_way_obj={};
+                        assert_way_obj[$(assert_way_elements[j]).val()]=$(elements[i+1]).val();
+                        j+=1;
+                        obj[$(elements[i]).val()]=assert_way_obj;
+                    }
+                }
+            }
+            else if(select_input==".add_api_dependency"){
+                var api_dependency_step_elements=$(".add_api_dependency_step");
+                j=0;
+                for(var i=0;i<elements.length;i+=2){
+                    if($(elements[i]).val()){
+                        var api_dependency_step_obj={};
+                        api_dependency_step_obj[$(api_dependency_step_elements[j]).val()]=$(elements[i+1]).val();
+                        j+=1;
+                        obj[$(elements[i]).val()]=api_dependency_step_obj;
+                    }
+                }
+            }
+            objstring=JSON.stringify(obj);
+            $(btn).val(objstring);
+
+            //提交的时候先把数据合并
+            $("#add_step_sub").click(function () {
+                //步骤名不能为空
+                if($("#step_name").val() !=""){
+                    //把信息头的数据合并放到input 的id为add_merge_headers里
+                    merge_data("#add_merge_headers",".add_headers");
+                    //把参数的数据合并放到input 的id为add_merge_params里
+                    merge_data("#add_merger_params",".add_params");
+                    //把断言的数据合并放到input 的id为add_headers里
+                    merge_data("#add_merge_asserts", ".add_assert");
+                    //把接口依赖的数据合并放到input 的id为add_merge_api_dependency里
+                    merge_data("#add_merge_api_dependency",".add_api_dependency");
+                    $("#add").submit();
+
+
+                }
+
+            });
+        }
 
 }
 

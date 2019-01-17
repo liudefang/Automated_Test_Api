@@ -1,0 +1,80 @@
+
+        #edit_div_big{
+        width: 32px;
+        height: 20px;
+        border-radius: 50px;
+        position: relative;
+        }
+        #edit_div_small{
+            width: 15px;
+            height: 15px;
+            border-radius: 48px;
+            position: absolute;
+            background: white;
+            box-shadow: 0px 2px 4px rgba(0,0,0,0.4);
+        }
+        #edit_div_big_api_dependency{
+        width: 32px;
+        height: 20px;
+        border-radius: 50px;
+        position: relative;
+        }
+        #edit_div_small_api_dependency{
+            width: 15px;
+            height: 15px;
+            border-radius: 48px;
+            position: absolute;
+            background: white;
+            box-shadow: 0px 2px 4px rgba(0,0,0,0.4);
+        }
+        #add_div_big_api_dependency{
+        width: 32px;
+        height: 20px;
+        border-radius: 50px;
+        position: relative;
+        }
+        #add_div_small_api_dependency{
+            width: 15px;
+            height: 15px;
+            border-radius: 48px;
+            position: absolute;
+            background: white;
+            box-shadow: 0px 2px 4px rgba(0,0,0,0.4);
+        }
+        #add_div_big{
+        width: 32px;
+        height: 20px;
+        border-radius: 50px;
+        position: relative;
+        }
+        #add_div_small{
+            width: 15px;
+            height: 15px;
+            border-radius: 48px;
+            position: absolute;
+            background: white;
+            box-shadow: 0px 2px 4px rgba(0,0,0,0.4);
+        }
+        .add_open_big{
+            background:rgb(26,161,148);
+        }
+        .add_open_small{
+            top: 2px;
+            right: 1px;
+        }
+        .add_close_big{
+            background: rgba(255,255,255,0.4);
+            border:2px solid rgba(0,0,0,0.15);
+            border-left: transparent;
+        }
+        .add_close_small{
+            left: 1px;
+            top: 0px;
+            border:1px solid rgba(0,0,0,0.1);}
+        .select_btn{
+            background: #DDDDDD;
+            border:1px solid dodgerblue;
+        }
+        .unselect_btn{
+            background: white;
+        }

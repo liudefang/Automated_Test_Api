@@ -415,38 +415,37 @@ def add_step(request):
 
     if request.method == "POST":
 
-        case = request.POST.get("case")
-        
-        step_name = request.POST.get("step_name")
-        step_level = request.POST.get("step_level")
-        method = request.POST.get("method")
-        params = request.POST.get("params")
-        headers = request.POST.get("headers")
-        files = request.POST.get("files")
-        step_desc = request.POST.get("step_desc")
-        assert_response = request.POST.get("assert_response")
-        api_dependency = request.POST.get("api_dependency")
-        step_weights = request.POST.get("step_weights")
+        step_name = request.POST.get('step_name')
+        case_name = request.POST.get('case_name')
+        method = request.POST.get('method')
+        headers = request.POST.get('headers')
+        params = request.POST.get('params')
+        asserts = request.POST.get('asserts')
+        api_dependency = request.POST.get('dependency')
+        steplevel = request.POST.get('steplevel')
+        step_desc = request.POST.get('step_desc')
+        status = request.POST.get('status')
+        paramsbody = request.POST.get('paramsbody')
+
         status = request.POST.get("status")
-
-
+        print("case_id:", case_id)
         if len(step_name) != 0 and step_name != str(ApiStep.objects.filter(step_name=step_name).first()):
 
-            ApiStep.objects.create(api_name=api_name, url=url, method=method, data_type=data_type,
-                                   project_id=project_id, is_sign=is_sign, api_desc=api_desc, request_header_param=request_header_param,
-                                   request_body_param=request_body_param, response_header_param=response_header_param,
-                                   response_body_param=response_body_param, private_key=private_key)
+            ApiStep.objects.create(case_id=case_id, step_name=step_name, step_level=step_level, method=method,
+                                   params=params, headers=headers, files=files, step_desc=step_desc,
+                                   assert_response=assert_response, api_dependency=api_dependency,
+                                   status=status)
 
             response = {"status": 0, "msg": "测试接口添加成功!"}
 
-        elif len(api_name) == 0:
+        elif len(step_name) == 0:
             response = {"status": 1, "msg": "接口名称不能为空!"}
         else:
             response = {"status": 2, "msg": "接口名称已存在!"}
 
         return JsonResponse(response)
 
-    return render(request, "env/index.html")
+    return render(request, "api_step/index.html")
 
 
 @login_required

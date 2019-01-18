@@ -409,7 +409,7 @@
             });
         // get方式
         var btn="#add_get";
-        var elements=["#add_params_div","#add_params_body_div","add_files_div"];
+        var elements=["#add_params_div","#add_params_body_div","#add_files_div"];
         var display_list=["display:block","display:None","display:None"];
         var btns=["#add_get","#add_post_form","#add_post_body","#add_post_file"];
         control_display(btns,btn,elements,display_list,"#method");
@@ -467,7 +467,9 @@
             objstring=JSON.stringify(obj);
             $(btn).val(objstring);
             alert(1111)
-            //提交的时候先把数据合并
+
+        }
+        //提交的时候先把数据合并
             $(".add_step_sub").click(function () {
                 //步骤名不能为空
                 if($("#step_name").val() !=""){
@@ -484,9 +486,12 @@
 
 
                 }
+                else {
+                    toastr.error("步骤名称不能为空")
+                }
+
 
             });
-        }
 
 }
 

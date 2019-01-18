@@ -219,7 +219,7 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary add_step_sub">提交</button>
+                    <button type="onclick" class="btn btn-primary add_step_sub">提交</button>
                   </div>
 
               </form>
@@ -273,7 +273,9 @@
     }
 
     // 新增序列增行和减行
+
     function add_line(add_btn,del_btn,ul_id,placeholder_name,placeholder_value,add_class) {
+
         $(add_btn).click(function () {
             if(add_class !="add_assert" && add_class !="edit_assert" && add_class !="add_api_dependency_step" && add_class !="edit_api_dependency_step")
             {
@@ -281,7 +283,8 @@
             }
             // 断言增行
             else if(add_class=="add_assert"){
-                 $(ul_id).append("<li><input type=\"text\" class="+add_class+" placeholder=\""+placeholder_name+"\"  /><select class=\"add_assert_Way\" >&nbsp;&nbsp;&nbsp;&nbsp;<option value=\"assertEqual\">等于</option><option value=\"assertNotEqual\">不等于</option><option value=\"assertRegexpMatches\">包含</option><option value=\"assertNotRegexpMatches\">不包含</option><option value=\"assertGreater\">大于</option><option value=\"assertGreaterEqual\">大于等于</option><option value=\"assertLess\">小于</option><option value=\"assertLessEqual\">小于等于</option><option value=\"assertIn\">在列表中</option><option value=\"assertNotIn\">不在列表中</option></select>&nbsp;&nbsp;&nbsp;&nbsp;<input   type=\"text\" class="+add_class+" placeholder=\""+placeholder_value+"\" /></li>");
+
+                 $(ul_id).append("<li><input type=\"text\" class=\""+add_class+"\" placeholder=\""+placeholder_name+"\"  />&nbsp;&nbsp;&nbsp;&nbsp;<select class=\"add_assert_Way\" ><option value=\"assertEqual\">等于</option><option value=\"assertNotEqual\">不等于</option><option value=\"assertRegexpMatches\">包含</option><option value=\"assertNotRegexpMatches\">不包含</option><option value=\"assertGreater\">大于</option><option value=\"assertGreaterEqual\">大于等于</option><option value=\"assertLess\">小于</option><option value=\"assertLessEqual\">小于等于</option><option value=\"assertIn\">在列表中</option><option value=\"assertNotIn\">不在列表中</option></select>&nbsp;&nbsp;&nbsp;&nbsp;<input   type=\"text\" class=\""+add_class+"\" placeholder=\""+placeholder_value+"\" /></li>");
             }
             else if(add_class=="edit_assert"){
                 $(ul_id).append("<li><input   type=\"text\" class="+add_class+" placeholder=\""+placeholder_name+"\"  /><select class=\"edit_assert_Way\" ><option value=\"assertEqual\">等于</option><option value=\"assertNotEqual\">不等于</option><option value=\"assertRegexpMatches\">包含</option><option value=\"assertNotRegexpMatches\">不包含</option><option value=\"assertGreater\">大于</option><option value=\"assertGreaterEqual\">大于等于</option><option value=\"assertLess\">小于</option><option value=\"assertLessEqual\">小于等于</option><option value=\"assertIn\">在列表中</option><option value=\"assertNotIn\">不在列表中</option></select><input   type=\"text\" class="+add_class+" placeholder=\""+placeholder_value+"\" /></li>");
@@ -388,7 +391,7 @@
         //断言增行和减少行
         var add_btn_assert_response="#add_assert_response";
         var del_btn_assert_response="#del_assert_response";
-        var ul_id_assert_response="add_assert_response_ul";
+        var ul_id_assert_response="#add_assert_response_ul";
         var placeholder_name_assert_response="断言名";
         var placeholder_value_assert_response="值";
         var add_class_assert="add_assert";
@@ -463,9 +466,9 @@
             }
             objstring=JSON.stringify(obj);
             $(btn).val(objstring);
-
+            alert(1111)
             //提交的时候先把数据合并
-            $("#add_step_sub").click(function () {
+            $(".add_step_sub").click(function () {
                 //步骤名不能为空
                 if($("#step_name").val() !=""){
                     //把信息头的数据合并放到input 的id为add_merge_headers里
@@ -476,6 +479,7 @@
                     merge_data("#add_merge_asserts", ".add_assert");
                     //把接口依赖的数据合并放到input 的id为add_merge_api_dependency里
                     merge_data("#add_merge_api_dependency",".add_api_dependency");
+
                     $("#add").submit();
 
 

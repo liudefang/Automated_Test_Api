@@ -408,16 +408,15 @@ def api_step(request):
 @login_required
 def add_step(request):
     """
-    新增项目
+    新增用例步骤
     :param request:
     :return:
     """
 
     if request.method == "POST":
 
-        api_name = request.POST.get("api_name")
         case = request.POST.get("case")
-        api_id = request.POST.get("api_id")
+        
         step_name = request.POST.get("step_name")
         step_level = request.POST.get("step_level")
         method = request.POST.get("method")
@@ -430,9 +429,8 @@ def add_step(request):
         step_weights = request.POST.get("step_weights")
         status = request.POST.get("status")
 
-        print("project_id:", project_id)
 
-        if len(api_name) != 0 and api_name != str(ApiStep.objects.filter(api_name=api_name).first()):
+        if len(step_name) != 0 and step_name != str(ApiStep.objects.filter(step_name=step_name).first()):
 
             ApiStep.objects.create(api_name=api_name, url=url, method=method, data_type=data_type,
                                    project_id=project_id, is_sign=is_sign, api_desc=api_desc, request_header_param=request_header_param,

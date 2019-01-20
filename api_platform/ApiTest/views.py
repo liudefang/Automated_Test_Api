@@ -416,25 +416,28 @@ def add_step(request):
     if request.method == "POST":
 
         step_name = request.POST.get('step_name')
-        case_name = request.POST.get('case_name')
+        case_id = request.POST.get('case_id')
         method = request.POST.get('method')
         headers = request.POST.get('headers')
         params = request.POST.get('params')
-        asserts = request.POST.get('asserts')
+        assert_response = request.POST.get('assert_response')
         api_dependency = request.POST.get('dependency')
-        steplevel = request.POST.get('steplevel')
+        step_level = request.POST.get('step_level')
         step_desc = request.POST.get('step_desc')
-        status = request.POST.get('status')
-        paramsbody = request.POST.get('paramsbody')
 
+        params_body = request.POST.get('params_body')
         status = request.POST.get("status")
         print("case_id:", case_id)
+        print("params:", params)
         if len(step_name) != 0 and step_name != str(ApiStep.objects.filter(step_name=step_name).first()):
-
-            ApiStep.objects.create(case_id=case_id, step_name=step_name, step_level=step_level, method=method,
-                                   params=params, headers=headers, files=files, step_desc=step_desc,
-                                   assert_response=assert_response, api_dependency=api_dependency,
-                                   status=status)
+            if method == "get" or method == "post_form":
+                ApiStep.objects.create(case_id=case_id, step_name=step_name, step_level=step_level, method=method,
+                                       params=params, headers=headers, assert_response=assert_response,
+                                       step_desc=step_desc, api_dependency=api_dependency, status=status)
+            elif method == "post_body":
+                ApiStep.objects.create(case_id=case_id, step_name=step_name, step_level=step_level, method=method,
+                                       params=params_body, headers=headers, assert_response=assert_response,
+                                       step_desc=step_desc, api_dependency=api_dependency, status=status)
 
             response = {"status": 0, "msg": "测试接口添加成功!"}
 
@@ -451,21 +454,21 @@ def add_step(request):
 @login_required
 def edit_step(request, env_id, option):
     """
-    编辑项目
+    编辑用例步骤
     :param request:
     :return:
     """
 
-    edit_env_list = Environment.objects.filter(env_id=env_id).first()
-    if edit_env_list and option == "delete":
+    edit_step_list = ApiStep.objects.filter(api_id=env_id).first()
+    if edit_step_list and option == "delete":
         try:
-            edit_env_list.delete()
+            edit_step_list.delete()
             reg = {'status': 0, 'msg': '删除成功!'}
         except Exception as e:
             reg = {'status': 1, 'msg': '删除失败!'}
 
         return HttpResponse(json.dumps(reg))
-    elif edit_env_list and option == "edit":
+    elif edit_step_list and option == "edit":
 
         if request.method == "POST":
 
@@ -487,9 +490,9 @@ def edit_step(request, env_id, option):
 
             return JsonResponse(response)
 
-        project_list = Project.objects.filter().all()
+        api_list = ApiStep.objects.filter().all()
 
-        return render(request, "env/edit.html", {"edit_env_list": edit_env_list, "project_list": project_list})
+        return render(request, "api_step/edit.html", {"edit_step_list": edit_step_list, "api_list": api_list})
     else:
         return render(request, "not_found.html")
 

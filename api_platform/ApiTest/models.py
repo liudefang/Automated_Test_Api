@@ -101,7 +101,7 @@ class ApiStep(models.Model):
     files = models.CharField(max_length=512)
     step_desc = models.CharField('接口描述', max_length=256)
     assert_response = models.CharField('接口预期结果', max_length=512)
-    api_dependency = models.CharField('接口依赖', max_length=512, default="")
+    api_dependency = models.CharField('接口依赖', max_length=512, default=None, null=True)
     step_weights = models.IntegerField('接口权重', default=0)
     status = models.BooleanField()
     create_time = models.DateTimeField('创建时间', auto_now=True)  # 创建时间

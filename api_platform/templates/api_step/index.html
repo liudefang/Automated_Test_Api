@@ -98,7 +98,7 @@
             <h4 class="modal-title" id="myModalLabel">添加用例步骤</h4>
           </div>
           <div class="modal-body">
-              <form id="add" role="form" method="POST" action="/add_step/">
+              <form role="form">
                   {% csrf_token %}
                   <div class="form-group">
                     <label for="step_name">步骤名称</label>
@@ -153,7 +153,7 @@
                   </div>
                   <div class="form-group" id="add_params_body_div">
                     <label for="params_body">请求参数body</label>
-                      <textarea class="form-control" name="params_body" cols="60" rows="5" ></textarea>
+                      <textarea class="form-control" name="params_body" cols="60" rows="5" id="params_body" ></textarea>
                   </div>
                   <div class="form-group" id="add_files_div">
                       <label for="files">文件上传</label>
@@ -173,7 +173,7 @@
                       </div>
                       <ul id="add_assert_response_ul" style="list-style-type:none">
                           <li>
-                              <input type="text" class="add_assert" placeholder="断言名" value="['code']" />&nbsp;&nbsp;&nbsp;<select class="add_assert_Way"><option value="assertEqual">等于</option><option value="assertNotEqual">不等于</option><option value="assertRegexpMatches">包含</option><option value="assertNotRegexpMatches">不包含</option><option value="assertGreater">大于</option><option value="assertGreaterEqual">大于等于</option><option value="assertLess">小于</option><option value="assertLessEqual">小于等于</option><option value="assertIn">在列表中</option><option value="assertNotIn">不在列表中</option></select>&nbsp;&nbsp;&nbsp;<input   type="text" class="add_assert" placeholder="值" />
+                              <input   type="text" class="add_assert" placeholder="断言名" value="['code']" /><select class="add_assert_Way"><option value="assertEqual">等于</option><option value="assertNotEqual">不等于</option><option value="assertRegexpMatches">包含</option><option value="assertNotRegexpMatches">不包含</option><option value="assertGreater">大于</option><option value="assertGreaterEqual">大于等于</option><option value="assertLess">小于</option><option value="assertLessEqual">小于等于</option><option value="assertIn">在列表中</option><option value="assertNotIn">不在列表中</option></select><input   type="text" class="add_assert" placeholder="值" />
                                 <input id="add_assert_response" type="button" class="btn btn-primary"  style="height:24px;width:24px;text-align:center; margin:0px; padding:0px;" value="+">
                                 <input id="del_assert_response" type="button" class="btn btn-primary"  style="height:24px;width:24px;text-align:center; margin:0px; padding:0px;" value="-">
                                 <input id="add_merge_asserts" type="text" style="display:None" name="asserts"/>
@@ -219,7 +219,7 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="onclick" class="btn btn-primary add_step_sub">提交</button>
+                    <button type="button" class="btn btn-primary add_step_sub">提交</button>
                   </div>
 
               </form>
@@ -420,12 +420,12 @@
         //post_body方式
         btn="#add_post_body";
         elements=["#add_params_div","#add_params_body_div","#add_files_div"];
-        display_list=["#display:None","display:block","display:None"];
+        display_list=["display:None","display:block","display:None"];
         control_display(btns,btn,elements,display_list,"#method");
         //post_file方式
         btn="#add_post_file";
         elements=["#add_params_div","#add_params_body_div","#add_files_div"];
-        display_list=["#display:None","display:block","display:None"];
+        display_list=["display:None","display:block","display:None"];
         control_display(btns,btn,elements,display_list,"#method");
 
         // headers,params和断言数据合并转成json字符串
@@ -434,7 +434,7 @@
             var obj={};
             if(select_input !=".add_assert" && select_input !=".add_api_dependency"){
                 for(var i=0;i<elements.length;i+=2){
-                    if($(elements[i].val())){
+                    if($(elements[i]).val()){
                         obj[$(elements[i]).val()]=$(elements[i+1]).val();
                     }
                 }
@@ -443,12 +443,13 @@
             else if(select_input==".add_assert"){
                 var assert_way_elements=$(".add_assert_Way");
                 j=0;
-                for(var i=0;i<elements.length;i+=2){
+                for (var i=0;i<elements.length;i+=2){
                     if($(elements[i]).val()){
                         var assert_way_obj={};
                         assert_way_obj[$(assert_way_elements[j]).val()]=$(elements[i+1]).val();
                         j+=1;
                         obj[$(elements[i]).val()]=assert_way_obj;
+                        alert($(elements[i]).val())
                     }
                 }
             }
@@ -466,7 +467,8 @@
             }
             objstring=JSON.stringify(obj);
             $(btn).val(objstring);
-            alert(1111)
+
+
 
         }
         //提交的时候先把数据合并
@@ -476,8 +478,8 @@
                     //把信息头的数据合并放到input 的id为add_merge_headers里
                     merge_data("#add_merge_headers",".add_headers");
                     //把参数的数据合并放到input 的id为add_merge_params里
-                    merge_data("#add_merger_params",".add_params");
-                    //把断言的数据合并放到input 的id为add_headers里
+                    merge_data("#add_merge_params",".add_params");
+                    //把断言的数据合并放到input 的id为add_merge_asserts里
                     merge_data("#add_merge_asserts", ".add_assert");
                     //把接口依赖的数据合并放到input 的id为add_merge_api_dependency里
                     merge_data("#add_merge_api_dependency",".add_api_dependency");
@@ -486,14 +488,141 @@
 
 
                 }
-                else {
-                    toastr.error("步骤名称不能为空")
+                $.ajax({
+                url: "/add_step/",
+                type: "post",
+                data: {
+                    step_name: $("#step_name").val(),
+                    case_id: $("#case_id").val(),
+                    method: $("#method").val(),
+                    headers: $("#add_merge_headers").val(),
+                    params: $("#add_merge_params").val(),
+                    assert_response: $("#add_merge_asserts").val(),
+                    api_dependency: $("#add_merge_api_dependency").val(),
+                    step_level: $("#step_level").val(),
+                    step_desc: $("#step_desc").val(),
+                    params_body: $("#params_body").val(),
+                    status: $("*[name='status']:checked").val(),
+                    csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val(),
+                },
+
+                success: function (data) {
+
+                    if (data.status== 0) {
+                        // alert(111)
+                        toastr.success(data.msg);
+                        if (location.search){
+                                location.href = location.search.slice(6)
+                        }
+                        else {
+                            setTimeout(function () {
+                                location.href = "/api_step/"
+                            }, 2000)
+
+                        }
+
+                    }
+                    else {
+
+
+                        $(".error").text(data.msg);
+                        setTimeout(function () {
+                            $(".error").text("");
+
+                        }, 5000)
+                    }
+
+
+
                 }
+
+            })
 
 
             });
 
+
 }
+    //删除用例步骤
+     $("#del_step").click(function () {
+                var env_ids=new Array();
+
+                    var count=0;
+
+                    var i=0;
+                     var row = $(this).parent().parent();
+                    var pathname = window.location.pathname;
+                    var url = null;
+                    $("#table").find(":checkbox:checked").each(function() {
+
+                        env_id = $(this).parent().next().text();
+
+                        if (env_id != "") {
+
+                            env_ids[i++] = env_id;
+
+                        }
+
+                        count++;
+
+                    });
+
+                //alert(count)
+                if(count>0){
+                    url = /api_step/+env_id+pathname.replace('/api_step/', '/delete/')
+                     // 删除插件的应用
+                swal({
+
+                    title: "确定要删除吗？",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonClass: "btn-danger",
+                    confirmButtonText: "确定",
+                    cancelButtonText: "取消",
+                    closeOnConfirm: true
+
+                },
+
+                function () {
+                    $.ajax({
+
+                        url: url,
+                        type: 'post',
+                        data:{
+                            delete_id: env_id,
+
+                        },
+
+                        success:function (ret) {
+                            var data = JSON.parse(ret);
+                            if(data.status == 0){
+                                row.remove();
+
+                                toastr.success(data.msg);
+                                setTimeout(function () {
+                                location.href = "/api_step/"
+                            }, 2000)
+
+
+                            }else{
+                                toastr.error(data.msg);
+                                setTimeout(function () {
+                                location.href = "/api_step/"
+                            }, 2000)
+                            }
+
+
+                        }
+                    });
+
+                });
+                }
+                else {
+                    toastr.error("请至少选择一项")
+                }
+
+        });
+
 
 
 </script>

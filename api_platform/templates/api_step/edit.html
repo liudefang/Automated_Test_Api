@@ -1,82 +1,117 @@
 {% extends "../base.html" %}
-{% block style %}
 
-    {{block.super}}
-    .form-horzontal {
-            margin-top:100px;
-        }
-    .panel {
-        margin-top: 50px;
-        width:300px;
-        height: 500px;
-        margin-left: 100px;
-    }
-    h6 {
-        margin-left:500px;
-    }
-{% endblock style%}
 {% block add %}
-    <div class="panel panel-info">
-        <div class="panel-heading">编辑用例信息</div>
+    <div class="panel panel-info" style="margin-top:50px;width:700px;height:1200px">
+        <div class="panel-heading">编辑用例步骤信息</div>
         <div class="panel-body">
-            <form class="form-horizontal" action="" method="post">
-                {% csrf_token %}
-                <div class="form-group">
-                    <div class="col-sm-10">
-                        <input type="hidden" name="b">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="case_name" class="col-sm-2 control-label">用例名称:</label>
-                    <div class="col-sm-6">
-                        <input type="text" name="case_name" value="{{ edit_case_list.case_name }}" id="case_name">
-                    </div>
-                </div>
-                <h6 style="color: red"><span class="error"></span></h6>
-                <div class="form-group">
-                    <label for="modules_id" class="col-sm-2 control-label">模块名称:</label>
-                        <div class="col-sm-6">
-                            <select name="modules_id" id="modules_id" class="form-control">
-                                {% for module_obj in module_list %}
-                                    {% if edit_case_list.modules == module_obj %}
-                                        <option selected value="{{module_obj.id}}">{{module_obj.modules_name}}</option>
-                                    {% else %}
-                                        <option value="{{module_obj.id}}">{{module_obj.modules_name}}</option>
-                                    {% endif %}
-                                {% endfor %}
-                            </select>
-                        </div>
+            <div class="modal-body">
+              <form role="form">
+                  {% csrf_token %}
+                  <div class="form-group">
+                    <label for="step_name">步骤名称</label>
+                    <input type="text" name="step_name" id="step_name" class="ipt form-control" value="{{ edit_step_list.step_name }}">
+                  </div>
+                  <h6 style="margin-left:500px;color: red"><span class="error"></span></h6>
+                  <div class="form-group">
+                    <label for="case_id">用例名称</label>
+
+                        <select name="case_id" id="case_id" class="form-control">
+                            {% for case_obj in case_list %}
+                                {% if edit_step_list.case == case_obj %}
+                                    <option selected value="{{case_obj.pk}}">{{case_obj.case_name}}</option>
+                                {% else %}}
+                                    <option value="{{case_obj.pk}}">{{case_obj.case_name}}</option>
+                                {% endif %}}
+                            {% endfor %}
+                        </select>
 
                   </div>
-                <div class="form-group">
-                    <label for="project_id" class="col-sm-2 control-label">所属项目:</label>
-                        <div class="col-sm-6">
-                            <select name="project_id" id="project_id" class="form-control">
-                                {% for project_obj in project_list %}
-                                    {% if edit_case_list.project == project_obj %}
-                                        <option selected value="{{project_obj.pk}}">{{project_obj.prj_name}}</option>
-                                    {% else %}
-                                        <option value="{{project_obj.pk}}">{{project_obj.prj_name}}</option>
-                                    {% endif %}
-                                {% endfor %}
-                            </select>
-                        </div>
+                  <div class="form-group">
+                    <label >请求方式</label>
+                      <br>
+                      <div class="btn-group">
+                          <button id="add_get" type="button" name="method" class="btn btn-primary">get</button>
+                          <button id="add_post_form" type="button" name="method" class="btn btn-primary">post_form</button>
+                          <button id="add_post_body" type="button" name="method" class="btn btn-primary">post_body</button>
+                          <button id="add_post_file" type="button" name="method" class="btn btn-primary">post_file</button>
+                          <input id="method" type="text" name="method" style="display:None" required/>
+                      </div>
 
                   </div>
-                <div class="form-group">
-                    <label for="api" class="col-sm-2 control-label">api地址:</label>
-                    <div class="col-sm-6">
-                        <input type="text" name="api" value="{{ edit_case_list.api }}" id="api">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="version" class="col-sm-2 control-label">版本:</label>
-                    <div class="col-sm-6">
-                        <input type="text" name="version" value="{{ edit_case_list.version }}" id="version">
-                    </div>
-                </div>
-                 <div class="form-group">
-                      <label class="col-sm-2 control-label">项目状态:</label>
+                  <div class="form-group">
+                    <label for="headers">消息头</label>
+                      <ul id="add_headers_ul" style="list-style-type:none">
+                          <li>
+                              <input id="ipt10" class="add_headers" type="text" placeholder="名称" />&nbsp;&nbsp;&nbsp;&nbsp;<input class="add_headers" type="text" placeholder="值" />
+                              <input id="add_headers" type="button" class="btn btn-primary" style="height:24px;width:24px;text-align:center;margin:0px;padding:0px;" value="+">
+                              <input id="del_headers" type="button" class="btn btn-primary" style="height:24px;width:24px;text-align:center;margin:0px;padding:0px;" value="-">
+                              <input id="add_merge_headers" type="text" style="display:None" name="headers">
+                          </li>
+                      </ul>
+
+                  </div>
+                  <div class="form-group" id="add_params_div">
+                    <label for="params">请求参数</label>
+                      <ul id="add_params_ul" style="list-style-type:none">
+                          <li>
+                              <input class="add_params" type="text" placeholder="参数名" />&nbsp;&nbsp;&nbsp;&nbsp;<input class="add_params" type="text" placeholder="参数值" />
+                              <input id="add_params" type="button" class="btn btn-primary" style="height:24px;width:24px;text-align:center;margin:0px;padding:0px;" value="+">
+                              <input id="del_params" type="button" class="btn btn-primary" style="height:24px;width:24px;text-align:center;margin:0px;padding:0px;" value="-">
+                              <input id="add_merge_params" type="text" style="display:None" name="params">
+                          </li>
+                      </ul>
+
+                  </div>
+                  <div class="form-group" id="add_params_body_div">
+                    <label for="params_body">请求参数body</label>
+                      <textarea class="form-control" name="params_body" cols="60" rows="5" id="params_body" ></textarea>
+                  </div>
+                  <div class="form-group" id="add_files_div">
+                      <label for="files">文件上传</label>
+                      <ul id="add_files_ul" style="list-style-type:none">
+                          <li>
+                              <input type="text" placeholder="文件名称" />&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" placeholder="参数名称"/>&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" placeholder="MiME类型" style="width:70px">
+                              <input id="add_files" type="button" class="btn btn-primary" style="height:24px;width:24px;text-align:center;margin:0px;padding:0px;" value="+">
+                              <input id="del_files" type="button" class="btn btn-primary" style="height:24px;width:24px;text-align:center;margin:0px;padding:0px;" value="-">
+                          </li>
+                      </ul>
+                  </div>
+
+                  <div class="form-group">
+                      <label for="asserts">断言</label>
+                      <div id="add_div_big" class="add_open_big">
+                          <div id="add_div_small" class="add_open_small"></div>
+                      </div>
+                      <ul id="add_assert_response_ul" style="list-style-type:none">
+                          <li>
+                              <input   type="text" class="add_assert" placeholder="断言名" value="['code']" /><select class="add_assert_Way"><option value="assertEqual">等于</option><option value="assertNotEqual">不等于</option><option value="assertRegexpMatches">包含</option><option value="assertNotRegexpMatches">不包含</option><option value="assertGreater">大于</option><option value="assertGreaterEqual">大于等于</option><option value="assertLess">小于</option><option value="assertLessEqual">小于等于</option><option value="assertIn">在列表中</option><option value="assertNotIn">不在列表中</option></select><input   type="text" class="add_assert" placeholder="值" />
+                                <input id="add_assert_response" type="button" class="btn btn-primary"  style="height:24px;width:24px;text-align:center; margin:0px; padding:0px;" value="+">
+                                <input id="del_assert_response" type="button" class="btn btn-primary"  style="height:24px;width:24px;text-align:center; margin:0px; padding:0px;" value="-">
+                                <input id="add_merge_asserts" type="text" style="display:None" name="asserts"/>
+                          </li>
+                      </ul>
+                  </div>
+                  <div class="form-group">
+                      <label for="dependency">接口依赖</label>
+                      <div id="add_div_big_api_dependency" class="add_open_big">
+                          <div id="add_div_small_api_dependency" class="add_open_small"></div>
+                      </div>
+                      <ul id="add_api_dependency_ul" style="list-style-type:none">
+                          <li>
+                              <select class="add_api_dependency_step">{% for step in step_names %}<option>{{ step }}</option>{% endfor %}</select><br/>
+                              <input type="text" class="add_api_dependency" placeholder="变量名" />&nbsp;&nbsp;&nbsp;<input type="text" class="add_api_dependency" placeholder="路径" />
+                                <input id="add_api_dependency" type="button" class="btn btn-primary"  style="height:24px;width:24px;text-align:center; margin:0px; padding:0px;" value="+">
+                                <input id="del_api_dependency" type="button" class="btn btn-primary"  style="height:24px;width:24px;text-align:center; margin:0px; padding:0px;" value="-">
+                                <input id="add_merge_api_dependency" type="text" style="display:None" name="dependency"/>
+                          </li>
+                      </ul>
+                  </div>
+                  <div class="form-group">
+                      <label for="step_level">优先级</label>
+                      <input type="text" class="ipt form-control" name="step_level" id="step_level" placeholder="请输入优先级">
+                  </div>
+                  <div class="form-group">
+                      <label>用例步骤状态</label>
                       <div>
                           <label class="radio-inline">
                               <input type="radio" name="status" id="optionsRadios1" value="1" checked> 有效
@@ -84,28 +119,23 @@
                           </label>
                           &nbsp;&nbsp;&nbsp;&nbsp;
                           <label class="radio-inline">
-                              <input type="radio" name="status" id="optionsRadios2" value="0" > 无效
+                              <input type="radio" name="status" id="optionsRadios2" value="0"> 无效
                           </label>
                       </div>
 
                   </div>
-               <div class="form-group">
-                    <label for="case_desc" class="col-sm-2 control-label">用例描述:</label>
-                    <div class="col-sm-6">
-                        <textarea name="case_desc" id="case_desc" cols="60" rows="5">{{ edit_case_list.case_desc }}</textarea>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-10 col-md-offset-6">
-                        <a href="/api_case/" class="btn btn-primary ">取消</a>
-                        &nbsp;&nbsp;
-                        <input type="button" class="btn btn-info edit_case_sub" value="提交">
+                  <div class="form-group">
+                    <label for="step_desc">用例步骤描述</label>
+                    <textarea name="step_desc" id="step_desc" cols="60" rows="3" class="form-control" placeholder="输入用例描述"></textarea>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary add_step_sub">提交</button>
+                  </div>
 
-                    </div>
-                </div>
+              </form>
 
-            </form>
-        </div>
+          </div>
         <script>
 
      // 编辑用例

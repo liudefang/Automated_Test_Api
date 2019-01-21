@@ -197,7 +197,7 @@
                   </div>
                   <div class="form-group">
                       <label for="step_level">优先级</label>
-                      <input type="text" class="ipt form-control" name="step_level" id="step_level" placeholder="请输入优先级">
+                      <input type="text" class="form-control" name="step_level" id="step_level" placeholder="请输入优先级">
                   </div>
                   <div class="form-group">
                       <label>用例步骤状态</label>
@@ -624,6 +624,54 @@
         });
 
 
+        //编辑模块
+
+        $("#edit_step").click(function(){
+
+            var count=0;
+            var env_value;
+            var env=new Array();
+            var elements=$(".ipt");
+            alert(elements.length)
+            var url = null;
+            $("#table").find(":checkbox:checked").each(function(){
+                env_value=$(this).parent()
+                for (var i=0;i<elements.length;i++){
+                    env_value=env_value.next()
+
+                    env[i]=env_value.text();
+
+
+                }
+                count++;
+            });
+
+            if (count==1)
+            {
+                alert(env);
+                url = "/api_step/"+env+"/edit"
+                //alert(url)
+                for (var i=0;i<env.length-1;i++){
+                    $(elements[i]).val(env[i]);
+                }
+                if (env[env.length-1]=="True"){
+                    $(elements[env.length-1]).prop('checked',true);
+                }
+                else{
+                    $(elements[env.length-1]).removeAttr('checked');
+                }
+                //$('#editMyModal').modal("show");
+                if(env>0){
+                    location.href = url;
+                }
+            }
+            else if(count==0){
+                toastr.error("请至少选择一个选项!")
+            }
+            else{
+                toastr.error("编辑只能选择一个选项!");
+            }
+        });
 
 </script>
 

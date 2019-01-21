@@ -472,15 +472,29 @@ def edit_step(request, env_id, option):
 
         if request.method == "POST":
 
-            evn_name = request.POST.get("evn_name")
-            evn_desc = request.POST.get("evn_desc")
-            url = request.POST.get("url")
-            project_id = request.POST.get("project_id")
-            private_key = request.POST.get("private_key")
+            step_name = request.POST.get('step_name')
+            case_id = request.POST.get('case_id')
+            method = request.POST.get('method')
+            headers = request.POST.get('headers')
+            params = request.POST.get('params')
+            assert_response = request.POST.get('assert_response')
+            api_dependency = request.POST.get('dependency')
+            step_level = request.POST.get('step_level')
+            step_desc = request.POST.get('step_desc')
 
-            if len(evn_name) != 0:
-
-                Environment.objects.filter(env_id=env_id).update(evn_name=evn_name, evn_desc=evn_desc, url=url, project_id=project_id, private_key=private_key)
+            params_body = request.POST.get('params_body')
+            status = request.POST.get("status")
+            print("case_id:", case_id)
+            print("params:", params)
+            if len(step_name) != 0 and step_name != str(ApiStep.objects.filter(step_name=step_name).first()):
+                if method == "get" or method == "post_form":
+                    ApiStep.objects.update(case_id=case_id, step_name=step_name, step_level=step_level, method=method,
+                                           params=params, headers=headers, assert_response=assert_response,
+                                           step_desc=step_desc, api_dependency=api_dependency, status=status)
+                elif method == "post_body":
+                    ApiStep.objects.update(case_id=case_id, step_name=step_name, step_level=step_level, method=method,
+                                           params=params_body, headers=headers, assert_response=assert_response,
+                                           step_desc=step_desc, api_dependency=api_dependency, status=status)
 
                 response = {"status": 0, "msg": "编辑成功!"}
 
@@ -490,9 +504,9 @@ def edit_step(request, env_id, option):
 
             return JsonResponse(response)
 
-        api_list = ApiStep.objects.filter().all()
+        case_list = TestCase.objects.filter().all()
 
-        return render(request, "api_step/edit.html", {"edit_step_list": edit_step_list, "api_list": api_list})
+        return render(request, "api_step/edit.html", {"edit_step_list": edit_step_list, "case_list": case_list})
     else:
         return render(request, "not_found.html")
 

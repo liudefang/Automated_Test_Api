@@ -19,7 +19,7 @@
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 添加接口用例步骤
     </button>
 
-    <button id="edit_step" class="btn btn-primary" data-toggle="modal" data-target="#">
+    <button id="edit_step" class="btn btn-primary" data-toggle="modal" data-target="#editmyModal">
         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 修改
     </button>
       <button id="del_step" type="onclick" class="btn btn-danger ">
@@ -231,6 +231,156 @@
     </div>
 
 
+<!--编辑接口步骤模态框-->
+<!-- 编辑项目模态框 -->
+    <div class="modal fade" id="editmyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">编辑用例步骤</h4>
+          </div>
+          <div class="modal-body">
+              <form role="form">
+                  <div class="form-group" style="display: none">
+                      <label for="id">id</label>
+                      <input type="text" class="form-control" name="id" placeholder="请输入ID">
+                  </div>
+                  {% csrf_token %}
+                  <div class="form-group">
+                    <label for="step_name">步骤名称</label>
+                    <input type="text" name="step_name" id="step_name" class="ipt form-control" placeholder="输入步骤名称">
+                  </div>
+                  <h6 style="color: red"><span class="error"></span></h6>
+                  <div class="form-group">
+                    <label for="case_id">用例名称</label>
+
+                        <select name="case_id" id="case_id" class="form-control">
+                            {% for case_obj in case_list %}
+                                {% if edit_step_list.case == case_obj %}
+                                    <option selected value="{{case_obj.pk}}">{{case_obj.case_name}}</option>
+                                {% else %}}
+                                    <option value="{{case_obj.pk}}">{{case_obj.case_name}}</option>
+                                {% endif %}}
+                            {% endfor %}
+                        </select>
+
+                  </div>
+                  <div class="form-group">
+                    <label >请求方式</label>
+                      <br>
+                      <div class="btn-group">
+                          <button id="edit_get" type="button" name="method" class="btn btn-primary">get</button>
+                          <button id="edit_post_form" type="button" name="method" class="btn btn-primary">post_form</button>
+                          <button id="edit_post_body" type="button" name="method" class="btn btn-primary">post_body</button>
+                          <button id="edit_post_file" type="button" name="method" class="btn btn-primary">post_file</button>
+                          <input id="edit_method" type="text" name="method" style="display:None" required/>
+                      </div>
+
+                  </div>
+                  <div class="form-group">
+                    <label for="headers">消息头</label>
+                      <ul id="edit_headers_ul" style="list-style-type:none">
+                          <li>
+                              <input  class="edit_headers" type="text" placeholder="名称" />&nbsp;&nbsp;&nbsp;&nbsp;<input class="edit_headers" type="text" placeholder="值" />
+                              <input id="add_headers_edit" type="button" class="btn btn-primary" style="height:24px;width:24px;text-align:center;margin:0px;padding:0px;" value="+">
+                              <input id="del_headers_edit" type="button" class="btn btn-primary" style="height:24px;width:24px;text-align:center;margin:0px;padding:0px;" value="-">
+                              <input id="edit_merge_headers" type="text" style="display:None" name="headers">
+                          </li>
+                      </ul>
+
+                  </div>
+                  <div class="form-group" id="edit_params_div">
+                    <label for="params">请求参数</label>
+                      <ul id="edit_params_ul" style="list-style-type:none">
+                          <li>
+                              <input class="edit_params" type="text" placeholder="参数名" />&nbsp;&nbsp;&nbsp;&nbsp;<input class="edit_params" type="text" placeholder="参数值" />
+                              <input id="add_params_edit" type="button" class="btn btn-primary" style="height:24px;width:24px;text-align:center;margin:0px;padding:0px;" value="+">
+                              <input id="del_params_edit" type="button" class="btn btn-primary" style="height:24px;width:24px;text-align:center;margin:0px;pediting:0px;" value="-">
+                              <input id="edit_merge_params" type="text" style="display:None" name="params">
+                          </li>
+                      </ul>
+
+                  </div>
+                  <div class="form-group" id="edit_params_body_div">
+                    <label for="params_body">请求参数body</label>
+                      <textarea class="form-control" name="params_body" cols="60" rows="5" id="params_body" ></textarea>
+                  </div>
+                  <div class="form-group" id="edit_files_div">
+                      <label for="files">文件上传</label>
+                      <ul id="edit_files_ul" style="list-style-type:none">
+                          <li>
+                              <input type="text" placeholder="文件名称" />&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" placeholder="参数名称"/>&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" placeholder="MiME类型" style="width:70px">
+                              <input id="add_files_edit" type="button" class="btn btn-primary" style="height:24px;width:24px;text-align:center;margin:0px;padding:0px;" value="+">
+                              <input id="del_files_edit" type="button" class="btn btn-primary" style="height:24px;width:24px;text-align:center;margin:0px;padding:0px;" value="-">
+                          </li>
+                      </ul>
+                  </div>
+
+                  <div class="form-group">
+                      <label for="asserts">断言</label>
+                      <div id="edit_div_big" class="edit_open_big">
+                          <div id="edit_div_small" class="edit_open_small"></div>
+                      </div>
+                      <ul id="edit_assert_response_ul" style="list-style-type:none">
+                          <li>
+                              <input   type="text" class="edit_assert" placeholder="断言名" value="['code']" /><select class="edit_assert_Way"><option value="assertEqual">等于</option><option value="assertNotEqual">不等于</option><option value="assertRegexpMatches">包含</option><option value="assertNotRegexpMatches">不包含</option><option value="assertGreater">大于</option><option value="assertGreaterEqual">大于等于</option><option value="assertLess">小于</option><option value="assertLessEqual">小于等于</option><option value="assertIn">在列表中</option><option value="assertNotIn">不在列表中</option></select><input   type="text" class="edit_assert" placeholder="值" />
+                                <input id="add_assert_response_edit" type="button" class="btn btn-primary"  style="height:24px;width:24px;text-align:center; margin:0px; padding:0px;" value="+">
+                                <input id="del_assert_response_" type="button" class="btn btn-primary"  style="height:24px;width:24px;text-align:center; margin:0px; padding:0px;" value="-">
+                                <input id="edit_merge_asserts" type="text" style="display:None" name="asserts"/>
+                          </li>
+                      </ul>
+                  </div>
+                  <div class="form-group">
+                      <label for="dependency">接口依赖</label>
+                      <div id="edit_div_big_api_dependency" class="edit_open_big">
+                          <div id="edit_div_small_api_dependency" class="edit_open_small"></div>
+                      </div>
+                      <ul id="edit_api_dependency_ul" style="list-style-type:none">
+                          <li>
+                              <select class="edit_api_dependency_step">{% for step in step_names %}<option>{{ step }}</option>{% endfor %}</select><br/>
+                              <input type="text" class="edit_api_dependency" placeholder="变量名" />&nbsp;&nbsp;&nbsp;<input type="text" class="edit_api_dependency" placeholder="路径" />
+                                <input id="add_api_dependency_edit" type="button" class="btn btn-primary"  style="height:24px;width:24px;text-align:center; margin:0px; padding:0px;" value="+">
+                                <input id="del_api_dependency_edit" type="button" class="btn btn-primary"  style="height:24px;width:24px;text-align:center; margin:0px; pediting:0px;" value="-">
+                                <input id="edit_merge_api_dependency" type="text" style="display:None" name="dependency"/>
+                          </li>
+                      </ul>
+                  </div>
+                  <div class="form-group">
+                      <label for="step_level">优先级</label>
+                      <input type="text" class="form-control" name="step_level" id="step_level" placeholder="请输入优先级">
+                  </div>
+                  <div class="form-group">
+                      <label>用例步骤状态</label>
+                      <div>
+                          <label class="radio-inline">
+                              <input type="radio" name="status" id="optionsRadios3" value="1" checked> 有效
+
+                          </label>
+                          &nbsp;&nbsp;&nbsp;&nbsp;
+                          <label class="radio-inline">
+                              <input type="radio" name="status" id="optionsRadios4" value="0"> 无效
+                          </label>
+                      </div>
+
+                  </div>
+                  <div class="form-group">
+                    <label for="step_desc">用例步骤描述</label>
+                    <textarea name="step_desc" id="step_desc" cols="60" rows="3" class="form-control" placeholder="输入用例描述"></textarea>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="onclick" class="btn btn-primary edit_step_sub">提交</button>
+                  </div>
+
+              </form>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
 <script>
  // 列表数据超过30个字符，只显示25个字符
     function display() {
@@ -251,7 +401,7 @@
 
     }
     $(function(){
-        //edit();
+        edit();
         add();
         //del();
         //paging();
@@ -543,6 +693,272 @@
 
 
 }
+
+    // 编辑
+    function edit(){
+    //编辑控制方式按钮
+            //get
+            control_display(["#edit_get","#edit_post_form","#edit_post_body","#edit_post_file"],"#edit_get",["#edit_params_div","#edit_params_body_div","#edit_files_div"],["display:block","display:None","display:None"],"#edit_method");
+            //postform
+            control_display(["#edit_get","#edit_post_form","#edit_post_body","#edit_post_file"],"#edit_post_form",["#edit_params_div","#edit_params_body_div","#edit_files_div"],["display:block","display:None","display:None"],"#edit_method");
+            //postbody
+            control_display(["#edit_get","#edit_post_form","#edit_post_body","#edit_post_file"],"#edit_post_body",["#edit_params_div","#edit_params_body_div","#edit_files_div"],["display:None","display:block","display:None"],"#edit_method");
+            //postfile
+            control_display(["#edit_get","#edit_post_form","#edit_post_body","#edit_post_file"],"#edit_post_file",["#edit_params_div","#edit_params_body_div","#edit_files_div"],["display:block","display:None","display:block"],"#edit_method");
+            //编辑控制信息头，参数，断言增行和减行
+            //信息头
+            add_line("#add_headers_edit","#del_headers_edit","#edit_headers_ul","名称","值","edit_headers");
+            //参数
+            add_line("#add_params_edit","#del_params_edit","#edit_params_ul","参数名","参数值","edit_params");
+            //断言
+            add_line("#add_assert_response_edit","#del_assert_response_edit","#edit_assert_response_ul","断言名","值","edit_assert");
+            //接口依赖增行
+            add_line("#add_api_dependency_edit","#del_api_dependency_edit","#edit_api_dependency_ul","变量名","路径","edit_api_dependency");
+            //是否要使用断言
+            $("#edit_div_big").click(function(){
+                if ($("#edit_div_big").attr("class")=="add_open_big"){
+                    $("#edit_div_big").attr("class","add_close_big");
+                    $("#edit_div_small").attr("class","add_close_small");
+                    $("#edit_assert_response_ul").attr("style","display:None");
+                    //删除断言属性
+                    $("#edit_merge_asserts").removeAttr("name");
+                }
+                else{
+                    $("#edit_div_big").attr("class","add_open_big");
+                    $("#edit_div_small").attr("class","add_open_small");
+                    $("#edit_assert_response_ul").attr("style","list-style-type: none;display:block");
+                    //添加断言属性
+                    $("#edit_merge_asserts").attr("name","asserts");
+                }
+            });
+            //是否要使用接口依赖
+            $("#edit_div_big_api_dependency").click(function(){
+                if ($("#edit_div_big_api_dependency").attr("class")=="add_open_big"){
+                    $("#edit_div_big_api_dependency").attr("class","add_close_big");
+                    $("#edit_div_small_api_dependency").attr("class","add_close_small");
+                    $("#edit_api_dependency_ul").attr("style","display:None");
+                    //删除接口依赖属性
+                    $("#edit_merge_api_dependency").removeAttr("name");
+                }
+                else{
+                    $("#edit_div_big_api_dependency").attr("class","add_open_big");
+                    $("#edit_div_small_api_dependency").attr("class","add_open_small");
+                    $("#edit_api_dependency_ul").attr("style","list-style-type: none;display:block");
+                    //添加断言属性
+                    $("#edit_merge_api_dependency").attr("name","api_dependency");
+                }
+            });
+            $("#edit_step").click(function(){
+                $("#myAlert").css("display","none");
+                $("#myAlert1").css("display","none");
+                var count=0;
+                var env_value;
+                var env=new Array();
+                var elements=$(".ipt");
+                $("#table").find(":checkbox:checked").each(function(){
+                    env_value=$(this).parent()
+                    for (var i=0;i<elements.length;i++){
+                        env_value=env_value.next()
+                        //alert(env_value.attr("title"));
+                        env[i]=env_value.attr("title");
+                    }
+                    //alert(env)
+                    count++;
+                });
+                if (count==1)
+                {
+                    //alert(env);
+                    for (var i=0;i<env.length-1;i++){
+                        $(elements[i]).val(env[i]);
+                    }
+                    if (env[env.length-1]=="True"){
+                        $(elements[env.length-1]).prop('checked',true);
+                    }
+                    else{
+                        $(elements[env.length-1]).removeAttr('checked');
+                    }
+                    $('#editMyModal').modal("show");
+                }
+                else{
+                    $("#myAlert").css("display","inherit");
+                }
+                //点开编辑按钮，method初始化
+                var method_dic={"get":"#edit_get","post_form":"#edit_post_form","post_body":"#edit_post_body","post_file":"#edit_post_file"}
+                $(method_dic[$("#edit_method").val()]).trigger("click");
+                //headers,params,assert初始化
+                function del_line_init(input_class,del_line_btn){
+                    for (var i=0;i<$(input_class).length;i++){
+                        $(del_line_btn).trigger("click");
+                    }
+                }
+                function edit_init(merge_btn,add_line_btn,del_line_btn,input_class){
+                    if ($(merge_btn).val()!=""){
+                        var JSON_OBJ=JSON.parse($(merge_btn).val());
+                        for (var i in JSON_OBJ){
+                            $(add_line_btn).trigger("click");
+                            //alert(JSON_OBJ[i]);
+                        }
+                        $(del_line_btn).trigger("click");
+                        //给每行赋值
+                        var elements=$(input_class);
+                        var assert_way_elements=$(".edit_assert_Way");
+                        var api_dependency_elements=$(".edit_api_dependency_step");
+                        var j=0;
+                        var f=0;
+                        if (input_class!=".edit_assert" && input_class!=".edit_api_dependency"){
+                            for (var i in JSON_OBJ){
+                                $(elements[j]).val(i);
+                                $(elements[j+1]).val(JSON_OBJ[i]);
+                                j+=2;
+                            }
+                        }
+                        //断言特殊处理
+                        else if(input_class==".edit_assert"){
+                            for (var i in JSON_OBJ){
+                                $(elements[j]).val(i);
+                                for (var k in JSON_OBJ[i]){
+                                    $(elements[j+1]).val(JSON_OBJ[i][k]);
+                                    //配置断言方式
+                                    $(assert_way_elements[f]).val(k);
+                                }
+                                j+=2;
+                                f++;
+                            }
+                        }
+                        //接口依赖特殊处理
+                        else if(input_class==".edit_ApiDependency"){
+                            for (var i in JSON_OBJ){
+                                $(elements[j]).val(i);
+                                for (var k in JSON_OBJ[i]){
+                                    $(elements[j+1]).val(JSON_OBJ[i][k]);
+                                    //配置断言方式
+                                    $(api_dependency_elements[f]).val(k);
+                                }
+                                j+=2;
+                                f++;
+                            }
+                        }
+                    }
+                }
+                //每次点击修改 先把信息头参数，断言行数归1
+                del_line_init(".edit_headers","#del_headers_edit");
+                del_line_init(".edit_params","#del_params_edit");
+                del_line_init(".edit_assert","#del_assert_respon_seedit");
+                del_line_init(".edit_api_dependency","#del_api_ependency_edit");
+                //headers初始化新增行数输入对应的数据
+                edit_init("#edit_merge_headers","#add_headers_edit","#del_headers_edit",".edit_headers");
+                //params初始化新增行数输入对应的数据
+                edit_init("#edit_merge_params","#add_params_edit","#del_params_edit",".edit_params");
+                //assert初始化新增行数输入对应的数据
+                edit_init("#edit_merge_asserts","#add_assert_response_edit","#del_assert_response_edit",".edit_assert");
+                //ApiDependency初始化新增行数输入对应的数据
+                edit_init("#edit_merge_api_dependency","#add_api_dependency_edit","#del_api_dependency_edit",".edit_api_dependency");
+                //断言开关
+                if ($("#edit_merge_asserts").val()==""){
+                    $("#edit_div_big").attr("class","add_close_big");
+                    $("#edit_div_small").attr("class","add_close_small");
+                    $("#edit_assert_response_ul").attr("style","display:None");
+                    //删除断言属性
+                    $("#edit_merge_asserts").removeAttr("name");
+                }
+                else{
+                    $("#edit_div_big").attr("class","add_open_big");
+                    $("#edit_divs_mall").attr("class","add_open_small");
+                    $("#edit_assert_response_ul").attr("style","list-style-type: none;display:block");
+                    //添加断言属性
+                    $("#edit_merge_asserts").attr("name","asserts");
+                }
+                //接口依赖开关
+                if ($("#edit_merge_api_dependency").val()==""){
+                    $("#edit_div_big_api_dependency").attr("class","add_close_big");
+                    $("#edit_div_small_api_dependency").attr("class","add_close_small");
+                    $("#edit_api_dependency_ul").attr("style","display:None");
+                    //删除断言属性
+                    $("#edit_merge_api_dependency").removeAttr("name");
+                }
+                else{
+                    $("#edit_div_big_api_dependency").attr("class","add_open_big");
+                    $("#edit_div_small_api_dependency").attr("class","add_open_small");
+                    $("#edit_api_dependency_ul").attr("style","list-style-type: none;display:block");
+                    //添加断言属性
+                    $("#edit_merge_api_dependency").attr("name","api_dependency");
+                }
+                //如果是POSTbody得修改参数内容
+                if ($("#edit_method").val()=="post_body"){
+                    $("#edit_params_body_div textarea").val($("#edit_merge_params").val());
+                    $("#edit_merge_params").val("");
+                    var len=$(".edit_params").length;
+                    for (var i=0;i<len;i++){
+                        if (i==len-1){
+                            $(".edit_params").each(function(index){
+                                $(this).val("");
+                            });
+                        }
+                        else{
+                            $("#del_params_edit").trigger("click");
+                        }
+                    }
+                }
+                else{
+                    $("#edit_params_body_div textarea").val("");
+                }
+                //headers，params和断言数据合并转成json字符串
+                function mergeData(btn,select_input){
+                    var elements=$(select_input);
+                    var obj={};
+                    if (select_input!=".edit_assert" && select_input!=".edit_api_dependency"){
+                        for (var i=0;i<elements.length;i+=2){
+                            if($(elements[i]).val()){
+                                obj[$(elements[i]).val()]=$(elements[i+1]).val();
+                            }
+                        }
+                    }
+                    //断言的时候数据特殊处理
+                    else if(select_input==".edit_assert"){
+                        var assert_way_elements=$(".edit_assertWay");
+                        j=0;
+                        for (var i=0;i<elements.length;i+=2){
+                            if($(elements[i]).val()){
+                                var assert_way_obj={};
+                                assert_way_obj[$(assert_way_elements[j]).val()]=$(elements[i+1]).val();
+                                j+=1;
+                                obj[$(elements[i]).val()]=assert_way_obj;
+                            }
+                        }
+                    }
+                    //接口依赖的时候数据特殊处理
+                    else if(select_input==".edit_api_dependency"){
+                    var api_dependency_step_elements=$(".edit_api_dependency_step");
+                    j=0;
+                    for (var i=0;i<elements.length;i+=2){
+                        if($(elements[i]).val()){
+                            var api_dependency_step_obj={};
+                            api_dependency_step_obj[$(api_dependency_step_elements[j]).val()]=$(elements[i+1]).val();
+                            j+=1;
+                            obj[$(elements[i]).val()]=api_dependency_step_obj;
+                        }
+                    }
+                }
+                    objstring=JSON.stringify(obj);
+                    $(btn).val(objstring);
+                }
+                //提交的时候把先把数据合并
+                $(".edit_step_sub").click(function() {
+                    //步骤名不为空
+                    if ($("#edit_step_name").val() != "") {
+                        //把信息头的数据合并放到input 的id为edit_merge_headers里
+                        mergeData("#edit_merge_headers", ".edit_headers");
+                        //把参数的数据合并放到input 的id为edit_merge_params里
+                        mergeData("#edit_merge_params", ".edit_params");
+                        //把断言的数据合并放到input 的id为edit_merge_asserts里
+                        mergeData("#edit_merge_asserts", ".edit_assert");
+                        //把接口依赖的数据合并放到input 的id为edit_merge_asserts里
+                        mergeData("#edit_merge_api_dependency", ".edit_api_dependency");
+                        $("#edit").submit();
+                    }
+                });
+            });
+        }
     //删除用例步骤
      $("#del_step").click(function () {
                 var env_ids=new Array();
@@ -624,54 +1040,7 @@
         });
 
 
-        //编辑模块
 
-        $("#edit_step").click(function(){
-
-            var count=0;
-            var env_value;
-            var env=new Array();
-            var elements=$(".ipt");
-            alert(elements.length)
-            var url = null;
-            $("#table").find(":checkbox:checked").each(function(){
-                env_value=$(this).parent()
-                for (var i=0;i<elements.length;i++){
-                    env_value=env_value.next()
-
-                    env[i]=env_value.text();
-
-
-                }
-                count++;
-            });
-
-            if (count==1)
-            {
-                alert(env);
-                url = "/api_step/"+env+"/edit"
-                //alert(url)
-                for (var i=0;i<env.length-1;i++){
-                    $(elements[i]).val(env[i]);
-                }
-                if (env[env.length-1]=="True"){
-                    $(elements[env.length-1]).prop('checked',true);
-                }
-                else{
-                    $(elements[env.length-1]).removeAttr('checked');
-                }
-                //$('#editMyModal').modal("show");
-                if(env>0){
-                    location.href = url;
-                }
-            }
-            else if(count==0){
-                toastr.error("请至少选择一个选项!")
-            }
-            else{
-                toastr.error("编辑只能选择一个选项!");
-            }
-        });
 
 </script>
 

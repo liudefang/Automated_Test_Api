@@ -19,8 +19,8 @@
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 添加接口用例步骤
     </button>
 
-    <button id="btn2" class="btn btn-primary"  data-toggle="modal" data-target="#">
-        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>修改
+    <button id="edit_step" class="btn btn-primary" data-toggle="modal" data-target="#editmyModal">
+        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 修改
     </button>
       <button id="del_step" type="onclick" class="btn btn-danger ">
             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 删除
@@ -46,7 +46,7 @@
                     <thead>
                         <tr>
                             <th>选中</th>
-                            <th>id</th>
+                            <th>步骤id</th>
                             <th>步骤名称</th>
                             <th>用例名称</th>
                             <th>请求方式</th>
@@ -231,142 +231,153 @@
     </div>
 
 
-<!-- 编辑 -->
-    <div class="modal fade" id="editMyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog" style="max-width:560px">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-					&times;
-				</button>
-				<h4 class="modal-title" id="myModalLabel">
-					编辑步骤
-				</h4>
-			</div>
-			<div class="modal-body">
-                <form id="edit" role="form" method='POST' action="/step_edit_data/">
-                    <div class="form-group" style="display: none">
-                        <label  for="id">id</label>
-                        <input  type="text" class="ipt form-control" name="id" placeholder="请输入id" >
-                    </div>
-                    <div class="form-group">
-                        <label  for="step_name">步骤名</label>
-                        <input  id="editstep_name" type="text" class="ipt form-control" name="step_name" placeholder="请输入步骤名" readonly="readonly" required >
-                    </div>
-                    <div class="form-group">
-                        <label  for="case_name" >用例名</label>
-                        <select name="case_name" class="ipt form-control" required>
-                            {% for case_name in case_names %}
-                            <option>{{ case_name }}</option>
+    <!--编辑接口步骤模态框-->
+    <div class="modal fade" id="editmyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">编辑用例步骤</h4>
+          </div>
+          <div class="modal-body">
+              <form id="edit" role="form">
+                  <div class="form-group" style="display: none">
+                      <label for="id">id</label>
+                      <input type="text" class="ipt form-control" name="id" placeholder="请输入ID">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="step_name">步骤名称</label>
+                    <input type="text" name="step_name" id="edit_step_name" class="ipt form-control" placeholder="输入步骤名称" readonly="readonly" required>
+                  </div>
+                  <h6 style="color: red"><span class="error"></span></h6>
+                  <div class="form-group">
+                    <label for="case_id">用例名称</label>
+
+                        <select name="case_id" id="edit_case_id" class="ipt form-control" required>
+                            {% for case_obj in case_list %}
+
+                                <option value="{{case_obj.pk}}">{{case_obj.case_name}}</option>
+
                             {% endfor %}
                         </select>
-                    </div>
-                    <div class="form-group">
-                        <label >方式</label>
-                        <br>
-                        <div class="btn-group ">
-                            <button id="editget" type="button" name="method" class="btn btn-default" >get</button>
-                            <button id="editpostform" type="button" name="method" class="btn btn-default">postform</button>
-                            <button id="editpostbody" type="button" name="method" class="btn btn-default">postbody</button>
-                            <button id="editpostfile" type="button" name="method" class="btn btn-default">postfile</button>
-                            <input id="editmethod" name="method" type="text" style="display:None" class="ipt"  required/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="headers" >信息头</label>
-                       <ul id="editheadersul" style="list-style-type: none" >
-                            <li>
-                                <input class="editheaders" type="text"  placeholder="名称"  /><input  class="editheaders" type="text"  placeholder="值" />
-                                <input id="addheadersedit" type="button" class="btn btn-default"  style="height:24px;width:24px;text-align:center; margin:0px; padding:0px;" value="+">
-                                <input id="delheadersedit" type="button" class="btn btn-default"  style="height:24px;width:24px;text-align:center; margin:0px; padding:0px;" value="-">
-                                <input id="editmergeheaders" type="text" style="display:None" class="ipt" name="headers"/>
-                            </li>
-                       </ul>
-                    </div>
-                    <div class="form-group" id="editparamsdiv">
-                        <label for="params" >Parameters</label>
-                       <ul id="editparamsul" style="list-style-type: none" >
-                            <li>
-                                <input   type="text" class="editparams" placeholder="参数名"  /><input   type="text" class="editparams" placeholder="参数值" />
-                                <input id="addparamsedit" type="button" class="btn btn-default"  style="height:24px;width:24px;text-align:center; margin:0px; padding:0px;" value="+">
-                                <input id="delparamsedit" type="button" class="btn btn-default"  style="height:24px;width:24px;text-align:center; margin:0px; padding:0px;" value="-">
-                                <input id="editmergeparams" type="text" style="display:None" class="ipt" name="params"/>
-                            </li>
-                       </ul>
-                    </div>
-                    <div class="form-group" id="editparamsbodydiv">
-                        <label for="paramsbody" >Body Data</label>
-                        <textarea  class="form-control" name="paramsbody" style="height:150px"></textarea>
-                    </div>
-                    <div class="form-group" id="editfilesdiv">
-                        <label for="files" >Files Upload</label>
-                       <ul id="addfilesul" style="list-style-type: none" >
-                            <li>
-                                <input   type="text"  placeholder="文件名称"  /><input   type="text"  placeholder="参数名称" /><input   type="text"  placeholder="MIME类型" style="width: 70px"/>
-                                <input id="addfiles" type="button" class="btn btn-default"  style="height:24px;width:24px;text-align:center; margin:0px; padding:0px;" value="+">
-                                <input id="delfiles" type="button" class="btn btn-default"  style="height:24px;width:24px;text-align:center; margin:0px; padding:0px;" value="-">
-                                <input id="addmergefiles" type="text" class="ipt" name="files"/>
-                            </li>
-                       </ul>
-                    </div>
-                    <div class="form-group">
-                        <label for="params" >Assert</label>
-                        <div id="editdivbig" class="addopenbig">
-                            <div id="editdivsmall" class="addopensmall"></div>
-                        </div>
 
-                       <ul id="editassert_responseul" style="list-style-type: none" >
-                            <li>
-                                <input   type="text" class="editassert" placeholder="断言名" value="['code']" /><select class="editassertWay" ><option value="assertEqual">等于</option><option value="assertNotEqual">不等于</option><option value="assertRegexpMatches">包含</option><option value="assertNotRegexpMatches">不包含</option><option value="assertGreater">大于</option><option value="assertGreaterEqual">大于等于</option><option value="assertLess">小于</option><option value="assertLessEqual">小于等于</option><option value="assertIn">在列表中</option><option value="assertNotIn">不在列表中</option></select><input   type="text" class="editassert" placeholder="值" />
-                                <input id="addassert_responseedit" type="button" class="btn btn-default"  style="height:24px;width:24px;text-align:center; margin:0px; padding:0px;" value="+">
-                                <input id="delassert_responseedit" type="button" class="btn btn-default"  style="height:24px;width:24px;text-align:center; margin:0px; padding:0px;" value="-">
-                                <input id="editmergeasserts" type="text" style="display:None" class="ipt" name="asserts"/>
-                            </li>
-                       </ul>
-                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label >请求方式</label>
+                      <br>
+                      <div class="btn-group">
+                          <button id="edit_get" type="button" name="method" class="btn btn-primary">get</button>
+                          <button id="edit_post_form" type="button" name="method" class="btn btn-primary">post_form</button>
+                          <button id="edit_post_body" type="button" name="method" class="btn btn-primary">post_body</button>
+                          <button id="edit_post_file" type="button" name="method" class="btn btn-primary">post_file</button>
+                          <input id="edit_method" type="text" name="method" style="display:None" class="ipt" required/>
+                      </div>
 
-                    <div class="form-group">
-                        <label for="params" >API Dependency</label>
-                        <div id="editdivbigApiDependency" class="addopenbig">
-                            <div id="editdivsmallApiDependency" class="addopensmall"></div>
-                        </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="headers">消息头</label>
+                      <ul id="edit_headers_ul" style="list-style-type:none">
+                          <li>
+                              <input  class="edit_headers" type="text" placeholder="名称" />&nbsp;&nbsp;&nbsp;&nbsp;<input class="edit_headers" type="text" placeholder="值" />
+                              <input id="add_headers_edit" type="button" class="btn btn-primary" style="height:24px;width:24px;text-align:center;margin:0px;padding:0px;" value="+">
+                              <input id="del_headers_edit" type="button" class="btn btn-primary" style="height:24px;width:24px;text-align:center;margin:0px;padding:0px;" value="-">
+                              <input id="edit_merge_headers" type="text" style="display:None" class="ipt" name="headers">
+                          </li>
+                      </ul>
 
-                       <ul id="editApiDependencyul" style="list-style-type: none" >
-                            <li>
-                                <select class="editApiDependencyStep">{% for step in step_names %}<option>{{ step }}</option>{% endfor %}</select><br/>
-                                <input   type="text" class="editApiDependency" placeholder="变量名"  /><input   type="text" class="editApiDependency" placeholder="路径" />
-                                <input id="addApiDependencyedit" type="button" class="btn btn-default"  style="height:24px;width:24px;text-align:center; margin:0px; padding:0px;" value="+">
-                                <input id="delApiDependencyedit" type="button" class="btn btn-default"  style="height:24px;width:24px;text-align:center; margin:0px; padding:0px;" value="-">
-                                <input id="editmergeApiDependencys" type="text" style="display:None" class="ipt" name="ApiDependencys"/>
-                            </li>
-                       </ul>
-                    </div>
+                  </div>
+                  <div class="form-group" id="edit_params_div">
+                    <label for="params">请求参数</label>
+                      <ul id="edit_params_ul" style="list-style-type:none">
+                          <li>
+                              <input class="edit_params" type="text" placeholder="参数名" />&nbsp;&nbsp;&nbsp;&nbsp;<input class="edit_params" type="text" placeholder="参数值" />
+                              <input id="add_params_edit" type="button" class="btn btn-primary" style="height:24px;width:24px;text-align:center;margin:0px;padding:0px;" value="+">
+                              <input id="del_params_edit" type="button" class="btn btn-primary" style="height:24px;width:24px;text-align:center;margin:0px;pediting:0px;" value="-">
+                              <input id="edit_merge_params" type="text" style="display:None" class="ipt" name="params">
+                          </li>
+                      </ul>
 
-                    <div class="form-group">
-                        <label  for="steplevel">优先级</label>
-                        <input  type="text" class="ipt form-control" name="steplevel" placeholder="请输入优先级" >
-                    </div>
-                    <div class="form-group">
-                        <label for="step_desc">步骤描述</label>
-                        <input  type="text" class="ipt form-control" name="step_desc" placeholder="请输入步骤描述">
-                    </div>
-                    <div class="form-group" >
-                        <label class="checkbox-inline">
-                            <input type="checkbox" class="ipt" name="status" id="optionsRadios1" checked> 状态
-                        </label>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn layui-btn" data-dismiss="modal">关闭
-				        </button>
-				        <button id="editsubmit" type="onclick" class="btn layui-btn">
-					    提交
-				        </button>
-			        </div>
-                    {% csrf_token %}
-                </form>
-			</div>
-		</div><!-- /.modal-content -->
-	</div><!-- /.modal -->
+                  </div>
+                  <div class="form-group" id="edit_params_body_div">
+                    <label for="params_body">请求参数body</label>
+                      <textarea class="form-control" name="params_body" cols="60" rows="5" id="edit_params_body" ></textarea>
+                  </div>
+                  <div class="form-group" id="edit_files_div">
+                      <label for="files">文件上传</label>
+                      <ul id="edit_files_ul" style="list-style-type:none">
+                          <li>
+                              <input type="text" placeholder="文件名称" />&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" placeholder="参数名称"/>&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" placeholder="MiME类型" style="width:70px">
+                              <input id="add_files_edit" type="button" class="btn btn-primary" style="height:24px;width:24px;text-align:center;margin:0px;padding:0px;" value="+">
+                              <input id="del_files_edit" type="button" class="btn btn-primary" style="height:24px;width:24px;text-align:center;margin:0px;padding:0px;" value="-">
+                              <input id="add_merge_files" type="text" class="ipt" name="files" />
+                          </li>
+                      </ul>
+                  </div>
+
+                  <div class="form-group">
+                      <label for="asserts">断言</label>
+                      <div id="edit_div_big" class="edit_open_big">
+                          <div id="edit_div_small" class="edit_open_small"></div>
+                      </div>
+                      <ul id="edit_assert_response_ul" style="list-style-type:none">
+                          <li>
+                              <input   type="text" class="edit_assert" placeholder="断言名" value="['code']" /><select class="edit_assert_Way"><option value="assertEqual">等于</option><option value="assertNotEqual">不等于</option><option value="assertRegexpMatches">包含</option><option value="assertNotRegexpMatches">不包含</option><option value="assertGreater">大于</option><option value="assertGreaterEqual">大于等于</option><option value="assertLess">小于</option><option value="assertLessEqual">小于等于</option><option value="assertIn">在列表中</option><option value="assertNotIn">不在列表中</option></select><input   type="text" class="edit_assert" placeholder="值" />
+                                <input id="add_assert_response_edit" type="button" class="btn btn-primary"  style="height:24px;width:24px;text-align:center; margin:0px; padding:0px;" value="+">
+                                <input id="del_assert_response_edit" type="button" class="btn btn-primary"  style="height:24px;width:24px;text-align:center; margin:0px; padding:0px;" value="-">
+                                <input id="edit_merge_asserts" type="text" style="display:None" class="ipt" name="asserts"/>
+                          </li>
+                      </ul>
+                  </div>
+                  <div class="form-group">
+                      <label for="dependency">接口依赖</label>
+                      <div id="edit_div_big_api_dependency" class="edit_open_big">
+                          <div id="edit_div_small_api_dependency" class="edit_open_small"></div>
+                      </div>
+                      <ul id="edit_api_dependency_ul" style="list-style-type:none">
+                          <li>
+                              <select class="edit_api_dependency_step">{% for step in step_names %}<option>{{ step }}</option>{% endfor %}</select><br/>
+                              <input type="text" class="edit_api_dependency" placeholder="变量名" />&nbsp;&nbsp;&nbsp;<input type="text" class="edit_api_dependency" placeholder="路径" />
+                                <input id="add_api_dependency_edit" type="button" class="btn btn-primary"  style="height:24px;width:24px;text-align:center; margin:0px; padding:0px;" value="+">
+                                <input id="del_api_dependency_edit" type="button" class="btn btn-primary"  style="height:24px;width:24px;text-align:center; margin:0px; pediting:0px;" value="-">
+                                <input id="edit_merge_api_dependency" type="text" style="display:None" class="ipt" name="dependency"/>
+                          </li>
+                      </ul>
+                  </div>
+                  <div class="form-group">
+                      <label for="step_level">优先级</label>
+                      <input type="text" class="ipt form-control" name="step_level" id="edit_step_level" placeholder="请输入优先级">
+                  </div>
+                   <div class="form-group">
+                    <label for="step_desc">用例步骤描述</label>
+                    <textarea name="step_desc" id="edit_step_desc" cols="60" rows="3" class="ipt form-control" placeholder="输入用例描述"></textarea>
+                  </div>
+                  <div class="form-group">
+                      <label>用例步骤状态</label>
+                      <div>
+                          <label class="ipt radio-inline">
+                              <input type="radio" name="status" id="optionsRadios3" value="1" checked> 有效
+
+                          </label>
+                          &nbsp;&nbsp;&nbsp;&nbsp;
+                          <label class="radio-inline">
+                              <input type="radio" name="status" id="optionsRadios4" value="0"> 无效
+                          </label>
+                      </div>
+
+                  </div>
+
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="onclick" class="btn btn-primary edit_step_sub">提交</button>
+                  </div>
+
+              </form>
+
+          </div>
+
+        </div>
+      </div>
     </div>
 
 <script>
@@ -397,7 +408,18 @@
         display();
         //funisRepeat();
     });
+    // 搜索或者搜索分页后去根据select返回的value去确定第几个option被选中
+    function get_option(elements, value) {
+        $(elements).each(function (index, element) {
+            if($(element).val()==value){
+                $(element).attr("selected", true);
+                //console.log($(element).val());
+                return
+            }
 
+        });
+
+    }
 
     // 新增序列增行和减行
 
@@ -670,114 +692,61 @@
 
 
 }
-//新增
-        //序列增行和减行
-        function addline(addbtn,delbtn,ulid,placeholdername,placeholdervalue,addclass){
-            $(addbtn).click(function(){
-                if (addclass!="addassert" && addclass!="editassert" && addclass!="addApiDependency" && addclass!="editApiDependency")
-                {
-                    $(ulid).append("<li><input   type=\"text\" class="+addclass+" placeholder=\""+placeholdername+"\"  /><input   type=\"text\" class="+addclass+" placeholder=\""+placeholdervalue+"\" /></li>");
-                }
-                //断言增行特别注意
-                else if(addclass=="addassert"){
-                    $(ulid).append("<li><input   type=\"text\" class="+addclass+" placeholder=\""+placeholdername+"\"  /><select class=\"addassertWay\" ><option value=\"assertEqual\">等于</option><option value=\"assertNotEqual\">不等于</option><option value=\"assertRegexpMatches\">包含</option><option value=\"assertNotRegexpMatches\">不包含</option><option value=\"assertGreater\">大于</option><option value=\"assertGreaterEqual\">大于等于</option><option value=\"assertLess\">小于</option><option value=\"assertLessEqual\">小于等于</option><option value=\"assertIn\">在列表中</option><option value=\"assertNotIn\">不在列表中</option></select><input   type=\"text\" class="+addclass+" placeholder=\""+placeholdervalue+"\" /></li>");
-                }
-                else if(addclass=="editassert"){
-                    $(ulid).append("<li><input   type=\"text\" class="+addclass+" placeholder=\""+placeholdername+"\"  /><select class=\"editassertWay\" ><option value=\"assertEqual\">等于</option><option value=\"assertNotEqual\">不等于</option><option value=\"assertRegexpMatches\">包含</option><option value=\"assertNotRegexpMatches\">不包含</option><option value=\"assertGreater\">大于</option><option value=\"assertGreaterEqual\">大于等于</option><option value=\"assertLess\">小于</option><option value=\"assertLessEqual\">小于等于</option><option value=\"assertIn\">在列表中</option><option value=\"assertNotIn\">不在列表中</option></select><input   type=\"text\" class="+addclass+" placeholder=\""+placeholdervalue+"\" /></li>");
-                }
-                //接口依赖增行
-                else if(addclass=="addApiDependency"){
-                    $(ulid).append("<li><select class=\"addApiDependencyStep\">{% for step in step_names %}<option>{{ step }} </option>{% endfor %}</select><br/><input   type=\"text\" class="+addclass+" placeholder=\""+placeholdername+"\"  /><input   type=\"text\" class="+addclass+" placeholder=\""+placeholdervalue+"\" /></li>");
-                }
-                else if(addclass=="editApiDependency"){
-                    $(ulid).append("<li><select class=\"editApiDependencyStep\">{% for step in step_names %}<option>{{ step }} </option>{% endfor %}</select><br/><input   type=\"text\" class="+addclass+" placeholder=\""+placeholdername+"\"  /><input   type=\"text\" class="+addclass+" placeholder=\""+placeholdervalue+"\" /></li>");
-                }
-            });
-            $(delbtn).click(function(){
-                if ($(ulid+" li").length>1){
-                    $(ulid+" li:last").remove();
-                }
-            });
-        }
 
-    //根据方式控制需要显示的控件
-        function controlDisplay(btns,btn,elements,displaylist,method){
-            $(btn).click(function() {
-                for (var i = 0; i < elements.length; i++) {
-                    $(elements[i]).attr("style", displaylist[i]);
-                }
-                //选中按钮变灰色,其他按钮变回白色
-                for (var i=0;i<btns.length;i++){
-                    if (btns[i]==btn){
-                        $(btns[i]).attr("class","selectbtn btn btn-default");
-                    }
-                    else{
-                        $(btns[i]).attr("class","unselectbtn btn btn-default");
-                    }
-                }
-                //把method的输入框填写方式
-                $(method).val($(btn).text());
-            });
-        }
-
-    //编辑
-        function edit(){
-            //编辑控制方式按钮
+    function edit(){
+    //编辑控制方式按钮
             //get
-            controlDisplay(["#editget","#editpostform","#editpostbody","#editpostfile"],"#editget",["#editparamsdiv","#editparamsbodydiv","#editfilesdiv"],["display:block","display:None","display:None"],"#editmethod");
+            control_display(["#edit_get","#edit_post_form","#edit_post_body","#edit_post_file"],"#edit_get",["#edit_params_div","#edit_params_body_div","#edit_files_div"],["display:block","display:None","display:None"],"#edit_method");
             //postform
-            controlDisplay(["#editget","#editpostform","#editpostbody","#editpostfile"],"#editpostform",["#editparamsdiv","#editparamsbodydiv","#editfilesdiv"],["display:block","display:None","display:None"],"#editmethod");
+            control_display(["#edit_get","#edit_post_form","#edit_post_body","#edit_post_file"],"#edit_post_form",["#edit_params_div","#edit_params_body_div","#edit_files_div"],["display:block","display:None","display:None"],"#edit_method");
             //postbody
-            controlDisplay(["#editget","#editpostform","#editpostbody","#editpostfile"],"#editpostbody",["#editparamsdiv","#editparamsbodydiv","#editfilesdiv"],["display:None","display:block","display:None"],"#editmethod");
+            control_display(["#edit_get","#edit_post_form","#edit_post_body","#edit_post_file"],"#edit_post_body",["#edit_params_div","#edit_params_body_div","#edit_files_div"],["display:None","display:block","display:None"],"#edit_method");
             //postfile
-            controlDisplay(["#editget","#editpostform","#editpostbody","#editpostfile"],"#editpostfile",["#editparamsdiv","#editparamsbodydiv","#editfilesdiv"],["display:block","display:None","display:block"],"#editmethod");
-
+            control_display(["#edit_get","#edit_post_form","#edit_post_body","#edit_post_file"],"#edit_post_file",["#edit_params_div","#edit_params_body_div","#edit_files_div"],["display:block","display:None","display:block"],"#edit_method");
             //编辑控制信息头，参数，断言增行和减行
             //信息头
-            addline("#addheadersedit","#delheadersedit","#editheadersul","名称","值","editheaders");
+            add_line("#add_headers_edit","#del_headers_edit","#edit_headers_ul","名称","值","edit_headers");
             //参数
-            addline("#addparamsedit","#delparamsedit","#editparamsul","参数名","参数值","editparams");
+            add_line("#add_params_edit","#del_params_edit","#edit_params_ul","参数名","参数值","edit_params");
             //断言
-            addline("#addassert_responseedit","#delassert_responseedit","#editassert_responseul","断言名","值","editassert");
+            add_line("#add_assert_response_edit","#del_assert_response_edit","#edit_assert_response_ul","断言名","值","edit_assert");
             //接口依赖增行
-            addline("#addApiDependencyedit","#delApiDependencyedit","#editApiDependencyul","变量名","路径","editApiDependency");
+            add_line("#add_api_dependency_edit","#del_api_dependency_edit","#edit_api_dependency_ul","变量名","路径","edit_api_dependency");
             //是否要使用断言
-            $("#editdivbig").click(function(){
-                if ($("#editdivbig").attr("class")=="addopenbig"){
-                    $("#editdivbig").attr("class","addclosebig");
-                    $("#editdivsmall").attr("class","addclosesmall");
-                    $("#editassert_responseul").attr("style","display:None");
+            $("#edit_div_big").click(function(){
+                if ($("#edit_div_big").attr("class")=="edit_open_big"){
+                    $("#edit_div_big").attr("class","edit_close_big");
+                    $("#edit_div_small").attr("class","edit_open_small");
+                    $("#edit_assert_response_ul").attr("style","display:None");
                     //删除断言属性
-                    $("#editmergeasserts").removeAttr("name");
+                    $("#edit_merge_asserts").removeAttr("name");
                 }
                 else{
-                    $("#editdivbig").attr("class","addopenbig");
-                    $("#editdivsmall").attr("class","addopensmall");
-                    $("#editassert_responseul").attr("style","list-style-type: none;display:block");
+                    $("#edit_div_big").attr("class","edit_open_big");
+                    $("#edit_div_small").attr("class","edit_open_small");
+                    $("#edit_assert_response_ul").attr("style","list-style-type: none;display:block");
                     //添加断言属性
-                    $("#editmergeasserts").attr("name","asserts");
+                    $("#edit_merge_asserts").attr("name","asserts");
                 }
             });
-
             //是否要使用接口依赖
-            $("#editdivbigApiDependency").click(function(){
-                if ($("#editdivbigApiDependency").attr("class")=="addopenbig"){
-                    $("#editdivbigApiDependency").attr("class","addclosebig");
-                    $("#editdivsmallApiDependency").attr("class","addclosesmall");
-                    $("#editApiDependencyul").attr("style","display:None");
-                    //删除断言属性
-                    $("#editmergeApiDependencys").removeAttr("name");
+            $("#edit_div_big_api_dependency").click(function(){
+                if ($("#edit_div_big_api_dependency").attr("class")=="edit_open_big"){
+                    $("#edit_div_big_api_dependency").attr("class","edit_close_big");
+                    $("#edit_div_small_api_dependency").attr("class","edit_open_small");
+                    $("#edit_api_dependency_ul").attr("style","display:None");
+                    //删除接口依赖属性
+                    $("#edit_merge_api_dependency").removeAttr("name");
                 }
                 else{
-                    $("#editdivbigApiDependency").attr("class","addopenbig");
-                    $("#editdivsmallApiDependency").attr("class","addopensmall");
-                    $("#editApiDependencyul").attr("style","list-style-type: none;display:block");
+                    $("#edit_div_big_api_dependency").attr("class","edit_open_big");
+                    $("#edit_div_small_api_dependency").attr("class","edit_open_small");
+                    $("#edit_api_dependency_ul").attr("style","list-style-type: none;display:block");
                     //添加断言属性
-                    $("#editmergeApiDependencys").attr("name","ApiDependencys");
+                    $("#edit_merge_api_dependency").attr("name","api_dependency");
                 }
             });
-
-            $("#btn2").click(function(){
+            $("#edit_step").click(function(){
                 $("#myAlert").css("display","none");
                 $("#myAlert1").css("display","none");
                 var count=0;
@@ -791,7 +760,7 @@
                         //alert(env_value.attr("title"));
                         env[i]=env_value.attr("title");
                     }
-                    //alert(env)
+
                     count++;
                 });
                 if (count==1)
@@ -799,9 +768,13 @@
                     alert(env);
                     for (var i=0;i<env.length-1;i++){
                         $(elements[i]).val(env[i]);
+
                     }
+                    //alert(env[env.length-2])
                     if (env[env.length-1]=="True"){
                         $(elements[env.length-1]).prop('checked',true);
+                        alert($(elements[env.length-2]).prop('checked',true))
+
                     }
                     else{
                         $(elements[env.length-1]).removeAttr('checked');
@@ -812,57 +785,57 @@
                     $("#myAlert").css("display","inherit");
                 }
                 //点开编辑按钮，method初始化
-                var methoddic={"get":"#editget","postform":"#editpostform","postbody":"#editpostbody","postfile":"#editpostfile"}
-                $(methoddic[$("#editmethod").val()]).trigger("click");
-
+                var method_dic={"get":"#edit_get","post_form":"#edit_post_form","post_body":"#edit_post_body","post_file":"#edit_post_file"}
+                $(method_dic[$("#edit_method").val()]).trigger("click");
                 //headers,params,assert初始化
-                function dellineinit(inputclass,dellinebtn){
-                    for (var i=0;i<$(inputclass).length;i++){
-                        $(dellinebtn).trigger("click");
+                function del_line_init(input_class,del_line_btn){
+                    for (var i=0;i<$(input_class).length;i++){
+                        $(del_line_btn).trigger("click");
                     }
                 }
-                function editinit(mergebtn,addlinebtn,dellinebtn,inputclass){
-                    if ($(mergebtn).val()!=""){
-                        var JSONOBJ=JSON.parse($(mergebtn).val());
-                        for (var i in JSONOBJ){
-                            $(addlinebtn).trigger("click");
-                            //alert(JSONOBJ[i]);
+                function edit_init(merge_btn,add_line_btn,del_line_btn,input_class){
+                    if ($(merge_btn).val()!=""){
+                        alert($(merge_btn).val())
+                        var JSON_OBJ=JSON.parse($(merge_btn).val());
+                        for (var i in JSON_OBJ){
+                            $(add_line_btn).trigger("click");
+                            //alert(JSON_OBJ[i]);
                         }
-                        $(dellinebtn).trigger("click");
+                        $(del_line_btn).trigger("click");
                         //给每行赋值
-                        var elements=$(inputclass);
-                        var assertwayelements=$(".editassertWay");
-                        var ApiDependencyelements=$(".editApiDependencyStep");
+                        var elements=$(input_class);
+                        var assert_way_elements=$(".edit_assert_Way");
+                        var api_dependency_elements=$(".edit_api_dependency_step");
                         var j=0;
                         var f=0;
-                        if (inputclass!=".editassert" && inputclass!=".editApiDependency"){
-                            for (var i in JSONOBJ){
+                        if (input_class!=".edit_assert" && input_class!=".edit_api_dependency"){
+                            for (var i in JSON_OBJ){
                                 $(elements[j]).val(i);
-                                $(elements[j+1]).val(JSONOBJ[i]);
+                                $(elements[j+1]).val(JSON_OBJ[i]);
                                 j+=2;
                             }
                         }
                         //断言特殊处理
-                        else if(inputclass==".editassert"){
-                            for (var i in JSONOBJ){
+                        else if(input_class==".edit_assert"){
+                            for (var i in JSON_OBJ){
                                 $(elements[j]).val(i);
-                                for (var k in JSONOBJ[i]){
-                                    $(elements[j+1]).val(JSONOBJ[i][k]);
+                                for (var k in JSON_OBJ[i]){
+                                    $(elements[j+1]).val(JSON_OBJ[i][k]);
                                     //配置断言方式
-                                    $(assertwayelements[f]).val(k);
+                                    $(assert_way_elements[f]).val(k);
                                 }
                                 j+=2;
                                 f++;
                             }
                         }
                         //接口依赖特殊处理
-                        else if(inputclass==".editApiDependency"){
-                            for (var i in JSONOBJ){
+                        else if(input_class==".edit_api_dependency"){
+                            for (var i in JSON_OBJ){
                                 $(elements[j]).val(i);
-                                for (var k in JSONOBJ[i]){
-                                    $(elements[j+1]).val(JSONOBJ[i][k]);
+                                for (var k in JSON_OBJ[i]){
+                                    $(elements[j+1]).val(JSON_OBJ[i][k]);
                                     //配置断言方式
-                                    $(ApiDependencyelements[f]).val(k);
+                                    $(api_dependency_elements[f]).val(k);
                                 }
                                 j+=2;
                                 f++;
@@ -871,75 +844,72 @@
                     }
                 }
                 //每次点击修改 先把信息头参数，断言行数归1
-                dellineinit(".editheaders","#delheadersedit");
-                dellineinit(".editparams","#delparamsedit");
-                dellineinit(".editassert","#delassert_responseedit");
-                dellineinit(".editApiDependency","#delApiDependencyedit");
+                del_line_init(".edit_headers","#del_headers_edit");
+                del_line_init(".edit_params","#del_params_edit");
+                del_line_init(".edit_assert","#del_assert_respon_seedit");
+                del_line_init(".edit_api_dependency","#del_api_ependency_edit");
                 //headers初始化新增行数输入对应的数据
-                editinit("#editmergeheaders","#addheadersedit","#delheadersedit",".editheaders");
+                edit_init("#edit_merge_headers","#add_headers_edit","#del_headers_edit",".edit_headers");
                 //params初始化新增行数输入对应的数据
-                editinit("#editmergeparams","#addparamsedit","#delparamsedit",".editparams");
+                edit_init("#edit_merge_params","#add_params_edit","#del_params_edit",".edit_params");
                 //assert初始化新增行数输入对应的数据
-                editinit("#editmergeasserts","#addassert_responseedit","#delassert_responseedit",".editassert");
+                edit_init("#edit_merge_asserts","#add_assert_response_edit","#del_assert_response_edit",".edit_assert");
                 //ApiDependency初始化新增行数输入对应的数据
-                editinit("#editmergeApiDependencys","#addApiDependencyedit","#delApiDependencyedit",".editApiDependency");
+                edit_init("#edit_merge_api_dependency","#add_api_dependency_edit","#del_api_dependency_edit",".edit_api_dependency");
                 //断言开关
-                if ($("#editmergeasserts").val()==""){
-                    $("#editdivbig").attr("class","addclosebig");
-                    $("#editdivsmall").attr("class","addclosesmall");
-                    $("#editassert_responseul").attr("style","display:None");
+                if ($("#edit_merge_asserts").val()==""){
+                    $("#edit_div_big").attr("class","add_close_big");
+                    $("#edit_div_small").attr("class","add_close_small");
+                    $("#edit_assert_response_ul").attr("style","display:None");
                     //删除断言属性
-                    $("#editmergeasserts").removeAttr("name");
+                    $("#edit_merge_asserts").removeAttr("name");
                 }
                 else{
-                    $("#editdivbig").attr("class","addopenbig");
-                    $("#editdivsmall").attr("class","addopensmall");
-                    $("#editassert_responseul").attr("style","list-style-type: none;display:block");
+                    $("#edit_div_big").attr("class","add_open_big");
+                    $("#edit_divs_mall").attr("class","add_open_small");
+                    $("#edit_assert_response_ul").attr("style","list-style-type: none;display:block");
                     //添加断言属性
-                    $("#editmergeasserts").attr("name","asserts");
+                    $("#edit_merge_asserts").attr("name","asserts");
                 }
-
                 //接口依赖开关
-                if ($("#editmergeApiDependencys").val()==""){
-                    $("#editdivbigApiDependency").attr("class","addclosebig");
-                    $("#editdivsmallApiDependency").attr("class","addclosesmall");
-                    $("#editApiDependencyul").attr("style","display:None");
+                if ($("#edit_merge_api_dependency").val()==""){
+                    $("#edit_div_big_api_dependency").attr("class","add_close_big");
+                    $("#edit_div_small_api_dependency").attr("class","add_close_small");
+                    $("#edit_api_dependency_ul").attr("style","display:None");
                     //删除断言属性
-                    $("#editmergeApiDependencys").removeAttr("name");
+                    $("#edit_merge_api_dependency").removeAttr("name");
                 }
                 else{
-                    $("#editdivbigApiDependency").attr("class","addopenbig");
-                    $("#editdivsmallApiDependency").attr("class","addopensmall");
-                    $("#editApiDependencyul").attr("style","list-style-type: none;display:block");
+                    $("#edit_div_big_api_dependency").attr("class","add_open_big");
+                    $("#edit_div_small_api_dependency").attr("class","add_open_small");
+                    $("#edit_api_dependency_ul").attr("style","list-style-type: none;display:block");
                     //添加断言属性
-                    $("#editmergeApiDependencys").attr("name","ApiDependencys");
+                    $("#edit_merge_api_dependency").attr("name","api_dependency");
                 }
                 //如果是POSTbody得修改参数内容
-                if ($("#editmethod").val()=="postbody"){
-                    $("#editparamsbodydiv textarea").val($("#editmergeparams").val());
-                    $("#editmergeparams").val("");
-                    var len=$(".editparams").length;
+                if ($("#edit_method").val()=="post_body"){
+                    $("#edit_params_body_div textarea").val($("#edit_merge_params").val());
+                    $("#edit_merge_params").val("");
+                    var len=$(".edit_params").length;
                     for (var i=0;i<len;i++){
                         if (i==len-1){
-                            $(".editparams").each(function(index){
+                            $(".edit_params").each(function(index){
                                 $(this).val("");
                             });
                         }
                         else{
-                            $("#delparamsedit").trigger("click");
+                            $("#del_params_edit").trigger("click");
                         }
                     }
-
                 }
                 else{
-                    $("#editparamsbodydiv textarea").val("");
+                    $("#edit_params_body_div textarea").val("");
                 }
-
                 //headers，params和断言数据合并转成json字符串
-                function mergeData(btn,selectinput){
-                    var elements=$(selectinput);
+                function mergeData(btn,select_input){
+                    var elements=$(select_input);
                     var obj={};
-                    if (selectinput!=".editassert" && selectinput!=".editApiDependency"){
+                    if (select_input!=".edit_assert" && select_input!=".edit_api_dependency"){
                         for (var i=0;i<elements.length;i+=2){
                             if($(elements[i]).val()){
                                 obj[$(elements[i]).val()]=$(elements[i+1]).val();
@@ -947,28 +917,28 @@
                         }
                     }
                     //断言的时候数据特殊处理
-                    else if(selectinput==".editassert"){
-                        var assertwayelements=$(".editassertWay");
+                    else if(select_input==".edit_assert"){
+                        var assert_way_elements=$(".edit_assertWay");
                         j=0;
                         for (var i=0;i<elements.length;i+=2){
                             if($(elements[i]).val()){
-                                var assertwayobj={};
-                                assertwayobj[$(assertwayelements[j]).val()]=$(elements[i+1]).val();
+                                var assert_way_obj={};
+                                assert_way_obj[$(assert_way_elements[j]).val()]=$(elements[i+1]).val();
                                 j+=1;
-                                obj[$(elements[i]).val()]=assertwayobj;
+                                obj[$(elements[i]).val()]=assert_way_obj;
                             }
                         }
                     }
                     //接口依赖的时候数据特殊处理
-                    else if(selectinput==".editApiDependency"){
-                    var ApiDependencyStepelements=$(".editApiDependencyStep");
+                    else if(select_input==".edit_api_dependency"){
+                    var api_dependency_step_elements=$(".edit_api_dependency_step");
                     j=0;
                     for (var i=0;i<elements.length;i+=2){
                         if($(elements[i]).val()){
-                            var ApiDependencyStepobj={};
-                            ApiDependencyStepobj[$(ApiDependencyStepelements[j]).val()]=$(elements[i+1]).val();
+                            var api_dependency_step_obj={};
+                            api_dependency_step_obj[$(api_dependency_step_elements[j]).val()]=$(elements[i+1]).val();
                             j+=1;
-                            obj[$(elements[i]).val()]=ApiDependencyStepobj;
+                            obj[$(elements[i]).val()]=api_dependency_step_obj;
                         }
                     }
                 }
@@ -976,17 +946,17 @@
                     $(btn).val(objstring);
                 }
                 //提交的时候把先把数据合并
-                $("#editsubmit").click(function() {
+                $(".edit_step_sub").click(function() {
                     //步骤名不为空
-                    if ($("#editstep_name").val() != "") {
-                        //把信息头的数据合并放到input 的id为editmergeheaders里
-                        mergeData("#editmergeheaders", ".editheaders");
-                        //把参数的数据合并放到input 的id为editmergeparams里
-                        mergeData("#editmergeparams", ".editparams");
-                        //把断言的数据合并放到input 的id为editmergeasserts里
-                        mergeData("#editmergeasserts", ".editassert");
-                        //把接口依赖的数据合并放到input 的id为editmergeasserts里
-                        mergeData("#editmergeApiDependencys", ".editApiDependency");
+                    if ($("#edit_step_name").val() != "") {
+                        //把信息头的数据合并放到input 的id为edit_merge_headers里
+                        mergeData("#edit_merge_headers", ".edit_headers");
+                        //把参数的数据合并放到input 的id为edit_merge_params里
+                        mergeData("#edit_merge_params", ".edit_params");
+                        //把断言的数据合并放到input 的id为edit_merge_asserts里
+                        mergeData("#edit_merge_asserts", ".edit_assert");
+                        //把接口依赖的数据合并放到input 的id为edit_merge_asserts里
+                        mergeData("#edit_merge_api_dependency", ".edit_api_dependency");
                         $("#edit").submit();
                     }
                 });

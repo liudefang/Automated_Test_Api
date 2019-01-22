@@ -402,7 +402,7 @@ def api_step(request):
     api_list = ApiStep.objects.filter().all()
     case_list = TestCase.objects.filter().all()
 
-    return render(request, "api_step/index.html", {"case_list": case_list, "api_list": api_list})
+    return render(request, "api_step/step.html", {"case_list": case_list, "api_list": api_list})
 
 
 @login_required

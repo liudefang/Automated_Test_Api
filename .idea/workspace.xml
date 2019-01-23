@@ -2,157 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="95d82afa-5943-4d02-91da-c8ee0a933eef" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/echarts/echarts.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/css/layui.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/css/layui.mobile.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/css/modules/code.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/css/modules/laydate/default/laydate.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/css/modules/layer/default/icon-ext.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/css/modules/layer/default/icon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/css/modules/layer/default/layer.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/css/modules/layer/default/loading-0.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/css/modules/layer/default/loading-1.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/css/modules/layer/default/loading-2.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/font/iconfont.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/font/iconfont.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/font/iconfont.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/font/iconfont.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/lay/modules/carousel.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/lay/modules/code.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/lay/modules/element.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/lay/modules/flow.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/lay/modules/form.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/lay/modules/jquery.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/lay/modules/laydate.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/lay/modules/layedit.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/lay/modules/layer.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/lay/modules/laypage.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/lay/modules/laytpl.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/lay/modules/mobile.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/lay/modules/table.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/lay/modules/tree.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/lay/modules/upload.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/lay/modules/util.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui.all.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/css/layui.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/css/layui.mobile.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/css/modules/code.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/css/modules/laydate/default/laydate.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/css/modules/layer/default/icon-ext.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/css/modules/layer/default/icon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/css/modules/layer/default/layer.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/css/modules/layer/default/loading-0.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/css/modules/layer/default/loading-1.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/css/modules/layer/default/loading-2.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/font/iconfont.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/font/iconfont.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/font/iconfont.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/font/iconfont.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/0.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/1.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/10.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/11.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/12.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/13.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/14.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/15.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/16.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/17.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/18.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/19.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/2.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/20.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/21.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/22.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/23.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/24.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/25.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/26.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/27.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/28.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/29.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/3.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/30.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/31.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/32.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/33.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/34.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/35.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/36.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/37.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/38.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/39.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/4.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/40.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/41.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/42.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/43.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/44.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/45.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/46.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/47.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/48.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/49.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/5.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/50.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/51.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/52.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/53.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/54.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/55.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/56.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/57.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/58.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/59.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/6.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/60.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/61.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/62.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/63.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/64.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/65.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/66.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/67.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/68.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/69.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/7.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/70.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/71.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/8.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/images/face/9.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/lay/modules/carousel.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/lay/modules/code.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/lay/modules/element.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/lay/modules/flow.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/lay/modules/form.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/lay/modules/jquery.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/lay/modules/laydate.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/lay/modules/layedit.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/lay/modules/layer.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/lay/modules/laypage.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/lay/modules/laytpl.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/lay/modules/mobile.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/lay/modules/table.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/lay/modules/tree.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/lay/modules/upload.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/lay/modules/util.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/layui.all.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/layui/layui/layui.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/static/css/style.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/static/image/bg.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/static/image/code.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/static/image/wx.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/static/image/zfb.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/static/js/vip_comm.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/static/js/vip_nav.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/static/js/vip_tab.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/frame/static/js/vip_table.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/static/js/layui.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_platform/templates/api_step/index1.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api_platform/ApiTest/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_platform/ApiTest/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api_platform/templates/api_step/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/api_platform/templates/api_step/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api_platform/templates/api_step/step.html" beforeDir="false" afterPath="$PROJECT_DIR$/api_platform/templates/api_step/step.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -162,171 +11,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/api_platform/ApiTest/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="404" column="41" selection-start-line="404" selection-start-column="41" selection-end-line="404" selection-end-column="41" />
-              <folding>
-                <element signature="e#0#11#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/api_platform/templates/api_step/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="585">
-              <caret line="24" column="64" selection-start-line="24" selection-start-column="54" selection-end-line="24" selection-end-column="64" />
-              <folding>
-                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#th#9;n#tr#0;n#thead#0;n#table#0;n#div#0;n#div#0;n#div#3;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#h6#0;n#form#0;n#div#1;n#div#0;n#div#0;n#div#4;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#input#0;n#div#0;n#div#2;n#form#0;n#div#1;n#div#0;n#div#0;n#div#4;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#input#2;n#li#0;n#ul#0;n#div#3;n#form#0;n#div#1;n#div#0;n#div#0;n#div#4;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#input#3;n#li#0;n#ul#0;n#div#3;n#form#0;n#div#1;n#div#0;n#div#0;n#div#4;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#input#4;n#li#0;n#ul#0;n#div#3;n#form#0;n#div#1;n#div#0;n#div#0;n#div#4;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#ul#0;n#div#6;n#form#0;n#div#1;n#div#0;n#div#0;n#div#4;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#5;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#form#0;n#div#1;n#div#0;n#div#0;n#div#5;n#!!top" expanded="true" />
-                <element signature="e#51#57#0" expanded="true" />
-                <element signature="e#57#63#0" expanded="true" />
-                <element signature="e#63#69#0" expanded="true" />
-                <element signature="e#69#75#0" expanded="true" />
-                <element signature="e#56#62#0" expanded="true" />
-                <element signature="e#62#68#0" expanded="true" />
-                <element signature="e#68#74#0" expanded="true" />
-                <element signature="e#74#80#0" expanded="true" />
-                <element signature="e#575#581#0" expanded="true" />
-                <element signature="e#581#587#0" expanded="true" />
-                <element signature="e#587#593#0" expanded="true" />
-                <element signature="e#593#599#0" expanded="true" />
-                <element signature="e#52#58#0" expanded="true" />
-                <element signature="e#58#64#0" expanded="true" />
-                <element signature="e#64#70#0" expanded="true" />
-                <element signature="e#70#76#0" expanded="true" />
-                <element signature="e#123#129#0" expanded="true" />
-                <element signature="e#129#135#0" expanded="true" />
-                <element signature="e#135#141#0" expanded="true" />
-                <element signature="e#141#147#0" expanded="true" />
-                <element signature="n#style#0;n#input#2;n#li#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/api_platform/templates/api_step/index1.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <folding>
-                <element signature="e#51#57#0" expanded="true" />
-                <element signature="e#57#63#0" expanded="true" />
-                <element signature="e#63#69#0" expanded="true" />
-                <element signature="e#69#75#0" expanded="true" />
-                <element signature="e#56#62#0" expanded="true" />
-                <element signature="e#62#68#0" expanded="true" />
-                <element signature="e#68#74#0" expanded="true" />
-                <element signature="e#74#80#0" expanded="true" />
-                <element signature="e#575#581#0" expanded="true" />
-                <element signature="e#581#587#0" expanded="true" />
-                <element signature="e#587#593#0" expanded="true" />
-                <element signature="e#593#599#0" expanded="true" />
-                <element signature="e#52#58#0" expanded="true" />
-                <element signature="e#58#64#0" expanded="true" />
-                <element signature="e#64#70#0" expanded="true" />
-                <element signature="e#70#76#0" expanded="true" />
-                <element signature="e#123#129#0" expanded="true" />
-                <element signature="e#129#135#0" expanded="true" />
-                <element signature="e#135#141#0" expanded="true" />
-                <element signature="e#141#147#0" expanded="true" />
-                <element signature="n#style#0;n#input#2;n#li#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/api_platform/templates/api_step/step.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="643">
-              <caret line="310" column="20" selection-start-line="310" selection-start-column="20" selection-end-line="310" selection-end-column="20" />
-              <folding>
-                <element signature="n#style#0;n#input#0;n#form#0;n#div#0;n#div#3;n#body#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#th#9;n#tr#0;n#table#0;n#div#0;n#div#4;n#body#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#6;n#body#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#form#0;n#div#1;n#div#0;n#div#0;n#div#6;n#body#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#input#0;n#div#0;n#div#3;n#form#0;n#div#1;n#div#0;n#div#0;n#div#6;n#body#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#ul#0;n#div#5;n#form#0;n#div#1;n#div#0;n#div#0;n#div#6;n#body#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#textarea#0;n#div#6;n#form#0;n#div#1;n#div#0;n#div#0;n#div#4;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/api_platform/ApiTest/models.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2790">
-              <caret line="94" column="10" selection-start-line="94" selection-start-column="4" selection-end-line="94" selection-end-column="10" />
-              <folding>
-                <element signature="e#0#51#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/api_platform/templates/modules/edit.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1230">
-              <caret line="41" column="44" selection-start-line="41" selection-start-column="44" selection-end-line="41" selection-end-column="44" />
-              <folding>
-                <element signature="n#style#0;n#h6#0;n#form#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/api_platform/templates/project/edit.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="870">
-              <caret line="29" column="49" selection-start-line="29" selection-start-column="49" selection-end-line="29" selection-end-column="49" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/api_platform/templates/interface/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="8550">
-              <caret line="285" column="11" selection-start-line="234" selection-start-column="5" selection-end-line="285" selection-end-column="11" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/api_platform/templates/modules/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="14" column="40" selection-start-line="14" selection-start-column="33" selection-end-line="14" selection-end-column="40" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/api_platform/templates/base.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="570">
-              <caret line="19" column="28" lean-forward="true" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -403,11 +88,11 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds">
     <option name="x" value="1920" />
-    <option name="y" value="20" />
+    <option name="y" value="23" />
     <option name="width" value="1920" />
-    <option name="height" value="1060" />
+    <option name="height" value="1057" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -417,60 +102,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="Automated_Test_Api" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Automated_Test_Api" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Automated_Test_Api" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Automated_Test_Api" type="462c0819:PsiDirectoryNode" />
-              <item name="api_platform" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Automated_Test_Api" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Automated_Test_Api" type="462c0819:PsiDirectoryNode" />
-              <item name="api_platform" type="462c0819:PsiDirectoryNode" />
-              <item name="api_platform" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Automated_Test_Api" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Automated_Test_Api" type="462c0819:PsiDirectoryNode" />
-              <item name="api_platform" type="462c0819:PsiDirectoryNode" />
-              <item name="ApiTest" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Automated_Test_Api" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Automated_Test_Api" type="462c0819:PsiDirectoryNode" />
-              <item name="api_platform" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Automated_Test_Api" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Automated_Test_Api" type="462c0819:PsiDirectoryNode" />
-              <item name="api_platform" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="frame" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Automated_Test_Api" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Automated_Test_Api" type="462c0819:PsiDirectoryNode" />
-              <item name="api_platform" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Automated_Test_Api" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Automated_Test_Api" type="462c0819:PsiDirectoryNode" />
-              <item name="api_platform" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="api_step" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
+      <pane id="ProjectPane" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -520,17 +152,17 @@
       <workItem from="1547989229393" duration="4521000" />
       <workItem from="1548070176225" duration="9119000" />
       <workItem from="1548156013502" duration="14422000" />
+      <workItem from="1548232173677" duration="41000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="89110000" />
+    <option name="totallyTimeSpent" value="89151000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1913" y="-7" width="2062" height="1126" extended-state="6" />
-    <editor active="true" />
+    <frame x="1920" y="23" width="1920" height="1057" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18434343" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18797399" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -624,54 +256,35 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/api_platform/ApiTest/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2790">
-          <caret line="94" column="10" selection-start-line="94" selection-start-column="4" selection-end-line="94" selection-end-column="10" />
-          <folding>
-            <element signature="e#0#51#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api_platform/templates/modules/edit.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1230">
-          <caret line="41" column="44" selection-start-line="41" selection-start-column="44" selection-end-line="41" selection-end-column="44" />
-          <folding>
-            <element signature="n#style#0;n#h6#0;n#form#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api_platform/templates/project/edit.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="870">
-          <caret line="29" column="49" selection-start-line="29" selection-start-column="49" selection-end-line="29" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api_platform/templates/interface/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8550">
-          <caret line="285" column="11" selection-start-line="234" selection-start-column="5" selection-end-line="285" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api_platform/templates/modules/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="14" column="40" selection-start-line="14" selection-start-column="33" selection-end-line="14" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/api_platform/static/js/layui.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/api_platform/templates/base.html">
+    <entry file="file://$PROJECT_DIR$/api_platform/ApiTest/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="19" column="28" lean-forward="true" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
+        <state relative-caret-position="9480">
+          <caret line="404" column="41" selection-start-line="404" selection-start-column="41" selection-end-line="404" selection-end-column="41" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api_platform/templates/api_step/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="576">
+          <caret line="24" column="64" selection-start-line="24" selection-start-column="54" selection-end-line="24" selection-end-column="64" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#th#9;n#tr#0;n#thead#0;n#table#0;n#div#0;n#div#0;n#div#3;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#h6#0;n#form#0;n#div#1;n#div#0;n#div#0;n#div#4;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#div#0;n#div#2;n#form#0;n#div#1;n#div#0;n#div#0;n#div#4;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#2;n#li#0;n#ul#0;n#div#3;n#form#0;n#div#1;n#div#0;n#div#0;n#div#4;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#3;n#li#0;n#ul#0;n#div#3;n#form#0;n#div#1;n#div#0;n#div#0;n#div#4;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#4;n#li#0;n#ul#0;n#div#3;n#form#0;n#div#1;n#div#0;n#div#0;n#div#4;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#ul#0;n#div#6;n#form#0;n#div#1;n#div#0;n#div#0;n#div#4;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#5;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#form#0;n#div#1;n#div#0;n#div#0;n#div#5;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -704,53 +317,51 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/api_platform/ApiTest/views.py">
+    <entry file="file://$PROJECT_DIR$/api_platform/ApiTest/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="404" column="41" selection-start-line="404" selection-start-column="41" selection-end-line="404" selection-end-column="41" />
+        <state relative-caret-position="2232">
+          <caret line="94" column="10" selection-start-line="94" selection-start-column="4" selection-end-line="94" selection-end-column="10" />
           <folding>
-            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#0#51#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/api_platform/templates/api_step/index.html">
+    <entry file="file://$PROJECT_DIR$/api_platform/templates/modules/edit.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="585">
-          <caret line="24" column="64" selection-start-line="24" selection-start-column="54" selection-end-line="24" selection-end-column="64" />
+        <state relative-caret-position="984">
+          <caret line="41" column="44" selection-start-line="41" selection-start-column="44" selection-end-line="41" selection-end-column="44" />
           <folding>
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#th#9;n#tr#0;n#thead#0;n#table#0;n#div#0;n#div#0;n#div#3;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#h6#0;n#form#0;n#div#1;n#div#0;n#div#0;n#div#4;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#0;n#div#0;n#div#2;n#form#0;n#div#1;n#div#0;n#div#0;n#div#4;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#2;n#li#0;n#ul#0;n#div#3;n#form#0;n#div#1;n#div#0;n#div#0;n#div#4;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#3;n#li#0;n#ul#0;n#div#3;n#form#0;n#div#1;n#div#0;n#div#0;n#div#4;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#4;n#li#0;n#ul#0;n#div#3;n#form#0;n#div#1;n#div#0;n#div#0;n#div#4;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#ul#0;n#div#6;n#form#0;n#div#1;n#div#0;n#div#0;n#div#4;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#5;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#form#0;n#div#1;n#div#0;n#div#0;n#div#5;n#!!top" expanded="true" />
-            <element signature="e#51#57#0" expanded="true" />
-            <element signature="e#57#63#0" expanded="true" />
-            <element signature="e#63#69#0" expanded="true" />
-            <element signature="e#69#75#0" expanded="true" />
-            <element signature="e#56#62#0" expanded="true" />
-            <element signature="e#62#68#0" expanded="true" />
-            <element signature="e#68#74#0" expanded="true" />
-            <element signature="e#74#80#0" expanded="true" />
-            <element signature="e#575#581#0" expanded="true" />
-            <element signature="e#581#587#0" expanded="true" />
-            <element signature="e#587#593#0" expanded="true" />
-            <element signature="e#593#599#0" expanded="true" />
-            <element signature="e#52#58#0" expanded="true" />
-            <element signature="e#58#64#0" expanded="true" />
-            <element signature="e#64#70#0" expanded="true" />
-            <element signature="e#70#76#0" expanded="true" />
-            <element signature="e#123#129#0" expanded="true" />
-            <element signature="e#129#135#0" expanded="true" />
-            <element signature="e#135#141#0" expanded="true" />
-            <element signature="e#141#147#0" expanded="true" />
-            <element signature="n#style#0;n#input#2;n#li#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#h6#0;n#form#0;n#div#1;n#div#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api_platform/templates/project/edit.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="696">
+          <caret line="29" column="49" selection-start-line="29" selection-start-column="49" selection-end-line="29" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api_platform/templates/interface/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6840">
+          <caret line="285" column="11" selection-start-line="234" selection-start-column="5" selection-end-line="285" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api_platform/templates/modules/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="14" column="40" selection-start-line="14" selection-start-column="33" selection-end-line="14" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api_platform/templates/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="456">
+          <caret line="19" column="28" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
         </state>
       </provider>
     </entry>

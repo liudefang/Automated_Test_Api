@@ -452,63 +452,67 @@ def add_step(request):
 
 
 @login_required
-def edit_step(request, env_id, option):
+def edit_step(request):
     """
     编辑用例步骤
     :param request:
     :return:
     """
 
+    if request.method == "POST":
+        step_id = request.POST.get("step_id")
+        step_name = request.POST.get('step_name')
+        case_name = request.POST.get('case_name')
+        method = request.POST.get('method')
+        headers = request.POST.get('headers')
+        params = request.POST.get('params')
+        assert_response = request.POST.get('assert_response')
+        api_dependency = request.POST.get('dependency')
+        step_level = request.POST.get('step_level')
+        step_desc = request.POST.get('step_desc')
+
+        params_body = request.POST.get('params_body')
+        status = request.POST.get("status")
+        print("case_name:", case_name)
+        print("params:", params)
+        print("step_id:", step_id)
+        case_id = TestCase.objects.get(case_name=case_name)
+        print("case_id:", case_id)
+        if len(step_name) != 0:
+            if method == "get" or method == "post_form":
+                ApiStep.objects.filter(api_id=step_id).update(case_id=case_id, step_name=step_name, step_level=step_level,
+                                                              method=method,params=params, headers=headers, assert_response=assert_response,
+                                                              step_desc=step_desc, api_dependency=api_dependency, status=status)
+            elif method == "post_body":
+                ApiStep.objects.filter(api_id=step_id).update(case_id=case_id, step_name=step_name, step_level=step_level, method=method,
+                                                              params=params_body, headers=headers, assert_response=assert_response,
+                                                              step_desc=step_desc, api_dependency=api_dependency, status=status)
+
+            response = {"status": 0, "msg": "编辑成功!"}
+
+            # return redirect("/project")
+        else:
+            response = {"status": 1, "msg": "用例步骤名称不能为空!"}
+
+        return JsonResponse(response)
+
+    case_list = TestCase.objects.filter().all()
+
+    return render(request, "api_step/step.html", {"case_list": case_list})
+
+
+@login_required
+def del_step(request, env_id):
     edit_step_list = ApiStep.objects.filter(api_id=env_id).first()
-    if edit_step_list and option == "delete":
-        try:
-            edit_step_list.delete()
-            reg = {'status': 0, 'msg': '删除成功!'}
-        except Exception as e:
-            reg = {'status': 1, 'msg': '删除失败!'}
 
-        return HttpResponse(json.dumps(reg))
-    elif edit_step_list and option == "edit":
+    try:
+        edit_step_list.delete()
+        reg = {'status': 0, 'msg': '删除成功!'}
+    except Exception as e:
+        reg = {'status': 1, 'msg': '删除失败!'}
 
-        if request.method == "POST":
+    return HttpResponse(json.dumps(reg))
 
-            step_name = request.POST.get('step_name')
-            case_id = request.POST.get('case_id')
-            method = request.POST.get('method')
-            headers = request.POST.get('headers')
-            params = request.POST.get('params')
-            assert_response = request.POST.get('assert_response')
-            api_dependency = request.POST.get('dependency')
-            step_level = request.POST.get('step_level')
-            step_desc = request.POST.get('step_desc')
-
-            params_body = request.POST.get('params_body')
-            status = request.POST.get("status")
-            print("case_id:", case_id)
-            print("params:", params)
-            if len(step_name) != 0 and step_name != str(ApiStep.objects.filter(step_name=step_name).first()):
-                if method == "get" or method == "post_form":
-                    ApiStep.objects.update(case_id=case_id, step_name=step_name, step_level=step_level, method=method,
-                                           params=params, headers=headers, assert_response=assert_response,
-                                           step_desc=step_desc, api_dependency=api_dependency, status=status)
-                elif method == "post_body":
-                    ApiStep.objects.update(case_id=case_id, step_name=step_name, step_level=step_level, method=method,
-                                           params=params_body, headers=headers, assert_response=assert_response,
-                                           step_desc=step_desc, api_dependency=api_dependency, status=status)
-
-                response = {"status": 0, "msg": "编辑成功!"}
-
-                # return redirect("/project")
-            else:
-                response = {"status": 1, "msg": "环境名称不能为空!"}
-
-            return JsonResponse(response)
-
-        case_list = TestCase.objects.filter().all()
-
-        return render(request, "api_step/edit.html", {"edit_step_list": edit_step_list, "case_list": case_list})
-    else:
-        return render(request, "not_found.html")
 
 
 @login_required

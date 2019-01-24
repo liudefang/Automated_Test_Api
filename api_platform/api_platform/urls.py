@@ -46,7 +46,8 @@ urlpatterns = [
     # 用例步骤
     url(r'^api_step/$', views.api_step),
     url(r'^add_step/$', views.add_step),
-    re_path(r'^api_step/(\d+)/(edit|delete)', views.edit_step),
+    url(r'^edit_step/$', views.edit_step),
+    re_path(r'^api_step/(\d+)/delete', views.del_step),
 
     # 环境
     url(r'^env/$', views.environment),

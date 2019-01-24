@@ -90,20 +90,21 @@
 				</h4>
 			</div>
 			<div class="modal-body">
-                <form id="edit" role="form" method='POST' action="/step_edit_data/">
+                <form role="form">
                     <div class="form-group" style="display: none">
-                        <label  for="id">id</label>
-                        <input  type="text" class="ipt form-control" name="id" placeholder="请输入id" >
+                        <label  for="step_id">id</label>
+                        <input  type="text" class="ipt form-control" name="step_id" id="step_id" placeholder="请输入id" >
                     </div>
                     <div class="form-group">
                         <label  for="edit_step_name">步骤名</label>
-                        <input  id="edit_step_name" type="text" class="ipt form-control" name="step_name" placeholder="请输入步骤名" readonly="readonly" required >
+                        <input  id="edit_step_name" type="text" class="ipt form-control" name="step_name" placeholder="请输入步骤名" required >
                     </div>
+                    <h6 style="color: red; margin-left:10px"><span class="error"></span></h6>
                     <div class="form-group">
                         <label  for="edit_case_name" >用例名</label>
-                        <select id="edit_case_name" name="case_name" class="ipt form-control" required>
-                            {% for case_name in case_names %}
-                            <option>{{ case_name }}</option>
+                        <select id="edit_case_name" name="edit_case_name" class="ipt form-control" required>
+                            {% for case_obj in case_list %}
+                            <option>{{case_obj.case_name}}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -197,13 +198,21 @@
                         <input  type="text" class="ipt form-control" name="edit_step_desc" id="edit_step_desc" placeholder="请输入步骤描述">
                     </div>
                     <div class="form-group" >
-                        <label class="checkbox-inline">
-                            <input type="checkbox" class="ipt" name="status" id="optionsRadios3" checked> 状态
-                        </label>
+                        <label>用例步骤状态</label>
+                      <div>
+                          <label class="ipt radio-inline">
+                              <input type="radio" name="status" id="optionsRadios3" value="1" checked> 有效
+
+                          </label>
+                          &nbsp;&nbsp;&nbsp;&nbsp;
+                          <label class="radio-inline">
+                              <input type="radio" name="status" id="optionsRadios4" value="0"> 无效
+                          </label>
+                      </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-info" data-dismiss="modal">关闭</button>
-				        <button id="edit_submit" type="onclick" class="btn btn-primary">提交</button>
+				        <button type="button" class="btn btn-primary edit_step_sub">提交</button>
 			        </div>
                     {% csrf_token %}
                 </form>
@@ -227,7 +236,7 @@
                     <label for="step_name">步骤名称</label>
                     <input type="text" name="step_name" id="step_name" class="ipt form-control" placeholder="输入步骤名称">
                   </div>
-                  <h6 style="color: red"><span class="error"></span></h6>
+                  <h6 style="color: red; margin-left:10px"><span class="error"></span></h6>
                   <div class="form-group">
                     <label for="case_id">用例名称</label>
 
@@ -473,6 +482,7 @@
                 else{
                     $("#myAlert").css("display","inherit");
                 }
+
                 //点开编辑按钮，method初始化
                 var method_dic={"get":"#edit_get","post_form":"#edit_post_form","post_body":"#edit_post_body","post_file":"#edit_post_file"}
                 $(method_dic[$("#edit_method").val()]).trigger("click");
@@ -598,7 +608,7 @@
                     $("#edit_merge_api_dependency").attr("name","api_dependency");
                 }
 
-
+            });
                 //headers，params和断言数据合并转成json字符串
                 function mergeData(btn,select_input){
                     var elements=$(select_input);
@@ -639,9 +649,11 @@
                     objstring=JSON.stringify(obj);
                     $(btn).val(objstring);
                 }
+
                 //提交的时候把先把数据合并
-                $("#edit_submit").click(function() {
+                $(".edit_step_sub").click(function() {
                     //步骤名不为空
+
                     if ($("#edit_step_name").val() != "") {
                         //把信息头的数据合并放到input 的id为editmergeheaders里
                         mergeData("#edit_merge_headers", ".edit_headers");
@@ -653,8 +665,59 @@
                         mergeData("#edit_merge_api_dependency", ".edit_api_dependency");
                         $("#edit").submit();
                     }
+
+                    $.ajax({
+                        url: "/edit_step/",
+                        type: "post",
+                        data: {
+                            step_id:$("#step_id").val(),
+                            step_name: $("#edit_step_name").val(),
+                            case_name: $("#edit_case_name").val(),
+                            method: $("#edit_method").val(),
+                            headers: $("#edit_merge_headers").val(),
+                            params: $("#edit_merge_params").val(),
+                            assert_response: $("#edit_merge_assert").val(),
+                            api_dependency: $("#edit_merge_api_dependency").val(),
+                            step_level: $("#edit_step_level").val(),
+                            step_desc: $("#edit_step_desc").val(),
+                            params_body: $("#body_data_params").val(),
+                            status: $("*[name='status']:checked").val(),
+                            csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val(),
+                        },
+
+                        success: function (data) {
+
+                            if (data.status== 0) {
+                                alert(111)
+                                toastr.success(data.msg);
+                                if (location.search){
+                                        location.href = location.search.slice(6)
+                                }
+                                else {
+                                    setTimeout(function () {
+                                        location.href = "/api_step/"
+                                    }, 2000)
+
+                                }
+
+                            }
+                            else {
+
+                                alert(222)
+                                $(".error").text(data.msg);
+                                setTimeout(function () {
+                                    $(".error").text("");
+
+                                }, 5000)
+                            }
+
+
+
+                        }
+
+                    })
                 });
-            });
+
         }
 
         //新增

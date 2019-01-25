@@ -75,25 +75,26 @@
                 <div class="menu">
                     <div class="head bg-primary">基础信息</div>
                     <ul class="nav nav-sidebar">
+                        <li><a href="/project/" target="_self">测试报告</a> </li>
                         <li><a href="/project/" target="_self">项目管理</a> </li>
                         <li><a href="/module/" target="_self">模块管理</a> </li>
                         <li><a href="/api_case/" target="_self">接口用例</a> </li>
                         <li><a href="/api_step/" target="_self">测试用例步骤</a> </li>
-                        <li><a href="#">测试计划</a> </li>
+                        <li><a href="#">Sql管理</a> </li>
 
                     </ul>
                 </div>
                 <div class="menu">
                     <div class="head bg-primary">测试任务</div>
                     <ul class="nav nav-sidebar">
-                        <li><a href="/sign/">签名方式</a> </li>
+                        <li><a href="/plan/">测试计划</a> </li>
                     </ul>
                 </div>
                 <div class="menu">
                     <div class="head bg-primary">系统配置</div>
                     <ul class="nav nav-sidebar">
                         <li><a href="/env/" target="_self">环境配置</a> </li>
-                        <li><a href="/email/" target="_self">邮箱</a> </li>
+                        <li><a href="/email/" target="_self">邮  箱</a> </li>
                         <li><a href="/database/" target="_self">数据库</a> </li>
                     </ul>
                 </div>
@@ -337,7 +338,7 @@
 
                 if (count==1)
                 {
-                    //alert(env);
+                    //alert(plan);
                     url = "/project/"+env+"/edit"
                     //alert(url)
                     for (var i=0;i<env.length-1;i++){
@@ -391,7 +392,7 @@
             //alert(count)
             alert(env_id1)
             if(count1>0){
-                url1 = /env/+env_id1+pathname1.replace('/env/', '/delete/')
+                url1 = /env/+env_id1+pathname1.replace('/plan/', '/delete/')
                  // 删除插件的应用
             swal({
 
@@ -422,14 +423,14 @@
 
                             toastr.success(data.msg);
                             setTimeout(function () {
-                            location.href = "/env/"
+                            location.href = "plan/"
                         }, 2000)
 
 
                         }else{
                             toastr.error(data.msg);
                             setTimeout(function () {
-                            location.href = "/env/"
+                            location.href = "plan/"
                         }, 2000)
                         }
 

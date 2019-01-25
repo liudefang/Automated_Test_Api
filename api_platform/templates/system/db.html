@@ -6,12 +6,12 @@
 <div class="btn-toolbar" role="toolbar">
   <div class="btn-group" style="padding-top: 100px; left: 100px">
     <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#addmyModal">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 添加邮箱信息
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 添加数据库信息
     </button>
-    <button id="edit_email" class="btn btn-primary" data-toggle="modal" data-target="#">
+    <button id="edit_db" class="btn btn-primary" data-toggle="modal" data-target="#">
         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 修改
     </button>
-      <button id="del_email" type="onclick" class="btn btn-danger">
+      <button id="del_db" type="onclick" class="btn btn-danger">
             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 删除
         </button>
 
@@ -32,32 +32,28 @@
                         <tr>
                             <th>选中</th>
                             <th>id</th>
-                            <th>发件人邮箱</th>
-                            <th>收件人邮箱</th>
-                            <th>SMTP服务器</th>
-                            <th>SMTP服务器端口</th>
+                            <th>数据库类别</th>
+                            <th>数据库名称</th>
+                            <th>数据库IP地址</th>
+                            <th>数据库端口</th>
                             <th>用户名</th>
                             <th>密码</th>
-                            <th>发件人头部信息</th>
-                            <th>收件人头部信息</th>
-                            <th>标题头部信息</th>
-
+                            <th>备注</th>
+                          
                         </tr>
                     </thead>
                     <tbody>
-                        {% for email_obj in email_list %}
+                        {% for db_obj in db_list %}
                             <tr>
                                 <td id="che1"><input type="checkbox"/></td>
-                                <td>{{ email_obj.id}}</td>
-                                <td>{{ email_obj.sender }}</td>
-                                <td>{{ email_obj.receivers }}</td>
-                                <td>{{ email_obj.host_dir }}</td>
-                                <td>{{ email_obj.email_port }}</td>
-                                <td>{{ email_obj.username }}</td>
-                                <td>{{ email_obj.password }}</td>
-                                <td>{{ email_obj.Headerfrom }}</td>
-                                <td>{{ email_obj.Headerto }}</td>
-                                 <td>{{ email_obj.subject }}</td>
+                                <td>{{ db_obj.id}}</td>
+                                <td>{{ db_obj.db_type }}</td>
+                                <td>{{ db_obj.db_name }}</td>
+                                <td>{{ db_obj.db_ip }}</td>
+                                <td>{{ db_obj.db_port }}</td>
+                                <td>{{ db_obj.db_user }}</td>
+                                <td>{{ db_obj.db_password }}</td>
+                                <td>{{ db_obj.db_remak }}</td>
 
                             </tr>
                         {% endfor %}
@@ -73,68 +69,51 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">添加邮箱配置信息</h4>
+            <h4 class="modal-title" id="myModalLabel">添加数据库信息</h4>
           </div>
           <div class="modal-body">
               <form role="form">
                   {% csrf_token %}
                   <h6 style="color: red;margin-left:10px"><span class="error"></span></h6>
                   <div class="form-group">
-                    <label for="sender">发件人邮箱地址</label>
+                    <label for="db_type">数据库类别</label>
                       <span class="required">*</span>
-                    <input type="text" name="sender" id="sender" class="form-control" placeholder="输入发件人邮箱地址">
+                    <input type="text" name="db_type" id="db_type" class="form-control" placeholder="输入数据库类别">
                   </div>
-
-
                   <div class="form-group">
-                    <label for="receivers">收件人邮箱地址</label>
+                    <label for="db_name">数据库名称</label>
                       <span class="required">*</span>
-                    <input type="text" name="receivers" id="receivers" class="form-control" placeholder="输入收件人邮箱地址">
+                    <input type="text" name="db_name" id="db_name" class="form-control" placeholder="输入数据库名称">
                   </div>
                    <div class="form-group">
-                    <label for="host_dir">SMTP服务器地址</label>
+                    <label for="db_ip">数据库IP地址</label>
                        <span class="required">*</span>
-                        <input type="text" name="host_dir" id="host_dir" class="form-control" placeholder="输入SMTP服务器域名">
+                        <input type="text" name="db_ip" id="db_ip" class="form-control" placeholder="输入数据库IP地址">
                   </div>
                   <div class="form-group">
-                    <label for="email_port">SMTP服务器端口</label>
+                    <label for="db_port">数据库端口</label>
                       <span class="required">*</span>
-                      <input name="email_port" id="email_port" class="form-control" placeholder="输入SMTP服务器端口">
+                      <input name="db_port" id="db_port" class="form-control" placeholder="输入数据库的端口">
 
                   </div>
                   <div class="form-group">
-                    <label for="username">登录邮箱的用户名</label>
+                    <label for="db_user">用户名</label>
                       <span class="required">*</span>
-                      <input name="username" id="username" class="form-control" placeholder="输入登录邮箱的用户名">
+                      <input name="db_user" id="db_user" class="form-control" placeholder="输入登录数据库的用户名">
 
                   </div>
                   <div class="form-group">
-                    <label for="password">登录邮箱的密码</label>
+                    <label for="db_password">密码</label>
                       <span class="required">*</span>
-                      <input name="password" id="password" class="form-control" placeholder="输入登录邮箱的密码">
+                      <input name="db_password" id="db_password" class="form-control" placeholder="输入登录数据库的密码">
                   </div>
                   <div class="form-group">
-                    <label for="Header_from">发件人头部信息</label>
-                      <span class="required">*</span>
-                      <input name="Header_from" id="Header_from" class="form-control" placeholder="输入发件人的头部信息">
-
+                    <label for="db_remak">备注</label>
+                      <input name="db_remak" id="db_remak" class="form-control" placeholder="输入数据库的备注信息">
                   </div>
-                  <div class="form-group">
-                    <label for="Header_to">收件人头部信息</label>
-                      <span class="required">*</span>
-                      <input name="Header_to" id="Header_to" class="form-control" placeholder="输入收件人头部信息">
-
-                  </div>
-                  <div class="form-group">
-                    <label for="subject">标题头部信息</label>
-                      <span class="required">*</span>
-                      <input name="subject" id="subject" class="form-control" placeholder="输入标题头部信息">
-
-                  </div>
-
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary add_email">提交</button>
+                    <button type="button" class="btn btn-primary add_db">提交</button>
                   </div>
 
 
@@ -164,65 +143,49 @@
                       <input type="text" class="ipt form-control" name="id" id="id" placeholder="请输入id">
                   </div>
                   <div class="form-group">
-                    <label for="edit_sender">发件人邮箱地址</label>
+                    <label for="edit_db_type">数据库类别</label>
                       <span class="required">*</span>
-                    <input type="text" name="edit_sender" id="edit_sender" class="ipt form-control" placeholder="输入发件人邮箱地址">
+                    <input type="text" name="edit_db_type" id="edit_db_type" class="ipt form-control" placeholder="输入数据库类别">
                   </div>
-
-
                   <div class="form-group">
-                    <label for="edit_receivers">收件人邮箱地址</label>
+                    <label for="edit_db_name">数据库名称</label>
                       <span class="required">*</span>
-                    <input type="text" name="edit_receivers" id="edit_receivers" class="ipt form-control" placeholder="输入收件人邮箱地址">
+                    <input type="text" name="edit_db_name" id="edit_db_name" class="ipt form-control" placeholder="输入数据库名称">
                   </div>
                    <div class="form-group">
-                    <label for="edit_host_dir">SMTP服务器地址</label>
+                    <label for="edit_db_ip">数据库IP地址</label>
                        <span class="required">*</span>
-                        <input type="text" name="edit_host_dir" id="edit_host_dir" class="ipt form-control" placeholder="输入SMTP服务器域名">
+                        <input type="text" name="edit_db_ip" id="edit_db_ip" class="ipt form-control" placeholder="输入数据库IP地址">
                   </div>
                   <div class="form-group">
-                    <label for="edit_email_port">SMTP服务器端口</label>
+                    <label for="edit_db_port">数据库端口</label>
                       <span class="required">*</span>
-                      <input name="edit_email_port" id="edit_email_port" class="ipt form-control" placeholder="输入SMTP服务器端口">
+                      <input name="edit_db_port" id="edit_db_port" class="ipt form-control" placeholder="输入数据库的端口">
 
                   </div>
                   <div class="form-group">
-                    <label for="edit_username">登录邮箱的用户名</label>
+                    <label for="edit_db_user">用户名</label>
                       <span class="required">*</span>
-                      <input name="edit_username" id="edit_username" class="ipt form-control" placeholder="输入登录邮箱的用户名">
+                      <input name="edit_db_user" id="edit_db_user" class="ipt form-control" placeholder="输入登录数据库的用户名">
 
                   </div>
                   <div class="form-group">
-                    <label for="edit_password">登录邮箱的密码</label>
+                    <label for="edit_db_password">密码</label>
                       <span class="required">*</span>
-                      <input name="edit_password" id="edit_password" class="ipt form-control" placeholder="输入登录邮箱的密码">
+                      <input name="edit_db_password" id="edit_db_password" class="ipt form-control" placeholder="输入登录数据库的密码">
                   </div>
                   <div class="form-group">
-                    <label for="edit_Header_from">发件人头部信息</label>
-                      <span class="required">*</span>
-                      <input name="edit_Header_from" id="edit_Header_from" class="ipt form-control" placeholder="输入发件人的头部信息">
-
+                    <label for="edit_db_remak">备注</label>
+                      <input name="edit_db_remak" id="edit_db_remak" class="ipt form-control" placeholder="输入数据库的备注信息">
                   </div>
-                  <div class="form-group">
-                    <label for="edit_Header_to">收件人头部信息</label>
-                      <span class="required">*</span>
-                      <input name="edit_Header_to" id="edit_Header_to" class="ipt form-control" placeholder="输入收件人头部信息">
-
-                  </div>
-                  <div class="form-group">
-                    <label for="edit_subject">标题头部信息</label>
-                      <span class="required">*</span>
-                      <input name="edit_subject" id="edit_subject" class="ipt form-control" placeholder="输入标题头部信息">
-
-                  </div>
-
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary edit_email_sub">提交</button>
+                    <button type="button" class="btn btn-primary edit_db_sub">提交</button>
                   </div>
 
 
               </form>
+
 
           </div>
 
@@ -235,21 +198,20 @@
 
 
         // 新增测试环境
-        $(".add_email").click(function () {
+        $(".add_db").click(function () {
 
             $.ajax({
-                url: "/add_email/",
+                url: "/add_db/",
                 type: "post",
                 data: {
-                    sender: $("#sender").val(),
-                    receivers: $("#receivers").val(),
-                    host_dir: $("#host_dir").val(),
-                    email_port: $("#email_port").val(),
-                    username: $("#username").val(),
-                    password: $("#password").val(),
-                    Header_from: $("#Header_from").val(),
-                    Header_to: $("#Header_to").val(),
-                    subject: $("#subject").val(),
+                    db_type: $("#db_type").val(),
+                    db_name: $("#db_name").val(),
+                    db_ip: $("#db_ip").val(),
+                    db_port: $("#db_port").val(),
+                    db_user: $("#db_user").val(),
+                    db_password: $("#db_password").val(),
+                    db_remak: $("#db_remak").val(),
+
                     csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val(),
                 },
 
@@ -263,7 +225,7 @@
                         }
                         else {
                             setTimeout(function () {
-                                location.href = "/email/"
+                                location.href = "/database/"
                             }, 2000)
 
                         }
@@ -289,9 +251,9 @@
 
 
 
-        //编辑邮箱信息
+        //编辑数据库信息
 
-        $("#edit_email").click(function(){
+        $("#edit_db").click(function(){
 
             var count=0;
             var env_value;
@@ -330,22 +292,20 @@
             }
         });
 
-        $(".edit_email_sub").click(function () {
+        $(".edit_db_sub").click(function () {
 
             $.ajax({
-                url: "/edit_email/",
+                url: "/edit_db/",
                 type: "post",
                 data: {
                     id: $("#id").val(),
-                    sender: $("#edit_sender").val(),
-                    receivers: $("#edit_receivers").val(),
-                    host_dir: $("#edit_host_dir").val(),
-                    email_port: $("#edit_email_port").val(),
-                    username: $("#edit_username").val(),
-                    password: $("#edit_password").val(),
-                    Header_from: $("#edit_Header_from").val(),
-                    Header_to: $("#edit_Header_to").val(),
-                    subject: $("#edit_subject").val(),
+                    db_type: $("#edit_db_type").val(),
+                    db_name: $("#edit_db_name").val(),
+                    db_ip: $("#edit_db_ip").val(),
+                    db_port: $("#edit_db_port").val(),
+                    db_user: $("#edit_db_user").val(),
+                    db_password: $("#edit_db_password").val(),
+                    db_remak: $("#edit_db_remak").val(),
                     csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val(),
                 },
                 success: function (data) {
@@ -358,7 +318,7 @@
                         }
                         else {
                             setTimeout(function () {
-                                location.href = "/email/"
+                                location.href = "/database/"
                             }, 2000)
 
                         }
@@ -381,8 +341,8 @@
             })
     });
 
-    //删除用例步骤
-     $("#del_email").click(function () {
+    //删除数据库信息
+     $("#del_db").click(function () {
                 var env_ids=new Array();
 
                     var count=0;
@@ -407,7 +367,7 @@
 
                 //alert(count)
                 if(count>0){
-                    url = /email/+env_id+pathname.replace('/email/', '/delete/')
+                    url = /database/+env_id+pathname.replace('/database/', '/delete/')
                      // 删除插件的应用
                 swal({
 
@@ -438,14 +398,14 @@
 
                                 toastr.success(data.msg);
                                 setTimeout(function () {
-                                location.href = "/email/"
+                                location.href = "/database/"
                             }, 2000)
 
 
                             }else{
                                 toastr.error(data.msg);
                                 setTimeout(function () {
-                                location.href = "/email/"
+                                location.href = "/database/"
                             }, 2000)
                             }
 

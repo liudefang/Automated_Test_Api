@@ -78,7 +78,7 @@
      // 编辑项目
     $(".edit_env").click(function () {
         $.ajax({
-            url: "/env/{{edit_env_list.env_id}}/edit/",
+            url: "/plan/{{edit_env_list.env_id}}/edit/",
             type: "post",
             data: {
 
@@ -100,7 +100,7 @@
                     }
                     else {
                         setTimeout(function () {
-                            location.href = "/env/"
+                            location.href = "/plan/"
                         }, 2000)
 
                     }

@@ -791,7 +791,7 @@
                         //alert(env_value.attr("title"));
                         env[i]=env_value.attr("title");
                     }
-                    //alert(env)
+                    //alert(plan)
                     count++;
                 });
                 if (count==1)
@@ -1079,7 +1079,7 @@
 
             var count=0;
             var env_value;
-            var env=new Array();
+            var plan=new Array();
             var elements=$(".ipt");
             alert(elements.length)
             var url = null;
@@ -1088,7 +1088,7 @@
                 for (var i=0;i<elements.length;i++){
                     env_value=env_value.next()
 
-                    env[i]=env_value.text();
+                    plan[i]=env_value.text();
 
 
                 }
@@ -1097,20 +1097,20 @@
 
             if (count==1)
             {
-                alert(env);
-                url = "/api_step/"+env+"/edit"
+                alert(plan);
+                url = "/api_step/"+plan+"/edit"
                 //alert(url)
-                for (var i=0;i<env.length-1;i++){
-                    $(elements[i]).val(env[i]);
+                for (var i=0;i<plan.length-1;i++){
+                    $(elements[i]).val(plan[i]);
                 }
-                if (env[env.length-1]=="True"){
-                    $(elements[env.length-1]).prop('checked',true);
+                if (plan[plan.length-1]=="True"){
+                    $(elements[plan.length-1]).prop('checked',true);
                 }
                 else{
-                    $(elements[env.length-1]).removeAttr('checked');
+                    $(elements[plan.length-1]).removeAttr('checked');
                 }
                 $('#editMyModal').modal("show");
-                if(env>0){
+                if(plan>0){
                     location.href = url;
                 }
             }

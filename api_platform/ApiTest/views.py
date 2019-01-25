@@ -412,7 +412,6 @@ def add_step(request):
     :param request:
     :return:
     """
-
     if request.method == "POST":
 
         step_name = request.POST.get('step_name')
@@ -524,7 +523,7 @@ def environment(request):
     """
     env_list = Environment.objects.filter().all()
 
-    return render(request, "env/index.html", {"env_list": env_list})
+    return render(request, "plan/index.html", {"env_list": env_list})
 
 
 @login_required
@@ -556,7 +555,7 @@ def add_env(request):
 
         return JsonResponse(response)
 
-    return render(request, "env/index.html")
+    return render(request, "plan/index.html")
 
 
 @login_required
@@ -588,7 +587,7 @@ def edit_env(request):
 
     edit_env_list = Environment.objects.filter().all()
 
-    return render(request, "env/index.html", {"edit_env_list": edit_env_list})
+    return render(request, "system/plan.html", {"edit_env_list": edit_env_list})
 
 
 # 删除测试环境配置
@@ -655,13 +654,150 @@ def add_email(request):
     return render(request, "system/email.html")
 
 
+@login_required
+def edit_email(request):
+    """
+    新增签名方式
+    :param request:
+    :return:
+    """
+    if request.method == "POST":
+        email_id = request.POST.get("id")
+        sender = request.POST.get("sender")
+        receivers = request.POST.get("receivers")
+        host_dir = request.POST.get("host_dir")
+        email_port = request.POST.get("email_port")
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        header_from = request.POST.get("Header_from")
+        header_to = request.POST.get("Header_to")
+        subject = request.POST.get("subject")
+
+        print("project_name:", sender)
+
+        if len(sender) != 0 and len(receivers) != 0 and len(host_dir) != 0 and len(email_port) != 0 and \
+                len(username) != 0 and len(password) != 0 and len(header_from) != 0 and len(header_to) != 0 and len(subject) != 0:
+
+            Email.objects.filter(id=email_id).update(sender=sender, receivers=receivers, host_dir=host_dir,
+                                                     email_port=email_port, username=username,password=password,
+                                                     Headerfrom=header_from, Headerto=header_to, subject=subject)
+
+            response = {"status": 0, "msg": "编辑成功!"}
+
+            # return redirect("/project")
+
+        else:
+            response = {"status": 1, "msg": "请填写必填信息!"}
+
+        return JsonResponse(response)
+
+    return render(request, "system/email.html")
+
+
 # 删除邮箱地址信息
 def del_email(request, env_id):
 
-    edit_emial_list = Email.objects.filter(id=env_id).first()
+    edit_email_list = Email.objects.filter(id=env_id).first()
 
     try:
-        edit_emial_list.delete()
+        edit_email_list.delete()
+        reg = {'status': 0, 'msg': '删除成功!'}
+    except Exception as e:
+        reg = {'status': 1, 'msg': '删除失败!'}
+    return HttpResponse(json.dumps(reg))
+
+
+@login_required
+def database(request):
+    """
+    签名方式
+    :param request:
+    :return:
+    """
+    db_list = Database.objects.filter().all()
+
+    return render(request, "system/db.html", {"db_list": db_list})
+
+
+@login_required
+def add_db(request):
+    """
+    新增签名方式
+    :param request:
+    :return:
+    """
+    if request.method == "POST":
+
+        db_type = request.POST.get("db_type")
+        db_name = request.POST.get("db_name")
+        db_ip = request.POST.get("db_ip")
+        db_port = request.POST.get("db_port")
+        db_user = request.POST.get("db_user")
+        db_password = request.POST.get("db_password")
+        db_remak = request.POST.get("db_remak")
+
+        print("db_name:", db_name)
+
+        if len(db_type) != 0 and len(db_name) != 0 and len(db_ip) != 0 and len(db_port) != 0 and \
+                len(db_user) != 0 and len(db_password) :
+
+            Database.objects.create(db_type=db_type, db_name=db_name, db_ip=db_ip, db_port=db_port, db_user=db_user,
+                                    db_password=db_password, db_remak=db_remak)
+
+            response = {"status": 0, "msg": "添加成功!"}
+
+            # return redirect("/project")
+
+        else:
+            response = {"status": 1, "msg": "请填写必填信息!"}
+
+        return JsonResponse(response)
+
+    return render(request, "system/email.html")
+
+
+@login_required
+def edit_db(request):
+    """
+    新增签名方式
+    :param request:
+    :return:
+    """
+    if request.method == "POST":
+        id = request.POST.get("id")
+        db_type = request.POST.get("db_type")
+        db_name = request.POST.get("db_name")
+        db_ip = request.POST.get("db_ip")
+        db_port = request.POST.get("db_port")
+        db_user = request.POST.get("db_user")
+        db_password = request.POST.get("db_password")
+        db_remak = request.POST.get("db_remak")
+
+        if len(db_type) != 0 and len(db_name) != 0 and len(db_ip) != 0 and len(db_port) != 0 and \
+                len(db_user) != 0 and len(db_password) :
+
+            Database.objects.filter(id=id).update(db_type=db_type, db_name=db_name, db_ip=db_ip, db_port=db_port,
+                                                  db_user=db_user,db_password=db_password, db_remak=db_remak)
+
+            response = {"status": 0, "msg": "编辑成功!"}
+
+            # return redirect("/project")
+
+        else:
+            response = {"status": 1, "msg": "请填写必填信息!"}
+
+        return JsonResponse(response)
+
+    return render(request, "system/db.html")
+
+
+# 删除邮箱地址信息
+def del_db(request, env_id):
+
+    edit_db_list = Database.objects.filter(id=env_id).first()
+
+    try:
+        edit_db_list.delete()
         reg = {'status': 0, 'msg': '删除成功!'}
     except Exception as e:
         reg = {'status': 1, 'msg': '删除失败!'}

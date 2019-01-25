@@ -50,15 +50,20 @@ urlpatterns = [
     re_path(r'^api_step/(\d+)/delete', views.del_step),
 
     # 环境
-    url(r'^env/$', views.environment),
+    url(r'^plan/$', views.environment),
     url(r'^add_env/$', views.add_env),
     url(r'^edit_env/$', views.edit_env),
-    re_path(r'env/(\d+)/delete', views.del_env),
-
+    re_path(r'plan/(\d+)/delete', views.del_env),
 
     # 邮箱
     url(r'^email/$', views.email),
     url(r'^add_email/$', views.add_email),
-    # url(r'^edit_email/$', views.edit_email),
+    url(r'^edit_email/$', views.edit_email),
     re_path(r'email/(\d+)/delete', views.del_email),
+
+    # 数据库
+    url(r'^database/$', views.database),
+    url(r'^add_db/$', views.add_db),
+    url(r'^edit_db/$', views.edit_db),
+    re_path(r'database/(\d+)/delete', views.del_db),
 ]

@@ -208,7 +208,7 @@
                         }
                         else {
                             setTimeout(function () {
-                                location.href = "/env/"
+                                location.href = "/plan/"
                             }, 2000)
 
                         }
@@ -239,8 +239,8 @@
             var pathname = window.location.pathname;
             var url = null;
             alert(delete_id)
-            if(pathname.indexOf("env/")>0){
-                url = /env/+delete_id+pathname.replace('/env/', '/delete/')
+            if(pathname.indexOf("plan/")>0){
+                url = /env/+delete_id+pathname.replace('/plan/', '/delete/')
             }
 
 

@@ -183,7 +183,7 @@
                         }
                         else {
                             setTimeout(function () {
-                                location.href = "/env/"
+                                location.href = "/plan/"
                             }, 2000)
 
                         }
@@ -223,7 +223,7 @@
                         env_value=env_value.next();
 
                         env[i]=env_value.text();
-                        //alert(env[i])
+                        //alert(plan[i])
 
                     }
                     count++;
@@ -232,7 +232,7 @@
                 if (count==1)
                 {
 
-                    //alert(env)
+                    //alert(plan)
                     for (var i=0;i<env.length;i++){
                         $(elements[i]).val(env[i]);
                     }
@@ -271,7 +271,7 @@
                             }
                             else {
                                 setTimeout(function () {
-                                    location.href = "/env/"
+                                    location.href = "/plan/"
                                 }, 2000)
 
                             }

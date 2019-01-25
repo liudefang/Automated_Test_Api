@@ -688,7 +688,7 @@
                         success: function (data) {
 
                             if (data.status== 0) {
-                                alert(111)
+                                //alert(111)
                                 toastr.success(data.msg);
                                 if (location.search){
                                         location.href = location.search.slice(6)
@@ -703,7 +703,7 @@
                             }
                             else {
 
-                                alert(222)
+                                //alert(222)
                                 $(".error").text(data.msg);
                                 setTimeout(function () {
                                     $(".error").text("");

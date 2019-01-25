@@ -560,67 +560,64 @@ def add_env(request):
 
 
 @login_required
-def edit_env(request, env_id, option):
+def edit_env(request):
     """
     编辑项目
     :param request:
     :return:
     """
 
+    if request.method == "POST":
+        env_id = request.POST.get("env_id")
+        env_ip = request.POST.get("env_ip")
+        evn_name = request.POST.get("evn_name")
+        env_port = request.POST.get("env_port")
+        env_host = request.POST.get("env_host")
+
+        if len(evn_name) != 0:
+
+            Environment.objects.filter(env_id=env_id).update(evn_name=evn_name, env_host=env_host, env_ip=env_ip, env_port=env_port)
+
+            response = {"status": 0, "msg": "编辑成功!"}
+
+            # return redirect("/project")
+        else:
+            response = {"status": 1, "msg": "环境名称不能为空!"}
+
+        return JsonResponse(response)
+
+    edit_env_list = Environment.objects.filter().all()
+
+    return render(request, "env/index.html", {"edit_env_list": edit_env_list})
+
+
+# 删除测试环境配置
+def del_env(request, env_id):
+
     edit_env_list = Environment.objects.filter(env_id=env_id).first()
-    if edit_env_list and option == "delete":
-        try:
-            edit_env_list.delete()
-            reg = {'status': 0, 'msg': '删除成功!'}
-        except Exception as e:
-            reg = {'status': 1, 'msg': '删除失败!'}
 
-        return HttpResponse(json.dumps(reg))
-    elif edit_env_list and option == "edit":
-
-        if request.method == "POST":
-
-            evn_name = request.POST.get("evn_name")
-            evn_desc = request.POST.get("evn_desc")
-            url = request.POST.get("url")
-            project_id = request.POST.get("project_id")
-            private_key = request.POST.get("private_key")
-
-            if len(evn_name) != 0:
-
-                Environment.objects.filter(env_id=env_id).update(evn_name=evn_name, evn_desc=evn_desc, url=url, project_id=project_id, private_key=private_key)
-
-                response = {"status": 0, "msg": "编辑成功!"}
-
-                # return redirect("/project")
-            else:
-                response = {"status": 1, "msg": "环境名称不能为空!"}
-
-            return JsonResponse(response)
-
-        project_list = Project.objects.filter().all()
-
-        return render(request, "env/edit.html", {"edit_env_list": edit_env_list, "project_list": project_list})
-    else:
-        return render(request, "not_found.html")
-
-
+    try:
+        edit_env_list.delete()
+        reg = {'status': 0, 'msg': '删除成功!'}
+    except Exception as e:
+        reg = {'status': 1, 'msg': '删除失败!'}
+    return HttpResponse(json.dumps(reg))
 
 
 @login_required
-def sign(request):
+def email(request):
     """
     签名方式
     :param request:
     :return:
     """
-    sign_list = Sign.objects.filter().all()
+    email_list = Email.objects.filter().all()
 
-    return render(request, "system/sign.html", {"sign_list": sign_list})
+    return render(request, "system/email.html", {"email_list": email_list})
 
 
 @login_required
-def add_sign(request):
+def add_email(request):
     """
     新增签名方式
     :param request:
@@ -628,23 +625,44 @@ def add_sign(request):
     """
     if request.method == "POST":
 
-        sign_name = request.POST.get("sign_name")
-        description = request.POST.get("description")
+        sender = request.POST.get("sender")
+        receivers = request.POST.get("receivers")
+        host_dir = request.POST.get("host_dir")
+        email_port = request.POST.get("email_port")
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        header_from = request.POST.get("Header_from")
+        header_to = request.POST.get("Header_to")
+        subject = request.POST.get("subject")
 
-        print("project_name:", sign_name)
+        print("project_name:", sender)
 
-        if len(sign_name) != 0 and sign_name != str(Sign.objects.filter(sign_name=sign_name).first()):
+        if len(sender) != 0 and len(receivers) != 0 and len(host_dir) != 0 and len(email_port) != 0 and \
+                len(username) != 0 and len(password) != 0 and len(header_from) != 0 and len(header_to) != 0 and len(subject) != 0:
 
-            Sign.objects.create(sign_name=sign_name, description=description)
+            Email.objects.create(sender=sender, receivers=receivers, host_dir=host_dir, email_port=email_port, username=username,
+                                 password=password, Headerfrom=header_from, Headerto=header_to, subject=subject)
 
             response = {"status": 0, "msg": "添加成功!"}
 
             # return redirect("/project")
-        elif len(sign_name) == 0:
-            response = {"status": 1, "msg": "签名方式名称不能为空!"}
+
         else:
-            response = {"status": 2, "msg": "签名方式名称已存在!"}
+            response = {"status": 1, "msg": "请填写必填信息!"}
 
         return JsonResponse(response)
 
-    return render(request, "system/sign.html")
+    return render(request, "system/email.html")
+
+
+# 删除邮箱地址信息
+def del_email(request, env_id):
+
+    edit_emial_list = Email.objects.filter(id=env_id).first()
+
+    try:
+        edit_emial_list.delete()
+        reg = {'status': 0, 'msg': '删除成功!'}
+    except Exception as e:
+        reg = {'status': 1, 'msg': '删除失败!'}
+    return HttpResponse(json.dumps(reg))

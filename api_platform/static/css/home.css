@@ -25,3 +25,8 @@ table {
 .navbar-collapse .navbar-nav > li > a{
     color: #333333;
 }
+
+.form-group span.required{
+    color: red;
+    font-size: 100%;
+}

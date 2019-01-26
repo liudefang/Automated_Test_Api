@@ -848,8 +848,6 @@ def add_sql(request):
 
             response = {"status": 0, "msg": "添加成功!"}
 
-            # return redirect("/project")
-
         else:
             response = {"status": 1, "msg": "请填写必填信息!"}
 

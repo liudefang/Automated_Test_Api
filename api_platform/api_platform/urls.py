@@ -66,4 +66,10 @@ urlpatterns = [
     url(r'^add_db/$', views.add_db),
     url(r'^edit_db/$', views.edit_db),
     re_path(r'database/(\d+)/delete', views.del_db),
+
+    # sql
+    url(r'^sql/$', views.sql),
+    url(r'^add_sql/$', views.add_sql),
+    url(r'^edit_sql/$', views.edit_sql),
+    re_path(r'sql/(\d+)/delete', views.del_sql),
 ]

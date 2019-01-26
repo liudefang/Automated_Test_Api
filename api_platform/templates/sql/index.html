@@ -1,0 +1,445 @@
+{% extends "../base.html" %}
+
+{% block add %}
+
+<!--按钮-->
+<div class="btn-toolbar" role="toolbar">
+  <div class="btn-group" style="padding-top: 100px; left: 100px">
+    <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#addmyModal">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 添加sql语句
+    </button>
+    <button id="edit_sql" class="btn btn-primary" data-toggle="modal" data-target="#">
+        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 修改
+    </button>
+      <button id="del_sql" type="onclick" class="btn btn-danger">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 删除
+        </button>
+
+        {% csrf_token %}
+    </form>
+
+  </div>
+
+</div>
+
+<!--测试环境列表-->
+<div class="container">
+        <div class="row">
+            <div class="col-md-12">
+
+                <table id="table" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>选中</th>
+                            <th>id</th>
+                            <th>步骤名</th>
+                            <th>是否是查询</th>
+                            <th>变量</th>
+                            <th>sql语句</th>
+                            <th>前置或者后置</th>
+                            <th>状态</th>
+                            <th>备注</th>
+                          
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for sql_obj in sql_list %}
+                            <tr>
+                                <td id="che1"><input type="checkbox"/></td>
+                                <td>{{ sql_obj.id}}</td>
+                                <td>{{ sql_obj.step }}</td>
+                                <td>{{ sql_obj.is_select }}</td>
+                                <td>{{ sql_obj.variable }}</td>
+                                <td>{{ sql_obj.sql }}</td>
+                                <td>{{ sql_obj.sql_condition }}</td>
+                                <td>{{ sql_obj.status }}</td>
+                                <td>{{ sql_obj.remake }}</td>
+
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+<!-- 新增测试sql模态框 -->
+    <div class="modal fade" id="addmyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">添加sql语句信息</h4>
+          </div>
+          <div class="modal-body">
+              <form role="form">
+                  {% csrf_token %}
+                  <h6 style="color: red;margin-left:10px"><span class="error"></span></h6>
+                  <div class="form-group">
+                    <label for="api_id">测试用例步骤名称</label>
+                      <span class="required">*</span>
+                        <select name="api_id" id="api_id" class="form-control">
+                            {% for api_obj in api_list %}
+                            <option value="{{api_obj.pk}}">{{api_obj.step_name}}</option>
+                            {% endfor %}
+                        </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" name="is_select" id="is_select" checked> 是否是查询
+                    </label>
+                  </div>
+                   <div class="form-group">
+                    <label for="variable">变量</label>
+                        <input type="text" name="variable" id="variable" class="form-control" placeholder="输入变量">
+                  </div>
+                  <div class="form-group">
+                    <label for="sql">sql语句</label>
+                      <span class="required">*</span>
+                      <input type="text" name="sql" id="sql" class="form-control" placeholder="输入sql语句">
+
+                  </div>
+                  <div class="form-group">
+                      <label>前置或者后置</label>
+                      <div>
+                          <label class="radio-inline">
+                              <input type="radio" name="sql_condition" id="optionsRadios1" value="1" checked> 前置
+
+                          </label>
+                          &nbsp;&nbsp;&nbsp;&nbsp;
+                          <label class="radio-inline">
+                              <input type="radio" name="sql_condition" id="optionsRadios2" value="0"> 后置
+                          </label>
+                      </div>
+
+                  </div>
+                  <div class="form-group">
+                      <label>状态</label>
+                      <div>
+                          <label class="radio-inline">
+                              <input type="radio" name="status" id="optionsRadios1" value="1" checked> 有效
+
+                          </label>
+                          &nbsp;&nbsp;&nbsp;&nbsp;
+                          <label class="radio-inline">
+                              <input type="radio" name="status" id="optionsRadios2" value="0"> 无效
+                          </label>
+                      </div>
+
+                  </div>
+                  <div class="form-group">
+                    <label for="remake">备注</label>
+                      <input name="remake" id="remake" class="form-control" placeholder="输入sql的备注信息">
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary add_sql">提交</button>
+                  </div>
+
+
+              </form>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+<!-- 编辑测试环境模态框 -->
+    <div class="modal fade" id="editMyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">添加测试环境</h4>
+          </div>
+          <div class="modal-body">
+              <form role="form">
+                  {% csrf_token %}
+                  <h6 style="color: red;margin-left:10px"><span class="error"></span></h6>
+                  <div class="form-group" style="display:none">
+                      <label for="id">id</label>
+                      <input type="text" class="ipt form-control" name="id" id="id" placeholder="请输入id">
+                  </div>
+                  <div class="form-group">
+                    <label for="edit_db_type">数据库类别</label>
+                      <span class="required">*</span>
+                    <input type="text" name="edit_db_type" id="edit_db_type" class="ipt form-control" placeholder="输入数据库类别">
+                  </div>
+                  <div class="form-group">
+                    <label for="edit_db_name">数据库名称</label>
+                      <span class="required">*</span>
+                    <input type="text" name="edit_db_name" id="edit_db_name" class="ipt form-control" placeholder="输入数据库名称">
+                  </div>
+                   <div class="form-group">
+                    <label for="edit_db_ip">数据库IP地址</label>
+                       <span class="required">*</span>
+                        <input type="text" name="edit_db_ip" id="edit_db_ip" class="ipt form-control" placeholder="输入数据库IP地址">
+                  </div>
+                  <div class="form-group">
+                    <label for="edit_db_port">数据库端口</label>
+                      <span class="required">*</span>
+                      <input name="edit_db_port" id="edit_db_port" class="ipt form-control" placeholder="输入数据库的端口">
+
+                  </div>
+                  <div class="form-group">
+                    <label for="edit_db_user">用户名</label>
+                      <span class="required">*</span>
+                      <input name="edit_db_user" id="edit_db_user" class="ipt form-control" placeholder="输入登录数据库的用户名">
+
+                  </div>
+                  <div class="form-group">
+                    <label for="edit_db_password">密码</label>
+                      <span class="required">*</span>
+                      <input name="edit_db_password" id="edit_db_password" class="ipt form-control" placeholder="输入登录数据库的密码">
+                  </div>
+                  <div class="form-group">
+                    <label for="edit_db_remak">备注</label>
+                      <input name="edit_db_remak" id="edit_db_remak" class="ipt form-control" placeholder="输入数据库的备注信息">
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary edit_db_sub">提交</button>
+                  </div>
+
+
+              </form>
+
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+<script>
+
+
+        // 新增测试环境
+        $(".add_sql").click(function () {
+
+            $.ajax({
+                url: "/add_sql/",
+                type: "post",
+                data: {
+                    api_id: $("#api_id").val(),
+                    is_select: $("*[name='is_select']:checked").val(),
+                    variable: $("#variable").val(),
+                    sql: $("#sql").val(),
+                    sql_condition: $("*[sql_condition='sql_condition']:checked").val(),
+                    status: $("*[name='status']:checked").val(),
+                    remake: $("#remake").val(),
+
+                    csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val(),
+                },
+
+                success: function (data) {
+
+                    if (data.status== 0) {
+                        // alert(111)
+                        toastr.success(data.msg);
+                        if (location.search){
+                                location.href = location.search.slice(6)
+                        }
+                        else {
+                            setTimeout(function () {
+                                location.href = "/sql/"
+                            }, 2000)
+
+                        }
+
+                    }
+                    else {
+
+
+                        $(".error").text(data.msg);
+                        setTimeout(function () {
+                            $(".error").text("");
+
+                        }, 5000)
+                    }
+
+
+
+                }
+
+            })
+        });
+
+
+
+
+        //编辑数据库信息
+
+        $("#edit_db").click(function(){
+
+            var count=0;
+            var env_value;
+            var env=new Array();
+            var elements=$(".ipt");
+
+            //alert(elements.length);
+            $("#table").find(":checkbox:checked").each(function(){
+                env_value=$(this).parent()
+                for (var i=0;i<elements.length;i++){
+                    env_value=env_value.next();
+
+                    env[i]=env_value.text();
+                    //alert(plan[i])
+
+                }
+                count++;
+            });
+            //alert(count)
+            if (count==1)
+            {
+
+                //alert(plan)
+                for (var i=0;i<env.length;i++){
+                    $(elements[i]).val(env[i]);
+                }
+
+                $('#editMyModal').modal("show");
+
+            }
+            else if(count==0){
+                toastr.error("请至少选择一个选项!")
+            }
+            else{
+                toastr.error("编辑只能选择一个选项!");
+            }
+        });
+
+        $(".edit_db_sub").click(function () {
+
+            $.ajax({
+                url: "/edit_db/",
+                type: "post",
+                data: {
+                    id: $("#id").val(),
+                    db_type: $("#edit_db_type").val(),
+                    db_name: $("#edit_db_name").val(),
+                    db_ip: $("#edit_db_ip").val(),
+                    db_port: $("#edit_db_port").val(),
+                    db_user: $("#edit_db_user").val(),
+                    db_password: $("#edit_db_password").val(),
+                    db_remak: $("#edit_db_remak").val(),
+                    csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val(),
+                },
+                success: function (data) {
+
+                    if (data.status== 0) {
+                        // alert(111)
+                        toastr.success(data.msg);
+                        if (location.search){
+                                location.href = location.search.slice(6)
+                        }
+                        else {
+                            setTimeout(function () {
+                                location.href = "/database/"
+                            }, 2000)
+
+                        }
+
+                    }
+                    else {
+
+
+                        $(".error").text(data.msg);
+                        setTimeout(function () {
+                            $(".error").text("");
+
+                        }, 5000)
+                    }
+
+
+
+                }
+
+            })
+    });
+
+    //删除数据库信息
+     $("#del_db").click(function () {
+                var env_ids=new Array();
+
+                    var count=0;
+
+                    var i=0;
+                     var row = $(this).parent().parent();
+                    var pathname = window.location.pathname;
+                    var url = null;
+                    $("#table").find(":checkbox:checked").each(function() {
+
+                        env_id = $(this).parent().next().text();
+
+                        if (env_id != "") {
+
+                            env_ids[i++] = env_id;
+
+                        }
+
+                        count++;
+
+                    });
+
+                //alert(count)
+                if(count>0){
+                    url = /database/+env_id+pathname.replace('/database/', '/delete/')
+                     // 删除插件的应用
+                swal({
+
+                    title: "确定要删除吗？",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonClass: "btn-danger",
+                    confirmButtonText: "确定",
+                    cancelButtonText: "取消",
+                    closeOnConfirm: true
+
+                },
+
+                function () {
+                    $.ajax({
+
+                        url: url,
+                        type: 'post',
+                        data:{
+                            delete_id: env_id,
+
+                        },
+
+                        success:function (ret) {
+                            var data = JSON.parse(ret);
+                            if(data.status == 0){
+                                row.remove();
+
+                                toastr.success(data.msg);
+                                setTimeout(function () {
+                                location.href = "/database/"
+                            }, 2000)
+
+
+                            }else{
+                                toastr.error(data.msg);
+                                setTimeout(function () {
+                                location.href = "/database/"
+                            }, 2000)
+                            }
+
+
+                        }
+                    });
+
+                });
+                }
+                else {
+                    toastr.error("请至少选择一项")
+                }
+
+        });
+    </script>
+
+{% endblock %}

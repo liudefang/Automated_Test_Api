@@ -591,6 +591,7 @@ def edit_env(request):
 
 
 # 删除测试环境配置
+@login_required
 def del_env(request, env_id):
 
     edit_env_list = Environment.objects.filter(env_id=env_id).first()
@@ -695,6 +696,7 @@ def edit_email(request):
 
 
 # 删除邮箱地址信息
+@login_required
 def del_email(request, env_id):
 
     edit_email_list = Email.objects.filter(id=env_id).first()
@@ -792,7 +794,108 @@ def edit_db(request):
 
 
 # 删除邮箱地址信息
+@login_required
 def del_db(request, env_id):
+
+    edit_db_list = Database.objects.filter(id=env_id).first()
+
+    try:
+        edit_db_list.delete()
+        reg = {'status': 0, 'msg': '删除成功!'}
+    except Exception as e:
+        reg = {'status': 1, 'msg': '删除失败!'}
+    return HttpResponse(json.dumps(reg))
+
+
+@login_required
+def sql(request):
+    """
+    签名方式
+    :param request:
+    :return:
+    """
+    sql_list = Sql.objects.filter().all()
+    api_list = ApiStep.objects.filter().all()
+
+    return render(request, "sql/index.html", {"sql_list": sql_list, "api_list": api_list})
+
+
+@login_required
+def add_sql(request):
+    """
+    新增签名方式
+    :param request:
+    :return:
+    """
+    if request.method == "POST":
+
+        api_id = request.POST.get("api_id")
+        sql_condition = request.POST.get("sql_condition")
+        is_select = request.POST.get("is_select")
+        variable = request.POST.get("variable")
+        sql = request.POST.get("sql")
+        remake = request.POST.get("remake")
+        status = request.POST.get("status")
+        step_name = ApiStep.objects.get(api_id=api_id)
+
+        print("step_name:", step_name)
+
+        if len(step_name) != 0 and len(sql_condition) != 0 and len(is_select) != 0 and len(variable) != 0 and \
+                len(sql) != 0 and len(remake) and len(status):
+
+            Sql.objects.create(step=step_name, sql_condition=sql_condition, is_select=is_select, variable=variable,
+                               sql=sql, remake=remake, status=status)
+
+            response = {"status": 0, "msg": "添加成功!"}
+
+            # return redirect("/project")
+
+        else:
+            response = {"status": 1, "msg": "请填写必填信息!"}
+
+        return JsonResponse(response)
+
+    return render(request, "sql/index.html")
+
+
+@login_required
+def edit_sql(request):
+    """
+    新增签名方式
+    :param request:
+    :return:
+    """
+    if request.method == "POST":
+        id = request.POST.get("id")
+        db_type = request.POST.get("db_type")
+        db_name = request.POST.get("db_name")
+        db_ip = request.POST.get("db_ip")
+        db_port = request.POST.get("db_port")
+        db_user = request.POST.get("db_user")
+        db_password = request.POST.get("db_password")
+        db_remak = request.POST.get("db_remak")
+
+        if len(db_type) != 0 and len(db_name) != 0 and len(db_ip) != 0 and len(db_port) != 0 and \
+                len(db_user) != 0 and len(db_password) :
+
+            Database.objects.filter(id=id).update(db_type=db_type, db_name=db_name, db_ip=db_ip, db_port=db_port,
+                                                  db_user=db_user,db_password=db_password, db_remak=db_remak)
+
+            response = {"status": 0, "msg": "编辑成功!"}
+
+            # return redirect("/project")
+
+        else:
+            response = {"status": 1, "msg": "请填写必填信息!"}
+
+        return JsonResponse(response)
+
+    return render(request, "sql/index.html")
+
+
+# 删除邮箱地址信息
+@login_required
+def del_sql(request, env_id):
 
     edit_db_list = Database.objects.filter(id=env_id).first()
 

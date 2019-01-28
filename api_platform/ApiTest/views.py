@@ -899,10 +899,112 @@ def edit_sql(request):
 @login_required
 def del_sql(request, env_id):
 
-    edit_db_list = Database.objects.filter(id=env_id).first()
+    edit_sql_list = Sql.objects.filter(id=env_id).first()
 
     try:
-        edit_db_list.delete()
+        edit_sql_list.delete()
+        reg = {'status': 0, 'msg': '删除成功!'}
+    except Exception as e:
+        reg = {'status': 1, 'msg': '删除失败!'}
+    return HttpResponse(json.dumps(reg))
+
+
+@login_required
+def test_plan(request):
+    """
+    测试计划
+    :param request:
+    :return:
+    """
+    plan_list = TestPlan.objects.filter().all()
+    api_list = ApiStep.objects.filter().all()
+
+    return render(request, "sql/index.html", {"plan_list": plan_list, "api_list": api_list})
+
+
+@login_required
+def add_sql(request):
+    """
+    新增签名方式
+    :param request:
+    :return:
+    """
+    if request.method == "POST":
+
+        step_id = request.POST.get("api_id")
+        sql_condition = request.POST.get("sql_condition")
+        is_select = request.POST.get("is_select")
+        variable = request.POST.get("variable")
+        sql = request.POST.get("sql")
+        remake = request.POST.get("remake")
+        status = request.POST.get("status")
+        if len(sql) != 0:
+            if is_select is not None:
+
+                Sql.objects.create(step_id=step_id, sql_condition=sql_condition, is_select=1, variable=variable,
+                                   sql=sql, remake=remake, status=status)
+            else:
+                Sql.objects.create(step_id=step_id, sql_condition=sql_condition, is_select=0, variable=variable,
+                                   sql=sql, remake=remake, status=status)
+
+            response = {"status": 0, "msg": "添加成功!"}
+
+        else:
+            response = {"status": 1, "msg": "请填写必填信息!"}
+
+        return JsonResponse(response)
+
+    return render(request, "sql/index.html")
+
+
+@login_required
+def edit_sql(request):
+    """
+    新增签名方式
+    :param request:
+    :return:
+    """
+    if request.method == "POST":
+        sql_id = request.POST.get("id")
+        step_name = request.POST.get("step_name")
+        sql_condition = request.POST.get("sql_condition")
+        is_select = request.POST.get("is_select")
+        variable = request.POST.get("variable")
+        sql = request.POST.get("sql")
+        remake = request.POST.get("remake")
+        status = request.POST.get("status")
+
+        step_id = ApiStep.objects.get(step_name=step_name)
+
+        if len(sql) != 0:
+            if is_select is not None:
+
+                Sql.objects.filter(id=sql_id).update(step_id=step_id, sql_condition=sql_condition, is_select=1,
+                                                     variable=variable,sql=sql, remake=remake, status=status)
+            else:
+                Sql.objects.filter(id=sql_id).update(step_id=step_id, sql_condition=sql_condition, is_select=0,
+                                                     variable=variable,sql=sql, remake=remake, status=status)
+
+            response = {"status": 0, "msg": "编辑成功!"}
+
+            # return redirect("/project")
+
+        else:
+            response = {"status": 1, "msg": "请填写必填信息!"}
+
+        return JsonResponse(response)
+
+    return render(request, "sql/index.html")
+
+
+# 删除邮箱地址信息
+@login_required
+def del_sql(request, env_id):
+
+    edit_sql_list = Sql.objects.filter(id=env_id).first()
+
+    try:
+        edit_sql_list.delete()
         reg = {'status': 0, 'msg': '删除成功!'}
     except Exception as e:
         reg = {'status': 1, 'msg': '删除失败!'}

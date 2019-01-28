@@ -6,23 +6,24 @@
 <div class="btn-toolbar" role="toolbar">
   <div class="btn-group" style="padding-top: 100px; left: 100px">
     <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#addmyModal">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 添加测试环境
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 添加测试任务
     </button>
-    <button id="edit_env" class="btn btn-primary" data-toggle="modal" data-target="#">
-        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 修改
+    <button id="run_plan" class="btn btn-primary" data-toggle="modal" data-target="#">
+        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 执行
     </button>
-      <button id="del_env" type="onclick" class="btn btn-danger">
+      <button id="del_plan" type="onclick" class="btn btn-danger">
             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 删除
         </button>
+    <button id="start_all_plan" class="btn btn-danger" data-toggle="modal" data-target="#">
+            <span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span> 启动所有定时任务
+    </button>
 
-        {% csrf_token %}
-    </form>
 
   </div>
 
 </div>
 
-<!--测试环境列表-->
+<!--测试任务列表-->
 <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -31,26 +32,34 @@
                     <thead>
                         <tr>
                             <th>选中</th>
-                            <th>环境id</th>
-                            <th>IP地址</th>
-                            <th>域名</th>
-                            <th>端口</th>
-                            <th>环境描述</th>
-                            <th>创建时间</th>
+                            <th>id</th>
+                            <th>任务名</th>
+                            <th>测试环境</th>
+                            <th>测试数据库</th>
+                            <th>失败重跑次数</th>
+                            <th>邮箱</th>
+                            <th>执行规则</th>
+                            <th>状态</th>
+                            <th>备注</th>
+                            <th>查看报告</th>
 
                         </tr>
                     </thead>
                     <tbody>
-                        {% for env_obj in env_list %}
+                        {% for plan_obj in plan_list %}
                             <tr>
                                 <td id="che1"><input type="checkbox"/></td>
-                                <td>{{ env_obj.env_id}}</td>
-                                <td>{{ env_obj.env_ip }}</td>
-                                <td>{{ env_obj.env_host }}</td>
-                                <td>{{ env_obj.env_port }}</td>
-                                <td>{{ env_obj.evn_name }}</td>
-                                <td>{{ env_obj.create_time|date:'Y-m-d' }}</td>
+                                <td>{{ plan_obj.plan_id}}</td>
+                                <td>{{ plan_obj.plan_name }}</td>
+                                <td>{{ plan_obj.db }}</td>
+                                <td>{{ plan_obj.fail_count }}</td>
+                                <td>{{ plan_obj.email }}</td>
+                                <td>{{ plan_obj.plan_run_time_regular }}</td>
+                                <td>{{ plan_obj.status }}</td>
+                                <td>{{ plan_obj.plan_desc }}</td>
+                                <td>{{ plan_obj.create_time|date:'Y-m-d' }}</td>
 
+   
                             </tr>
                         {% endfor %}
                     </tbody>

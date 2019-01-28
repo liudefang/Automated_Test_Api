@@ -766,7 +766,7 @@ def edit_db(request):
     :return:
     """
     if request.method == "POST":
-        id = request.POST.get("id")
+        db_id = request.POST.get("id")
         db_type = request.POST.get("db_type")
         db_name = request.POST.get("db_name")
         db_ip = request.POST.get("db_ip")
@@ -778,8 +778,8 @@ def edit_db(request):
         if len(db_type) != 0 and len(db_name) != 0 and len(db_ip) != 0 and len(db_port) != 0 and \
                 len(db_user) != 0 and len(db_password) :
 
-            Database.objects.filter(id=id).update(db_type=db_type, db_name=db_name, db_ip=db_ip, db_port=db_port,
-                                                  db_user=db_user,db_password=db_password, db_remak=db_remak)
+            Database.objects.filter(id=db_id).update(db_type=db_type, db_name=db_name, db_ip=db_ip, db_port=db_port,
+                                                  db_user=db_user, db_password=db_password, db_remak=db_remak)
 
             response = {"status": 0, "msg": "编辑成功!"}
 
@@ -829,22 +829,21 @@ def add_sql(request):
     """
     if request.method == "POST":
 
-        api_id = request.POST.get("api_id")
+        step_id = request.POST.get("api_id")
         sql_condition = request.POST.get("sql_condition")
         is_select = request.POST.get("is_select")
         variable = request.POST.get("variable")
         sql = request.POST.get("sql")
         remake = request.POST.get("remake")
         status = request.POST.get("status")
-        step_name = ApiStep.objects.get(api_id=api_id)
+        if len(sql) != 0:
+            if is_select is not None:
 
-        print("step_name:", step_name)
-
-        if len(step_name) != 0 and len(sql_condition) != 0 and len(is_select) != 0 and len(variable) != 0 and \
-                len(sql) != 0 and len(remake) and len(status):
-
-            Sql.objects.create(step=step_name, sql_condition=sql_condition, is_select=is_select, variable=variable,
-                               sql=sql, remake=remake, status=status)
+                Sql.objects.create(step_id=step_id, sql_condition=sql_condition, is_select=1, variable=variable,
+                                   sql=sql, remake=remake, status=status)
+            else:
+                Sql.objects.create(step_id=step_id, sql_condition=sql_condition, is_select=0, variable=variable,
+                                   sql=sql, remake=remake, status=status)
 
             response = {"status": 0, "msg": "添加成功!"}
 
@@ -864,20 +863,25 @@ def edit_sql(request):
     :return:
     """
     if request.method == "POST":
-        id = request.POST.get("id")
-        db_type = request.POST.get("db_type")
-        db_name = request.POST.get("db_name")
-        db_ip = request.POST.get("db_ip")
-        db_port = request.POST.get("db_port")
-        db_user = request.POST.get("db_user")
-        db_password = request.POST.get("db_password")
-        db_remak = request.POST.get("db_remak")
+        sql_id = request.POST.get("id")
+        step_name = request.POST.get("step_name")
+        sql_condition = request.POST.get("sql_condition")
+        is_select = request.POST.get("is_select")
+        variable = request.POST.get("variable")
+        sql = request.POST.get("sql")
+        remake = request.POST.get("remake")
+        status = request.POST.get("status")
 
-        if len(db_type) != 0 and len(db_name) != 0 and len(db_ip) != 0 and len(db_port) != 0 and \
-                len(db_user) != 0 and len(db_password) :
+        step_id = ApiStep.objects.get(step_name=step_name)
 
-            Database.objects.filter(id=id).update(db_type=db_type, db_name=db_name, db_ip=db_ip, db_port=db_port,
-                                                  db_user=db_user,db_password=db_password, db_remak=db_remak)
+        if len(sql) != 0:
+            if is_select is not None:
+
+                Sql.objects.filter(id=sql_id).update(step_id=step_id, sql_condition=sql_condition, is_select=1,
+                                                     variable=variable,sql=sql, remake=remake, status=status)
+            else:
+                Sql.objects.filter(id=sql_id).update(step_id=step_id, sql_condition=sql_condition, is_select=0,
+                                                     variable=variable,sql=sql, remake=remake, status=status)
 
             response = {"status": 0, "msg": "编辑成功!"}
 

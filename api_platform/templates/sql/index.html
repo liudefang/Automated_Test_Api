@@ -86,7 +86,7 @@
                   </div>
                   <div class="form-group">
                     <label class="checkbox-inline">
-                        <input type="checkbox" name="is_select" id="is_select" checked> 是否是查询
+                        <input type="checkbox" name="is_select" id="is_select"  checked> 是否是查询
                     </label>
                   </div>
                    <div class="form-group">
@@ -152,7 +152,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">添加测试环境</h4>
+            <h4 class="modal-title" id="myModalLabel">编辑sql语句</h4>
           </div>
           <div class="modal-body">
               <form role="form">
@@ -163,44 +163,64 @@
                       <input type="text" class="ipt form-control" name="id" id="id" placeholder="请输入id">
                   </div>
                   <div class="form-group">
-                    <label for="edit_db_type">数据库类别</label>
+                    <label for="edit_step_name">测试用例步骤名称</label>
                       <span class="required">*</span>
-                    <input type="text" name="edit_db_type" id="edit_db_type" class="ipt form-control" placeholder="输入数据库类别">
+                        <select name="edit_step_name" id="edit_step_name" class="ipt form-control">
+                            {% for api_obj in api_list %}
+                                <option>{{api_obj.step_name}}</option>
+                            {% endfor %}
+                        </select>
                   </div>
                   <div class="form-group">
-                    <label for="edit_db_name">数据库名称</label>
-                      <span class="required">*</span>
-                    <input type="text" name="edit_db_name" id="edit_db_name" class="ipt form-control" placeholder="输入数据库名称">
+                    <label class="ipt checkbox-inline">
+                        <input type="checkbox" name="edit_is_select" id="edit_is_select"  checked> 是否是查询
+                    </label>
                   </div>
                    <div class="form-group">
-                    <label for="edit_db_ip">数据库IP地址</label>
-                       <span class="required">*</span>
-                        <input type="text" name="edit_db_ip" id="edit_db_ip" class="ipt form-control" placeholder="输入数据库IP地址">
+                    <label for="edit_variable">变量</label>
+                        <input type="text" name="edit_variable" id="edit_variable" class="ipt form-control" placeholder="输入变量">
                   </div>
                   <div class="form-group">
-                    <label for="edit_db_port">数据库端口</label>
-                      <span class="required">*</span>
-                      <input name="edit_db_port" id="edit_db_port" class="ipt form-control" placeholder="输入数据库的端口">
+                    <label for="sql_edit">sql语句</label>
+
+                        <input type="text" name="sql_edit" id="sql_edit" class="ipt form-control" placeholder="输入sql语句">
 
                   </div>
                   <div class="form-group">
-                    <label for="edit_db_user">用户名</label>
-                      <span class="required">*</span>
-                      <input name="edit_db_user" id="edit_db_user" class="ipt form-control" placeholder="输入登录数据库的用户名">
+                      <label>前置或者后置</label>
+                      <div>
+                          <label class="ipt radio-inline">
+                              <input type="radio" name="edit_sql_condition" id="edit_optionsRadios1" value="1" checked> 前置
+
+                          </label>
+                          &nbsp;&nbsp;&nbsp;&nbsp;
+                          <label class="radio-inline">
+                              <input type="radio" name="edit_sql_condition" id="edit_optionsRadios2" value="0"> 后置
+                          </label>
+                      </div>
 
                   </div>
                   <div class="form-group">
-                    <label for="edit_db_password">密码</label>
-                      <span class="required">*</span>
-                      <input name="edit_db_password" id="edit_db_password" class="ipt form-control" placeholder="输入登录数据库的密码">
+                      <label>状态</label>
+                      <div>
+                          <label class="ipt radio-inline">
+                              <input type="radio" name="edit_status" id="optionsRadios1" value="1" checked> 有效
+
+                          </label>
+                          &nbsp;&nbsp;&nbsp;&nbsp;
+                          <label class="radio-inline">
+                              <input type="radio" name="edit_status" id="optionsRadios2" value="0"> 无效
+                          </label>
+                      </div>
+
                   </div>
                   <div class="form-group">
-                    <label for="edit_db_remak">备注</label>
-                      <input name="edit_db_remak" id="edit_db_remak" class="ipt form-control" placeholder="输入数据库的备注信息">
+                    <label for="edit_remake">备注</label>
+                      <input name="edit_remake" id="edit_remake" class="ipt form-control" placeholder="输入sql的备注信息">
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary edit_db_sub">提交</button>
+                    <button type="button" class="btn btn-primary edit_sql_sub">提交</button>
                   </div>
 
 
@@ -216,8 +236,16 @@
 
 <script>
 
+    $(function () {
+        edit();
+        add();
 
-        // 新增测试环境
+    })
+
+    function add(){
+        is_variable("#is_select", "#variable")
+    }
+        // 新增sql信息
         $(".add_sql").click(function () {
 
             $.ajax({
@@ -228,7 +256,7 @@
                     is_select: $("*[name='is_select']:checked").val(),
                     variable: $("#variable").val(),
                     sql: $("#sql").val(),
-                    sql_condition: $("*[sql_condition='sql_condition']:checked").val(),
+                    sql_condition: $("*[name='sql_condition']:checked").val(),
                     status: $("*[name='status']:checked").val(),
                     remake: $("#remake").val(),
 
@@ -272,8 +300,8 @@
 
 
         //编辑数据库信息
-
-        $("#edit_db").click(function(){
+    function edit(){
+        $("#edit_sql").click(function(){
 
             var count=0;
             var env_value;
@@ -296,9 +324,18 @@
             if (count==1)
             {
 
-                //alert(plan)
+                alert(env)
                 for (var i=0;i<env.length;i++){
                     $(elements[i]).val(env[i]);
+                }
+                // 初始化是否查询和变量输入框
+                if($("#edit_variable input").val()==""){
+                    $("#edit_is_select").removeAttr('checked');
+                    $("#edit_variable").attr("style", "display:None");
+                }
+                else{
+                    $("#edit_is_select").prop("checked", true);
+                    $("#edit_variable").attr("style", "display:Block")
                 }
 
                 $('#editMyModal').modal("show");
@@ -311,21 +348,35 @@
                 toastr.error("编辑只能选择一个选项!");
             }
         });
+        is_variable("#edit_is_select", "#edit_variable");
+    }
+    //新增和编辑的时候根据该sql是否是查询判断变量输入框是否显示
+    function is_variable(checkbok,ipt){
+        $(checkbok).click(function () {
+            if($(checkbok).is(':checked')){
+                $(ipt).attr("style", "display:Block");
+            }
+            else{
+                $(ipt).attr("style","display:None");
+            }
 
-        $(".edit_db_sub").click(function () {
+        })
+    }
+
+        $(".edit_sql_sub").click(function () {
 
             $.ajax({
-                url: "/edit_db/",
+                url: "/edit_sql/",
                 type: "post",
                 data: {
                     id: $("#id").val(),
-                    db_type: $("#edit_db_type").val(),
-                    db_name: $("#edit_db_name").val(),
-                    db_ip: $("#edit_db_ip").val(),
-                    db_port: $("#edit_db_port").val(),
-                    db_user: $("#edit_db_user").val(),
-                    db_password: $("#edit_db_password").val(),
-                    db_remak: $("#edit_db_remak").val(),
+                    step_name: $("#edit_step_name").val(),
+                    is_select: $("*[name='edit_is_select']:checked").val(),
+                    variable: $("#edit_variable").val(),
+                    sql: $("#sql_edit").val(),
+                    sql_condition: $("*[name='edit_sql_condition']:checked").val(),
+                    status: $("*[name='edit_status']:checked").val(),
+                    remake: $("#edit_remake").val(),
                     csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val(),
                 },
                 success: function (data) {
@@ -338,7 +389,7 @@
                         }
                         else {
                             setTimeout(function () {
-                                location.href = "/database/"
+                                location.href = "/sql/"
                             }, 2000)
 
                         }
@@ -362,7 +413,7 @@
     });
 
     //删除数据库信息
-     $("#del_db").click(function () {
+     $("#del_sql").click(function () {
                 var env_ids=new Array();
 
                     var count=0;
@@ -387,7 +438,7 @@
 
                 //alert(count)
                 if(count>0){
-                    url = /database/+env_id+pathname.replace('/database/', '/delete/')
+                    url = /sql/+env_id+pathname.replace('/sql/', '/delete/')
                      // 删除插件的应用
                 swal({
 
@@ -418,14 +469,14 @@
 
                                 toastr.success(data.msg);
                                 setTimeout(function () {
-                                location.href = "/database/"
+                                location.href = "/sql/"
                             }, 2000)
 
 
                             }else{
                                 toastr.error(data.msg);
                                 setTimeout(function () {
-                                location.href = "/database/"
+                                location.href = "/sql/"
                             }, 2000)
                             }
 

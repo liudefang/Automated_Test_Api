@@ -933,7 +933,7 @@ def get_py_data(case_ids, test_case_dir):
         plan_data = TestCase.objects.filter(case_id=case_id).values("case_name", "api")[0]
         # 得到外键数据
         case = TestCase.objects.get(case_id=case_id)
-        step_list_data=ApiStep.objects.filter(case=case, status=1).values("api_id", "step_name", "method", "params", "headers",
+        step_list_data = ApiStep.objects.filter(case=case, status=1).values("api_id", "step_name", "method", "params", "headers",
                                                                           "files", "assert_response", "api_dependency", "step_desc")
         for step_data in step_list_data:
             # 得到外键数据

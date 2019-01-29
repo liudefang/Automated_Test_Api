@@ -41,7 +41,8 @@ urlpatterns = [
     # 用例
     url(r'^api_case/$', views.api_case),
     url(r'^add_case/$', views.add_case),
-    re_path(r'^api_case/(\d+)/(edit|delete)', views.edit_case),
+    url(r'^edit_case/$', views.edit_case),
+    re_path(r'^api_case/(\d+)/delete', views.del_case),
 
     # 用例步骤
     url(r'^api_step/$', views.api_step),

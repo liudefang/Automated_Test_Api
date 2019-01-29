@@ -57,9 +57,16 @@
                                 <td>{{ plan_obj.plan_run_time_regular }}</td>
                                 <td>{{ plan_obj.status }}</td>
                                 <td>{{ plan_obj.plan_desc }}</td>
-                                <td>{{ plan_obj.create_time|date:'Y-m-d' }}</td>
+                                <td>
+                                    <a id="find_report" href="/html_report/" target="_blank">
+                                        <div class="btn-group btn-group-xs">
+                                            <button id="find_html_report" class="btn btn-primary" style="background: #4b4a4a;color:whitesmoke">查看HTML</button>
+                                            <button id="find_text_report" class="btn btn-primary" style="background: #868888;color:whitesmoke">查看日志</button>
+                                        </div>
+                                    </a>
+                                </td>
 
-   
+
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -302,6 +309,8 @@
 
                 })
         });
+
+
 
 
     </script>

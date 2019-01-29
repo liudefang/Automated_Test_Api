@@ -8,6 +8,7 @@ from django.shortcuts import render, redirect
 # Create your views here.
 from ApiTest.forms import RegForm
 from ApiTest.models import *
+from public.make_test_case import MakeTestCase
 
 
 def index(request):
@@ -343,53 +344,60 @@ def add_case(request):
 
 
 @login_required
-def edit_case(request, case_id, option):
+def edit_case(request):
     """
     编辑用例
     :param request:
     :return:
     """
+
+    if request.method == "POST":
+        case_id = request.POST.get("case_id")
+        case_name = request.POST.get("case_name")
+        case_desc = request.POST.get("case_desc")
+        modules_id = request.POST.get("modules_id")
+        api = request.POST.get("api")
+        version = request.POST.get("version")
+        status = request.POST.get("status")
+        project_id = request.POST.get("project_id")
+
+        if len(case_name) != 0:
+
+            TestCase.objects.filter(case_id=case_id).update(case_name=case_name, case_desc=case_desc,
+                                                            modules_id=modules_id, api=api, version=version,
+                                                            status=status, project_id=project_id)
+
+            response = {"status": 0, "msg": "编辑成功!"}
+
+        else:
+            response = {"status": 1, "msg": "用例名称不能为空!"}
+
+        return JsonResponse(response)
+    project_list = Project.objects.filter().all()
+    module_list = Modules.objects.filter().all()
+
+    return render(request, "api_case/index.html", {"project_list": project_list, "module_list": module_list})
+
+
+@login_required
+def del_case(request, case_id):
+    """
+    删除测试用例
+    :param request:
+    :param case_id:
+    :return:
+    """
     print("prj_id:", case_id)
     edit_case_list = TestCase.objects.filter(case_id=case_id).first()
-    if edit_case_list and option == "delete":
-        try:
-            edit_case_list.delete()
-            reg = {'status': 0, 'msg': '删除成功!'}
-        except Exception as e:
-            reg = {'status': 1, 'msg': '删除失败!'}
 
-        return HttpResponse(json.dumps(reg))
-    elif edit_case_list and option == "edit":
+    try:
+        edit_case_list.delete()
+        reg = {'status': 0, 'msg': '删除成功!'}
+    except Exception as e:
+        reg = {'status': 1, 'msg': '删除失败!'}
 
-        if request.method == "POST":
+    return HttpResponse(json.dumps(reg))
 
-            case_name = request.POST.get("case_name")
-            case_desc = request.POST.get("case_desc")
-            modules_id = request.POST.get("modules_id")
-            api = request.POST.get("api")
-            version = request.POST.get("version")
-            status = request.POST.get("status")
-            project_id = request.POST.get("project_id")
-
-            if len(case_name) != 0:
-
-                TestCase.objects.filter(case_id=case_id).update(case_name=case_name, case_desc=case_desc,
-                                                                modules_id=modules_id, api=api, version=version,
-                                                                status=status, project_id=project_id)
-
-                response = {"status": 0, "msg": "编辑成功!"}
-
-            else:
-                response = {"status": 1, "msg": "用例名称不能为空!"}
-
-            return JsonResponse(response)
-        project_list = Project.objects.filter().all()
-        module_list = Modules.objects.filter().all()
-
-        return render(request, "api_case/edit.html", {"edit_case_list": edit_case_list, "project_list": project_list,
-                                                      "module_list": module_list})
-    else:
-        return render(request, "not_found.html")
 
 
 @login_required
@@ -909,6 +917,33 @@ def del_sql(request, env_id):
     return HttpResponse(json.dumps(reg))
 
 
+# 创建测试计划表
+def create_plan(case_ids, plan_name, plan_desc):
+    for case_id in case_ids:
+        plan_data=TestCase.objects.filter(case_id=case_id).values("case_name", "api")[0]
+        # 得到外键数据
+        case = TestCase.objects.get(case_id=case_id)
+        TestPlan.objects.create(case=case, plan_name=plan_name, plan_desc=plan_desc, status=0)
+
+
+# 用例生成脚本
+# 得到根据用例id拿到数据
+def get_py_data(case_ids, test_case_dir):
+    for case_id in case_ids:
+        plan_data = TestCase.objects.filter(case_id=case_id).values("case_name", "api")[0]
+        # 得到外键数据
+        case = TestCase.objects.get(case_id=case_id)
+        step_list_data=ApiStep.objects.filter(case=case, status=1).values("api_id", "step_name", "method", "params", "headers",
+                                                                          "files", "assert_response", "api_dependency", "step_desc")
+        for step_data in step_list_data:
+            # 得到外键数据
+            step = ApiStep.objects.get(api_id=step_data['api_id'])
+            sql_list_data = Sql.objects.filter(step=step, status=1).values("sql_condition", "is_select", "variable", "sql")
+            step_data['sql_list_data'] = sql_list_data
+            print(step_data)
+        plan_data["step_list_data"] = step_list_data
+        make_test_case = MakeTestCase(test_case_dir, plan_data)
+        
 @login_required
 def test_plan(request):
     """

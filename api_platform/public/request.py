@@ -2,7 +2,10 @@
 # @Time    : 2019/1/29 19:42
 # @Author  : mike.liu
 # @File    : request.py
-import requests, json
+import requests
+import json
+
+
 class Http:
     def __init__(self, model):
         self.model = model
@@ -28,6 +31,7 @@ class Http:
     def __change_Json(self, response):
         response_json = json.loads(requests.text)
         return response_json
+
     def __call__(self, fuc):
         def wrapper(*args, **kwargs):
             fuc(*args, **kwargs)

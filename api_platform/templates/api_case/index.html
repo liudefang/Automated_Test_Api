@@ -235,8 +235,8 @@
               <form role="form">
                   {% csrf_token %}
                   <div class="form-group" style="display:none">
-                      <label for="plan_id">plan_id</label>
-                      <input type="text" class="form-control" name="plan_id" id="plan_id" style="display:none">
+                      <label for="case_id">case_id</label>
+                      <input type="text" class="form-control" name="case_id" id="case_id" style="display:none">
                   </div>
                   <h6 style="color: red"><span class="error"></span></h6>
 
@@ -552,7 +552,7 @@
             url: "/make_case_data/",
             type: "post",
             data: {
-                    plan_id: $("#plan_id").val(),
+                    case_id: $("#case_id").val(),
                     plan_name: $("#plan_name").val(),
                     plan_desc: $("#plan_desc").val(),
                     csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val(),

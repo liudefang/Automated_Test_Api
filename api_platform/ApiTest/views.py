@@ -1,4 +1,5 @@
 import json
+import os
 
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
@@ -9,6 +10,7 @@ from django.shortcuts import render, redirect
 from ApiTest.forms import RegForm
 from ApiTest.models import *
 from public.make_test_case import MakeTestCase
+from public.system import *
 
 
 def index(request):
@@ -943,7 +945,57 @@ def get_py_data(case_ids, test_case_dir):
             print(step_data)
         plan_data["step_list_data"] = step_list_data
         make_test_case = MakeTestCase(test_case_dir, plan_data)
-        
+        print("plan_data:", plan_data)
+
+
+# 判断是不是Windows，在task目录下创建本次任务目录，再创建case
+def create_plan(plan_name):
+    if os.name == 'nt':
+        plan_dir = os.getcwd()+r"\plan"
+        plan_name = plan_dir+r"/"+plan_name
+        test_case = plan_name + r"\test_case"
+        report = plan_name + r"\report"
+    else:
+        plan_dir = os.getcwd() + r"/plan"
+        plan_name = plan_dir + r"/" + plan_name
+        test_case = plan_name + r"/test_case"
+        report = plan_name + r"/report"
+    create_dir(plan_name)
+    create_dir(test_case)
+    create_dir(report)
+    # 创建一个初始化文件__init__.py
+    file_name = test_case+"/__init__.py"
+    create_file(file_name)
+    return test_case
+
+
+# 生成脚本
+@login_required
+def make_case_data(request):
+    if request.POST == "POST":
+        case_ids = request.POST.get("case_id")
+        plan_name = request.POST.get("plan_name")
+        plan_desc = request.POST.get("plan_desc")
+        if plan_name != str(TestPlan.objects.filter(plan_name=plan_name).values()):
+            case_ids = case_ids.split(',')
+            print("case_ids:", case_ids)
+            # 第一个传过来的值None字符串，不需要
+            case_ids = case_ids[1:]
+            print("case_ids:", case_ids)
+            # 创建任务表
+            create_plan(case_ids, plan_name, plan_desc)
+            # 创建对应目录
+            test_case_dir = create_plan(plan_name)
+            # 整合数据
+            get_py_data(case_ids, test_case_dir)
+            response = {"status": 0, "msg": "生成脚本成功!"}
+
+        else:
+            # 指定是新建任务重复
+            response = {"status": 1, "msg": "测试计划名称已经存在!"}
+        return JsonResponse(response)
+    return render(request, "api_case/index.html")
+
 @login_required
 def test_plan(request):
     """

@@ -3,6 +3,7 @@ import os
 
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q, Max
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
 
@@ -996,6 +997,34 @@ def make_case_data(request):
         return JsonResponse(response)
     return render(request, "api_case/index.html")
 
+
+@login_required
+def get_env_database_desc(request):
+    """
+    获取环境和数据库的描述和邮件信息
+    :param request:
+    :return:
+    """
+    env_desc = []
+    db_remaks = []
+    subjects = []
+    # 环境
+    start_env_desc = Environment.objects.values("evn_name")
+    for i in range(len(start_env_desc)):
+        env_desc.append(start_env_desc[i]['env_name'])
+
+    # 数据库
+    start_db_remarks = Database.objects.values("db_remak")
+    for i in range(len(start_db_remarks)):
+        db_remaks.append(start_db_remarks[i]['db_remark'])
+
+    # 邮件
+    start_subjects = Email.objects.values("subject")
+    for i in range(len(start_subjects)):
+        subjects.append(start_subjects[i]['subject'])
+    return env_desc, db_remaks, subjects
+
+
 @login_required
 def test_plan(request):
     """
@@ -1003,16 +1032,222 @@ def test_plan(request):
     :param request:
     :return:
     """
+
+    env_desc, db_remarks, subjects = get_env_database_desc(request)
+    plan_name = request.POST.get("plan_name")
+    try:
+        data_list = TestPlan.objects.filter(Q(plan_name__contains=plan_name)).values("plan_name", "plan_run_time_regular",
+                                                                                     "db_remark", "plan_desc", "fail_count",
+                                                                                     "remark", "status", "subject").distinct().order_by("plan_name")
+    except:
+        data_list = TestPlan.objects.values("plan_name", "plan_run_time_regular", "db_remark", "plan_desc", "fail_count",
+                                            "remark", "status", "subject").distinct().order_by("plan_name")
     plan_list = TestPlan.objects.filter().all()
     api_list = ApiStep.objects.filter().all()
 
-    return render(request, "sql/index.html", {"plan_list": plan_list, "api_list": api_list})
+    return render(request, "sql/plan.html", {"plan_list": plan_list, "api_list": api_list})
 
 
 @login_required
+def rm_plan(plan_name):
+    """
+    删除计划目录以及文件
+    :param plan_name:
+    :return:
+    """
+    plan_dir = os.getcwd()+r"/task/"+plan_name
+    if os.path.exists(plan_dir):
+        shutil.rmtree(plan_dir)
+
+
+@login_required
+def del_plan(request, plan_id):
+
+    edit_plan_list = TestPlan.objects.filter(plan_id=plan_id).first()
+
+    try:
+        edit_plan_list.delete()
+        reg = {'status': 0, 'msg': '删除成功!'}
+    except Exception as e:
+        reg = {'status': 1, 'msg': '删除失败!'}
+    return HttpResponse(json.dumps(reg))
+
+
+@login_required
+def get_ip_database(request, evn_name, database_desc):
+    """
+    拼接ip和启动数据库对象
+    :param request:
+    :param plan_desc:
+    :param database_desc:
+    :return:
+    """
+    # 环境
+    env_list = Environment.objects.filter(evn_name=evn_name).values("env_ip", "env_host", "env_port")
+    if env_list[0]['env_ip'] != "":
+        if env_list[0]['env_port'] != "":
+            env_ip = "http://{host}:{port}".format(host=env_list[0]['env_ip'], port=env_list[0]['env_port'])
+        else:
+            env_ip = "http://{host}".format(host=env_list[0]['env_ip'])
+
+    else:
+        if env_list[0]['env_port'] != "":
+            env_ip = "http://{host}:{port}".format(host=env_list[0]['env_host'], port=env_list[0]['env_port'])
+        else:
+            env_ip = "http://{host}".format(host=env_list[0]['env_host'])
+
+    # 数据库
+    if database_desc != "":
+        db_list = Database.objects.filter(db_remark=database_desc).values("db_type", "db_name", "db_ip", "db_port",
+                                                                          "db_user", "db_password")
+    # 不需要数据库
+    else:
+        db_list = []
+        db_list.append({"db_type": "", "db_ip": "", "db_port": "", "db_user": "", "db_password": "", "db_name": ""})
+
+    create_db(db_list[0]['db_type'], db_list[0]['db_ip'], db_list[0]['db_port'], db_list[0]['db_user'],
+              db_list[0]['db_password'], db_list[0]['db_name'])
+
+
+@login_required
+def write_plan(request, plan_name, env_desc, database_desc, fail_count, schedule, status, email_data):
+    # 环境
+    env_id = Environment.objects.filter(env_desc=env_desc).values("env_id")[0]['env_id']
+    # 数据库
+    if database_desc != "":
+        db_id = Database.objects.filter(db_remark=database_desc).values("id")[0]['id']
+    # 不使用数据库
+    else:
+        db_id = ""
+    if status == "1":
+        if email_data is None:
+            TestPlan.objects.filter(plan_name=plan_name).update(ip=env_id, db=db_id, fail_count=fail_count,
+                                                                plan_run_time_regular=schedule, status=status,
+                                                                env_desc=env_desc, db_remark=database_desc)
+        else:
+            TestPlan.objects.filter(plan_name=plan_name).update(ip=env_id, db=db_id, fail_count=fail_count,
+                                                                plan_run_time_regular=schedule, status=status,
+                                                                env_desc=env_desc, db_remark=database_desc,
+                                                                email=email_data['id'], subject=email_data['subject'])
+    else:
+        if email_data is None:
+            TestPlan.objects.filter(plan_name=plan_name).update(ip=env_id, db=db_id, fail_count=fail_count,
+                                                                plan_run_time_regular=schedule, status=status,
+                                                                env_desc=env_desc, db_remark=database_desc)
+        else:
+            TestPlan.objects.filter(plan_name=plan_name).update(ip=env_id, db=db_id, fail_count=fail_count,
+                                                                plan_run_time_regular=schedule, status=status,
+                                                                env_desc=env_desc, db_remark=database_desc,
+                                                                email=email_data['id'], subject=email_data['subject'])
+
+
+@login_required
+def plan_run(request):
+    """
+    执行测试计划
+    :param request:
+    :return:
+    """
+    global finish
+    plan_name = request.POST.get("plan_name")
+    plan_desc = request.POST.get("plan_desc")
+    db_remark = request.POST.get("db_remark")
+    subject = request.POST.get("subject")
+    # 修改失败重跑的次数
+    fail_count = request.POST.get("fail_count")
+    # 日程表
+    schedule = request.POST.get("schedule")
+    # 状态
+    status = request.POST.get("status")
+    plan_desc, db_remarks, subjects = get_env_database_desc(request)
+
+    # 如果要发送邮件拿到邮件配置数据
+    if subject is not None:
+        email_data = Email.objects.filter(subject=subject).values('id', 'sender', 'receivers', 'host_dir', 'email_port',
+                                                                  'username', 'password', 'Headerfrom', 'Headerto', 'subject')[0]
+    else:
+        email_data = None
+
+    # 选择一次执行还是配置定时任务
+    if schedule is None:
+        # 启动数据库对象，拼接ip
+        get_ip_database(request, plan_desc, db_remark)
+        interface(plan_name, fail_count, email_data)
+    else:
+        write_plan(request, plan_name, plan_desc, db_remark, fail_count, schedule, status, email_data)
+        job = Job(plan_name, schedule)
+        if status == '1':
+            job.create_job(request, plan_desc, db_remark, fail_count, subject)
+        else:
+            job.delete_job()
+
+    finish = 1
+    return render(request, "plan/index.html")
+
+
+@login_required
+def get_plan_data(request):
+    plan_name_list = TestPlan.objects.filter(status=1).values("plan_name", "plan_run_time_regular", "db_remark",
+                                                              "plan_desc", "fail_count", "remark", "status",
+                                                              "subject").distinct().order_by("plan_name")
+    for i in range(len(plan_name_list)):
+        job = Job(plan_name_list[i]['plan_name'], plan_name_list[i]['plan_run_time_regular'])
+        # 新建任务
+        job.create_job(request, plan_name_list[i]['plan_desc'], plan_name_list[i]['db_remark'],
+                       plan_name_list[i]['fail_count'], plan_name_list[i]['subject'])
+
+
+@login_required
+def start_timing_plan(request):
+    """
+    启动定时计划
+    :param request:
+    :return:
+    """
+    # 启动全部定时计划
+    get_plan_data(request)
+    env_desc, db_remarks, subjects = get_env_database_desc(request)
+    plan_name = None
+    try:
+        data_list = TestPlan.objects.filter(Q(plan_name__contains=plan_name)).values("plan_name", "plan_run_time_regular",
+                                                                                     "db_remark", "plan_desc", "fail_count",
+                                                                                     "remark", "status", "subject").distinct().order_by("plan_name")
+    except:
+        data_list = TestPlan.objects.values("plan_name", "plan_run_time_regular", "db_remark", "plan_desc", "fail_count",
+                                            "remark", "status", "subject").distinct().order_by("plan_name")
+
+    return render(request, "plan/index.html")
+
+
+@login_required
+def get_progress_bar(request):
+    response = {}
+    global finish
+    get_finish = finish
+    print("get_finish:", get_finish)
+    finish = 0
+    response["get_finish"] = get_finish
+    return JsonResponse(response)
+
+
+@login_required
+def html_report(request):
+    """
+    html报告信息
+    :param request:
+    :return:
+    """
+    plan_name = request.GET.get("plan_name")
+    find_way = request.GET.get("find_way")
+    # 查找日志
+    if find_way == "find_text_report":
+        report_id = CarryTask.objects.filter(task_name=plan_name).aggregate(id=Max('id'))['id']
+        if report_id is None:
+            success_
+@login_required
 def add_sql(request):
     """
-    新增签名方式
+    新增sql语句
     :param request:
     :return:
     """

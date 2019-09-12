@@ -1,0 +1,32 @@
+   .menu {
+                margin: 0 -20px;
+                border-bottom: 1px solid #336699;
+}
+.head {
+    padding: 15px;
+}
+.menu .nav-sidebar > li > a {
+    padding-right: 40px;
+    padding-left: 40px;
+}
+table {
+    margin-top: 50px;
+    margin-left: 40px;
+}
+
+.navbar {
+    background-color: #428bca;
+}
+
+.navbar-brand {
+    color: white;
+}
+
+.navbar-collapse .navbar-nav > li > a{
+    color: #333333;
+}
+
+.form-group span.required{
+    color: red;
+    font-size: 100%;
+}

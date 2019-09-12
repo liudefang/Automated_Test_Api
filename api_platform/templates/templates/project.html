@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block add %}
+
+
+<div id="myAlert1" class="alert alert-warning" style="display: none;">
+    <a href="#" class="close" data-dismiss="alert">&times;</a>
+    <strong>警告!</strong>请勾选一条数据
+</div>
+<!--按钮-->
+<div class="btn-toolbar" role="toolbar">
+  <div class="btn-group" style="padding-top: 100px; left: 350px">
+    <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#addmyModal">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 添加
+    </button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editmyModal">
+        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 修改
+    </button>
+    <form id="del" method="POST" action="/del_project/" style="display: inline;">
+        <input id="ipt1" type="text" name="pid" style="display: none"/>
+         <button id="btn-del" type="onclick" class="btn btn-danger ">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 删除
+        </button>
+        {% csrf_token %}
+    </form>
+
+  </div>
+
+</div>
+
+<!--项目列表-->
+<div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-3">
+
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>选中</th>
+                            <th>项目id</th>
+                            <th>项目名称</th>
+                            <th>项目描述</th>
+                            <th>测试人员</th>
+                            <th>创建时间</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for project_obj in project_list %}
+                            <tr>
+                                <td id="che1"><input type="checkbox"/></td>
+                                <td>{{project_obj.pid}}</td>
+                                <td>{{ project_obj.project_name }}</td>
+                                <td>{{ project_obj.project_desc }}</td>
+                                <td>{{ project_obj.testers }}</td>
+                                <td>{{ project_obj.create_time|date:'Y-m-d' }}</td>
+
+
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}

@@ -139,53 +139,6 @@
                 "hideMethod":"fadeOut"//消失时的动画方式
                 };
 
-        // 新建项目验证
-
-    $(".btn_sub").click(function () {
-
-        $.ajax({
-            url: "/add_project/",
-            type: "post",
-            data: {
-                prj_name: $("#prj_name").val(),
-                prj_desc: $("#prj_desc").val(),
-                testers: $("#testers").val(),
-                developer: $("#developer").val(),
-                status: $("*[name='status']:checked").val(),
-                csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val(),
-            },
-            success: function (data) {
-
-                if (data.status== 0) {
-                    // alert(111)
-                    toastr.success(data.msg);
-                    if (location.search){
-                            location.href = location.search.slice(6)
-                    }
-                    else {
-                        setTimeout(function () {
-                            location.href = "/project/"
-                        }, 2000)
-
-                    }
-
-                }
-                else {
-
-
-                    $(".error").text(data.msg);
-                    setTimeout(function () {
-                        $(".error").text("");
-
-                    }, 5000)
-                }
-
-
-
-            }
-
-        })
-    });
 
 
 

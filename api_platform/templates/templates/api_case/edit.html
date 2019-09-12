@@ -1,0 +1,163 @@
+{% extends "../base.html" %}
+{% block style %}
+
+    {{block.super}}
+    .form-horzontal {
+            margin-top:100px;
+        }
+    .panel {
+        margin-top: 50px;
+        width:300px;
+        height: 500px;
+        margin-left: 100px;
+    }
+    h6 {
+        margin-left:500px;
+    }
+{% endblock style%}
+{% block add %}
+    <div class="panel panel-info">
+        <div class="panel-heading">编辑用例信息</div>
+        <div class="panel-body">
+            <form class="form-horizontal" action="" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <div class="col-sm-10">
+                        <input type="hidden" name="b">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="case_name" class="col-sm-2 control-label">用例名称:</label>
+                    <div class="col-sm-6">
+                        <input type="text" name="case_name" value="{{ edit_case_list.case_name }}" id="case_name">
+                    </div>
+                </div>
+                <h6 style="color: red"><span class="error"></span></h6>
+                <div class="form-group">
+                    <label for="modules_id" class="col-sm-2 control-label">模块名称:</label>
+                        <div class="col-sm-6">
+                            <select name="modules_id" id="modules_id" class="form-control">
+                                {% for module_obj in module_list %}
+                                    {% if edit_case_list.modules == module_obj %}
+                                        <option selected value="{{module_obj.id}}">{{module_obj.modules_name}}</option>
+                                    {% else %}
+                                        <option value="{{module_obj.id}}">{{module_obj.modules_name}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                  </div>
+                <div class="form-group">
+                    <label for="project_id" class="col-sm-2 control-label">所属项目:</label>
+                        <div class="col-sm-6">
+                            <select name="project_id" id="project_id" class="form-control">
+                                {% for project_obj in project_list %}
+                                    {% if edit_case_list.project == project_obj %}
+                                        <option selected value="{{project_obj.pk}}">{{project_obj.prj_name}}</option>
+                                    {% else %}
+                                        <option value="{{project_obj.pk}}">{{project_obj.prj_name}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                  </div>
+                <div class="form-group">
+                    <label for="api" class="col-sm-2 control-label">api地址:</label>
+                    <div class="col-sm-6">
+                        <input type="text" name="api" value="{{ edit_case_list.api }}" id="api">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="version" class="col-sm-2 control-label">版本:</label>
+                    <div class="col-sm-6">
+                        <input type="text" name="version" value="{{ edit_case_list.version }}" id="version">
+                    </div>
+                </div>
+                 <div class="form-group">
+                      <label class="col-sm-2 control-label">项目状态:</label>
+                      <div>
+                          <label class="radio-inline">
+                              <input type="radio" name="status" id="optionsRadios1" value="1" checked> 有效
+
+                          </label>
+                          &nbsp;&nbsp;&nbsp;&nbsp;
+                          <label class="radio-inline">
+                              <input type="radio" name="status" id="optionsRadios2" value="0" > 无效
+                          </label>
+                      </div>
+
+                  </div>
+               <div class="form-group">
+                    <label for="case_desc" class="col-sm-2 control-label">用例描述:</label>
+                    <div class="col-sm-6">
+                        <textarea name="case_desc" id="case_desc" cols="60" rows="5">{{ edit_case_list.case_desc }}</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-10 col-md-offset-6">
+                        <a href="/api_case/" class="btn btn-primary ">取消</a>
+                        &nbsp;&nbsp;
+                        <input type="button" class="btn btn-info edit_case_sub" value="提交">
+
+                    </div>
+                </div>
+
+            </form>
+        </div>
+        <script>
+
+     // 编辑用例
+    $(".edit_case_sub").click(function () {
+        $.ajax({
+            url: "/api_case/{{edit_case_list.pk}}/edit/",
+            type: "post",
+            data: {
+
+                case_name: $("#case_name").val(),
+                modules_id: $("#modules_id").val(),
+                project_id: $("#project_id").val(),
+                api: $("#api").val(),
+                version: $("#version").val(),
+                case_desc: $("#case_desc").val(),
+                status: $("*[name='status']:checked").val(),
+                csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val(),
+            },
+
+            success: function (data) {
+
+                if (data.status== 0) {
+                    // alert(111)
+                    toastr.success(data.msg);
+                    if (location.search){
+                            location.href = location.search.slice(6)
+                    }
+                    else {
+                        setTimeout(function () {
+                            location.href = "/api_case/"
+                        }, 2000)
+
+                    }
+
+                }
+                else {
+
+
+                    $(".error").text(data.msg);
+                    setTimeout(function () {
+                        $(".error").text("");
+
+                    }, 5000)
+                }
+
+
+
+            }
+
+        })
+    });
+
+        </script>
+    </div>
+{% endblock %}

@@ -533,18 +533,7 @@
         alert(checked_env_ids)
 
     }
-    // 生成脚本
-    $("#btn_make").click(){
-        // 调整被勾选的值
-           change_checked_env_ids();
-           if (checked_env_ids.length<=1){
-               toastr.success("生成脚本时一定要勾选一条测试用例");
-               return false;
-           }
-           else{
-               $("#plan_id").val(checked_env_ids);
-           }
-       }
+
 
     $(".add_plan_sub").click(function () {
 

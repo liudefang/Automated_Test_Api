@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>接口自动化测试平台</title>
+    <link rel="stylesheet" href="/static/bootstrap-3.3.7/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/css/toastr.min.css">
+    <script src="/static/js/jquery-3.3.1.js"></script>
+    <script src="/static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/static/css/login_reg.css">
+    <script src="/static/js/toastr.min.js"></script>
+
+</head>
+<body>
+    <nav class="tab navbar  navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <h3>接口自动化测试平台</h3>
+            </div>
+
+        </div>
+        
+    </nav>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <form>
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="username">用户名</label>
+                            <input type="text" id="username" class="form-control" placeholder="输入用户名">
+                        </div>
+
+                         <div class="form-group">
+                            <label for="password">密码</label>
+                            <input type="password" id="password" class="form-control" placeholder="输入密码">
+                        </div>
+
+                        <input type="button" class="btn btn-primary login_btn" value="登录"><span class="error"></span>
+                        <a href="/register/"><input type="button" class="btn pull-right" value="注册"></a>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <script>
+            // 登录验证
+            $(".login_btn").click(function () {
+
+                $.ajax({
+                    url:"",
+                    type: "post",
+                    data:{
+                        username: $("#username").val(),
+                        password: $("#password").val(),
+                        csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val(),
+                    },
+                    success: function (data) {
+                        console.log(data);
+
+
+                        if (data.username){
+
+                            if (location.search){
+                                location.href = location.search.slice(6)
+                            }
+                            else {
+
+                                    location.href = "/home/"
+
+
+
+                            }
+                        }
+                        else {
+                            alert(222)
+                            $(".error").text(data.msg);
+                            setTimeout(function () {
+                                $(".error").text("")
+
+                            }, 5000)
+                        }
+
+                    }
+                })
+
+            })
+        </script>
+
+</body>
+</html>

@@ -1,0 +1,318 @@
+{% extends "../base.html" %}
+
+{% block add %}
+
+<!--按钮-->
+<div class="btn-toolbar" role="toolbar">
+  <div class="btn-group" style="padding-top: 20px;left: 50px">
+    <button id="add_btn" class="btn btn-primary " data-toggle="modal" data-target="#addmyModal">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 添加模块
+    </button>
+
+    <button id="edit_mod" class="btn btn-primary" data-toggle="modal" data-target="#">
+        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 修改
+    </button>
+      <button id="del_mod" type="onclick" class="btn btn-danger ">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 删除
+        </button>
+    <!--<form id="del_btn" method="POST" action="/del_project/" style="display: inline;">
+        <input id="ipt1" type="text" name="pid" style="display: none"/>
+         <button id="btn_delete" type="onclick" class="btn btn-danger ">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 删除
+        </button>
+        {% csrf_token %}
+    </form>-->
+
+  </div>
+
+</div>
+
+<!--模块列表-->
+<div class="container">
+        <div class="row">
+            <div class="col-md-12">
+
+                <table id= "table" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>选中</th>
+                            <th>模块id</th>
+                            <th>模块名称</th>
+                            <th>项目名称</th>
+                            <th>测试人员</th>
+                            <th>开发人员</th>
+                            <th>状态</th>
+                            <th>模块描述</th>
+                            <th>创建时间</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for module_obj in module_list %}
+                            <tr>
+                                <td id="che1"><input type="checkbox"/></td>
+                                <td>{{ module_obj.id}}</td>
+                                <td>{{ module_obj.modules_name }}</td>
+                                <td>{{ module_obj.project }}</td>
+                                <td>{{ module_obj.testers }}</td>
+                                <td>{{ module_obj.developer }}</td>
+                                <td>{{ module_obj.status }}</td>
+                                <td>{{ module_obj.modules_desc }}</td>
+                                <td>{{ module_obj.create_time|date:'Y-m-d' }}</td>
+
+
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+<!-- 新增项目模态框 -->
+    <div class="modal fade" id="addmyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">添加模块</h4>
+          </div>
+          <div class="modal-body">
+              <form role="form">
+                  {% csrf_token %}
+                  <div class="form-group">
+                    <label for="modules_name">模块名称</label>
+                    <input type="text" name="modules_name" id="modules_name" class="ipt form-control" placeholder="输入模块名称">
+                  </div>
+                  <h6 style="color: red"><span class="error"></span></h6>
+                  <div class="form-group">
+                    <label for="project_id">所属项目</label>
+
+                        <select name="project_id" id="project_id" class="form-control">
+                            {% for project_obj in project_list %}
+                            <option value="{{project_obj.pk}}">{{project_obj.prj_name}}</option>
+                            {% endfor %}
+                        </select>
+
+                  </div>
+                  <div class="form-group">
+                    <label for="testers">项目负责人</label>
+                    <input type="text" name="testers" id="testers" class="form-control" placeholder="输入项目负责人">
+                  </div>
+                  <div class="form-group">
+                    <label for="developer">开发负责人</label>
+                    <input type="text" name="developer" id="developer" class="form-control" placeholder="输入开发负责人">
+                  </div>
+                  <div class="form-group">
+                      <label>项目状态</label>
+                      <div>
+                          <label class="radio-inline">
+                              <input type="radio" name="status" id="optionsRadios1" value="1" checked> 有效
+
+                          </label>
+                          &nbsp;&nbsp;&nbsp;&nbsp;
+                          <label class="radio-inline">
+                              <input type="radio" name="status" id="optionsRadios2" value="0"> 无效
+                          </label>
+                      </div>
+
+                  </div>
+                  <div class="form-group">
+                    <label for="modules_desc">项目描述</label>
+                    <textarea name="modules_desc" id="modules_desc" cols="60" rows="3" class="form-control" placeholder="输入模块描述"></textarea>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary add_mod_sub">提交</button>
+                  </div>
+
+              </form>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+<script>
+       // 新建项目验证
+
+    $(".add_mod_sub").click(function () {
+
+        $.ajax({
+            url: "/add_module/",
+            type: "post",
+            data: {
+                modules_name: $("#modules_name").val(),
+                modules_desc: $("#modules_desc").val(),
+                project_id: $("#project_id").val(),
+                testers: $("#testers").val(),
+                developer: $("#developer").val(),
+                status: $("*[name='status']:checked").val(),
+                csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val(),
+            },
+            success: function (data) {
+
+                if (data.status== 0) {
+                    // alert(111)
+                    toastr.success(data.msg);
+                    if (location.search){
+                            location.href = location.search.slice(6)
+                    }
+                    else {
+                        setTimeout(function () {
+                            location.href = "/module/"
+                        }, 2000)
+
+                    }
+
+                }
+                else {
+
+
+                    $(".error").text(data.msg);
+                    setTimeout(function () {
+                        $(".error").text("");
+
+                    }, 5000)
+                }
+
+
+
+            }
+
+        })
+    });
+
+
+        //编辑模块
+
+            $("#edit_mod").click(function(){
+
+                var count=0;
+                var env_value;
+                var env=new Array();
+                var elements=$(".ipt");
+                var url = null;
+                $("#table").find(":checkbox:checked").each(function(){
+                    env_value=$(this).parent()
+                    for (var i=0;i<elements.length;i++){
+                        env_value=env_value.next()
+
+                        env[i]=env_value.text();
+
+
+                    }
+                    count++;
+                });
+
+                if (count==1)
+                {
+                    //alert(plan);
+                    url = "/module/"+env+"/edit"
+                    alert(url)
+                    for (var i=0;i<env.length-1;i++){
+                        $(elements[i]).val(env[i]);
+                    }
+                    if (env[env.length-1]=="True"){
+                        $(elements[env.length-1]).prop('checked',true);
+                    }
+                    else{
+                        $(elements[env.length-1]).removeAttr('checked');
+                    }
+                    //$('#editMyModal').modal("show");
+                    if(env>0){
+                        location.href = url;
+                    }
+                }
+                else if(count==0){
+                    toastr.error("请至少选择一个选项!")
+                }
+                else{
+                    toastr.error("编辑只能选择一个选项!");
+                }
+            });
+
+      // 删除模块
+    $("#del_mod").click(function () {
+            var env_ids=new Array();
+
+                var count=0;
+
+                var i=0;
+                 var row = $(this).parent().parent();
+                var pathname = window.location.pathname;
+                var url = null;
+                $("#table").find(":checkbox:checked").each(function() {
+
+                    env_id = $(this).parent().next().text();
+
+                    if (env_id != "") {
+
+                        env_ids[i++] = env_id;
+
+                    }
+
+                    count++;
+
+                });
+
+            //alert(count)
+            if(count>0){
+                url = /module/+env_id+pathname.replace('/module/', '/delete/')
+                 // 删除插件的应用
+            swal({
+
+                title: "确定要删除吗？",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                closeOnConfirm: true
+
+            },
+
+            function () {
+                $.ajax({
+
+                    url: url,
+                    type: 'post',
+                    data:{
+                        delete_id: env_id,
+
+                    },
+
+                    success:function (ret) {
+                        var data = JSON.parse(ret);
+                        if(data.status == 0){
+                            row.remove();
+
+                            toastr.success(data.msg);
+                            setTimeout(function () {
+                            location.href = "/module/"
+                        }, 2000)
+
+
+                        }else{
+                            toastr.error(data.msg);
+                            setTimeout(function () {
+                            location.href = "/module/"
+                        }, 2000)
+                        }
+
+
+                    }
+                });
+
+            });
+            }
+            else {
+                toastr.error("请至少选择一项")
+            }
+
+    });
+
+</script>
+
+{% endblock %}
